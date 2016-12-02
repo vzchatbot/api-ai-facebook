@@ -95,7 +95,7 @@ function processEvent(event) {
 	    
 	var ReqSenderID = event.sender.id.toString();
         var ReqRecipientID = event.recipient.id.toString();
-	   
+	 var ReqMessageText = text;  
 	    if(event.timestamp)
 	    {
 		var ReqTimeStamp = event.timestamp.toString();
@@ -106,13 +106,9 @@ function processEvent(event) {
 		    {
 			var ReqMessageID = event.message.mid.toString();
 		    }
-	    }
-	    if(event.message)
-	    {
-		     if(event.message.text)
-		    {
-			var ReqMessageText = event.message.text.toString();   
-		    }
+	    }	  
+			   
+	
 	    }
 	/*    
         console.log("SSSReqSenderID :" + JSON.stringify(ReqSenderID));
@@ -159,7 +155,7 @@ function processEvent(event) {
                 console.log('action : - '+ action );
                 console.log('intent : - '+ intent );	
 		    
-console.log("Processevent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
+console.log("Processevent %" + JSON.stringify(ReqSenderID) + "%" + JSON.stringify(ReqRecipientID) +"%"+ JSON.stringify(ReqTimeStamp) + "%" + JSON.stringify(ReqMessageID) + "%"+ JSON.stringify(ReqMessageText)+ "%"  + JSON.stringify(action) + "%"+  JSON.stringify(intent)+ "% Undefined");	    
  
 		    
                 // see if the intent is not finished play the prompt of API.ai or fall back messages
@@ -436,8 +432,8 @@ app.post('/webhook/', function (req, res)  {
 					  var TimeStamp = event.timestamp;
 					  var MessageID = event.message.mid;
 					  var MessageText = event.message.text;
-console.log("API||" + JSON.stringify(SenderID) + "||" + JSON.stringify(RecipientID) +"||"+ JSON.stringify(TimeStamp) +
-	    "||" + JSON.stringify(MessageID) + "|| " + JSON.stringify(MessageText)+ "|| Undefined || Undefined ||" + JSON.stringify(data));
+console.log("API%" + JSON.stringify(SenderID) + "%" + JSON.stringify(RecipientID) +"%"+ JSON.stringify(TimeStamp) +
+	    "%" + JSON.stringify(MessageID) + "%" + JSON.stringify(MessageText)+ "% Undefined % Undefined %" + JSON.stringify(data));
 
                        		 } 
                         if (event.message && !event.message.is_echo ||
