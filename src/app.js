@@ -100,16 +100,23 @@ function processEvent(event) {
 	    var ReqMessageText="Undefined";
 	    if(event.timestamp)
 	    {
-		 ReqTimeStamp = event.timestamp.toString();        
-		// ReqMessageID = event.message.mid.toString();
-		// ReqMessageText = event.message.text.toString();   
-	    }	    
+		 ReqTimeStamp = event.timestamp.toString();
+	    }	 
+	     if(event.message.mid)
+	    {
+		 ReqMessageID = event.message.mid.toString();
+		
+	    }
+	     if(event.message.text)
+	    {
+		ReqMessageText = event.message.text.toString();   
+	    }
 	    
         console.log("SSSReqSenderID :" + JSON.stringify(ReqSenderID));
         console.log("SSSReqRecipientID :" + JSON.stringify(ReqRecipientID));
-       console.log("ReqTimeStamp :" + JSON.stringify(ReqTimeStamp));
-  //      console.log("ReqMessageID :" + JSON.stringify(ReqMessageID));
-  //      console.log("ReqMessageText :" + JSON.stringify(ReqMessageText));
+        console.log("ReqTimeStamp :" + JSON.stringify(ReqTimeStamp));
+        console.log("ReqMessageID :" + JSON.stringify(ReqMessageID));
+        console.log("ReqMessageText :" + JSON.stringify(ReqMessageText));
 	    
         console.log("Text Value", text);   
         console.log("event content :- " +JSON.stringify(event.entry));
