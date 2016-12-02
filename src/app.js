@@ -101,8 +101,8 @@ function processEvent(event) {
 	    if(event.timestamp)
 	    {
 		 ReqTimeStamp = event.timestamp.toString();        
-		 ReqMessageID = event.message.mid.toString();
-		 ReqMessageText = event.message.text.toString();   
+		// ReqMessageID = event.message.mid.toString();
+		// ReqMessageText = event.message.text.toString();   
 	    }	    
 	    
         console.log("SSSReqSenderID :" + JSON.stringify(ReqSenderID));
