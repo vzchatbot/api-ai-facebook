@@ -114,17 +114,14 @@ function processEvent(event) {
 			var ReqMessageText = event.message.text.toString();   
 		    }
 	    }
-	    
+	/*    
         console.log("SSSReqSenderID :" + JSON.stringify(ReqSenderID));
         console.log("SSSReqRecipientID :" + JSON.stringify(ReqRecipientID));
         console.log("ReqTimeStamp :" + JSON.stringify(ReqTimeStamp));
         console.log("ReqMessageID :" + JSON.stringify(ReqMessageID));
         console.log("ReqMessageText :" + JSON.stringify(ReqMessageText));
-	    
+	  */  
         console.log("Text Value", text);   
-	var Entries =event.entry;
-        console.log("event content :- " +JSON.stringify(Entries));
-       
         if (event.account_linking) 
         {
             console.log("event account_linking content :- " + JSON.stringify(event.account_linking));
@@ -162,7 +159,7 @@ function processEvent(event) {
                 console.log('action : - '+ action );
                 console.log('intent : - '+ intent );	
 		    
-//console.log("||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
+console.log("||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
  
 		    
                 // see if the intent is not finished play the prompt of API.ai or fall back messages
