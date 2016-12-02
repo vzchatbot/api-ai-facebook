@@ -1,21 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
- @vzchatbot
- Watch 1
-  Star 0
-  Fork 87 vzchatbot/api-ai-facebook
-forked from xVir/api-ai-facebook
- Code  Pull requests 0  Projects 0  Wiki  Pulse  Graphs  Settings
-Tree: ba777dc7a5 Find file Copy pathapi-ai-facebook/src/app.js
-ba777dc  an hour ago
-@vzchatbot vzchatbot Update app.js
-2 contributors @vzchatbot @xVir
-RawBlameHistory     
-1544 lines (1331 sloc)  66.1 KB
 'use strict';
 
 var apiai = require('apiai');
@@ -47,6 +29,7 @@ var userData = new Map();
 log4js.loadAppender('file');
 //log4js.addAppender(log4js.appenders.console());
 log4js.addAppender(log4js.appenders.file('./logger.txt'), 'VZ');
+
 var logger = log4js.getLogger('VZ');
 logger.setLevel('INFO');
 */
@@ -780,6 +763,7 @@ console.log ("splittedText:"+splittedText)
          console.log("channel: "+channel);
                 sendFBMessage(usersession,  {text: channel});}
            )};
+
 	
 	
 }
@@ -1557,5 +1541,3 @@ function testmethod(usersession)
     //  var msg = new builder.Message(usersession).sourceEvent(myobj);              
     sendFBMessage(usersession,  myobj.facebook);
 }
-Contact GitHub API Training Shop Blog About
-© 2016 GitHub, Inc. Terms Privacy Security Status Help
