@@ -95,26 +95,23 @@ function processEvent(event) {
 	    
 	var ReqSenderID = event.sender.id.toString();
         var ReqRecipientID = event.recipient.id.toString();
-	    var ReqTimeStamp="Undefined";
-	    var ReqMessageID= "Undefined";
-	    var ReqMessageText="Undefined";
+	   
 	    if(event.timestamp)
 	    {
-		 ReqTimeStamp = event.timestamp.toString();
+		var ReqTimeStamp = event.timestamp.toString();
 	    }
 	    if(event.message)
 	    {
 		    if(event.message.mid)
 		    {
-			 ReqMessageID = event.message.mid.toString();
-
+			var ReqMessageID = event.message.mid.toString();
 		    }
 	    }
 	    if(event.message)
 	    {
 		     if(event.message.text)
 		    {
-			ReqMessageText = event.message.text.toString();   
+			var ReqMessageText = event.message.text.toString();   
 		    }
 	    }
 	    
@@ -122,10 +119,11 @@ function processEvent(event) {
         console.log("SSSReqRecipientID :" + JSON.stringify(ReqRecipientID));
         console.log("ReqTimeStamp :" + JSON.stringify(ReqTimeStamp));
         console.log("ReqMessageID :" + JSON.stringify(ReqMessageID));
-    //    console.log("ReqMessageText :" + JSON.stringify(ReqMessageText));
+        console.log("ReqMessageText :" + JSON.stringify(ReqMessageText));
 	    
         console.log("Text Value", text);   
-        console.log("event content :- " +JSON.stringify(event.entry));
+	var Entries =event.entry;
+        console.log("event content :- " +JSON.stringify(Entries));
        
         if (event.account_linking) 
         {
