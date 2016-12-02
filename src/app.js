@@ -1,3 +1,21 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Gist
+ @vzchatbot
+ Watch 1
+  Star 0
+  Fork 87 vzchatbot/api-ai-facebook
+forked from xVir/api-ai-facebook
+ Code  Pull requests 0  Projects 0  Wiki  Pulse  Graphs  Settings
+Tree: ba777dc7a5 Find file Copy pathapi-ai-facebook/src/app.js
+ba777dc  an hour ago
+@vzchatbot vzchatbot Update app.js
+2 contributors @vzchatbot @xVir
+RawBlameHistory     
+1544 lines (1331 sloc)  66.1 KB
 'use strict';
 
 var apiai = require('apiai');
@@ -29,7 +47,6 @@ var userData = new Map();
 log4js.loadAppender('file');
 //log4js.addAppender(log4js.appenders.console());
 log4js.addAppender(log4js.appenders.file('./logger.txt'), 'VZ');
-
 var logger = log4js.getLogger('VZ');
 logger.setLevel('INFO');
 */
@@ -95,7 +112,7 @@ function processEvent(event) {
 	    
 	var ReqSenderID = event.sender.id.toString();
         var ReqRecipientID = event.recipient.id.toString();
-	 var ReqMessageText = text;  
+	   
 	    if(event.timestamp)
 	    {
 		var ReqTimeStamp = event.timestamp.toString();
@@ -106,9 +123,13 @@ function processEvent(event) {
 		    {
 			var ReqMessageID = event.message.mid.toString();
 		    }
-	    }	  
-			   
-	
+	    }
+	    if(event.message)
+	    {
+		     if(event.message.text)
+		    {
+			var ReqMessageText = event.message.text.toString();   
+		    }
 	    }
 	/*    
         console.log("SSSReqSenderID :" + JSON.stringify(ReqSenderID));
@@ -155,8 +176,7 @@ function processEvent(event) {
                 console.log('action : - '+ action );
                 console.log('intent : - '+ intent );	
 		    
-console.log("Processevent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
- 
+console.log("||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
  
 		    
                 // see if the intent is not finished play the prompt of API.ai or fall back messages
@@ -433,10 +453,9 @@ app.post('/webhook/', function (req, res)  {
 					  var TimeStamp = event.timestamp;
 					  var MessageID = event.message.mid;
 					  var MessageText = event.message.text;
-
-					 console.log("API||" + JSON.stringify(SenderID) + "||" + JSON.stringify(RecipientID) +"||"+ JSON.stringify(TimeStamp) +
+console.log("||" + JSON.stringify(SenderID) + "||" + JSON.stringify(RecipientID) +"||"+ JSON.stringify(TimeStamp) +
 	    "||" + JSON.stringify(MessageID) + "|| " + JSON.stringify(MessageText)+ "|| Undefined || Undefined ||" + JSON.stringify(data));
-					 
+
                        		 } 
                         if (event.message && !event.message.is_echo ||
                             event.postback && event.postback.payload) {	
@@ -761,7 +780,6 @@ console.log ("splittedText:"+splittedText)
          console.log("channel: "+channel);
                 sendFBMessage(usersession,  {text: channel});}
            )};
-
 	
 	
 }
@@ -1539,3 +1557,5 @@ function testmethod(usersession)
     //  var msg = new builder.Message(usersession).sourceEvent(myobj);              
     sendFBMessage(usersession,  myobj.facebook);
 }
+Contact GitHub API Training Shop Blog About
+© 2016 GitHub, Inc. Terms Privacy Security Status Help
