@@ -234,6 +234,10 @@ console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringi
                             console.log("----->>>>>>>>>>>> INSIDE Rescheduleticket <<<<<<<<<<<------");
                             Rescheduleticket(response,sender,function (str){ RescheduleticketCallback(str,sender)});
                             break;
+			case "showopentickets":
+                            console.log("----->>>>>>>>>>>> INSIDE showopentickets <<<<<<<<<<<------");
+                            showopentickets(response,sender,function (str){ showopenticketsCallback(str,sender)});
+                            break;
 				    
                             /*case "demowhatshot": 
                                      console.log("----->>>>>>>>>>>> INSIDE demowhatshot <<<<<<<<<<<------");
@@ -636,6 +640,86 @@ function getVzProfile(apireq,callback) {
         }
     );
 } 
+	
+//=====================showopentickets
+	function cancelscheduledticket(apireq,sender,callback) { 
+    console.log('inside showopentickets call '+ apireq.contexts);
+    var struserid = ''; 
+    for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
+        if (apireq.result.contexts[i].name == "sessionuserid") {
+
+            struserid = apireq.result.contexts[i].parameters.Userid;
+            console.log("original userid " + ": " + struserid);
+        }
+    } 
+	
+    if (struserid == '' || struserid == undefined) struserid='lt6sth2'; //hardcoding if its empty
+	
+    console.log('struserid '+ struserid);
+    var headersInfo = { "Content-Type": "application/json" };
+    var args = {
+        "headers": headersInfo,
+        "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+            Request: {ThisValue: 'ShowOpenTicket',
+		       BotProviderId :sender, 
+		      Userid:''} 
+        }		
+    };
+console.log("args=" + JSON.stringify(args));
+    request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+             
+                console.log("body " + body);
+                callback(body);
+            }
+            else
+                console.log('error: ' + error + ' body: ' + body);
+        }
+    );
+} 
+  
+function cancelscheduledticketCallBack(apiresp,usersession) {
+    var objToJson = {};
+    objToJson = apiresp;
+    var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
+	console.log("showopentickets=" + JSON.stringify(subflow));
+    //fix to single element array 
+    if (subflow != null 
+         && subflow.facebook != null 
+         && subflow.facebook.attachment != null 
+         && subflow.facebook.attachment.payload != null 
+         && subflow.facebook.attachment.payload.buttons != null) {
+        try {
+            var pgms = subflow.facebook.attachment.payload.buttons;
+            console.log ("Is array? "+ util.isArray(pgms))
+            if (!util.isArray(pgms))
+            {
+                subflow.facebook.attachment.payload.buttons = [];
+                subflow.facebook.attachment.payload.buttons.push(pgms);
+                console.log("showopentickets=After=" + JSON.stringify(subflow));
+            }
+        }catch (err) { console.log(err); }
+    } 
+    console.log("showopenticketsCallBack=" + JSON.stringify(subflow));
+	
+	if (subflow != null 
+        && subflow.facebook != null 
+        && subflow.facebook.text != null && subflow.facebook.text =='UserNotFound')
+	{
+		console.log ("showopenticketsCallBack subflow "+ subflow.facebook.text);
+		var respobj ={"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[
+		{"title":"You have to Login to Verizon to proceed","image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","buttons":[
+			{"type":"account_link","url":"https://www98.verizon.com/vzssobot/upr/preauth"}]}]}}}};		
+		sendFBMessage(usersession,  respobj.facebook);
+	}
+	else
+	{	
+         sendFBMessage(usersession,  subflow.facebook);
+	}
+   
+} 
+//====================================
 	
 //******************** cancelscheduledticket
 	function cancelscheduledticket(apireq,sender,callback) { 
