@@ -226,10 +226,20 @@ console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringi
                             console.log("----->>>>>>>>>>>> INSIDE Billing <<<<<<<<<<<------");
                             stationsearch(sender);
                             break;
-                            /*case "demowhatshot":
+		        case "cancelappointment":
+                            console.log("----->>>>>>>>>>>> INSIDE cancelappointment <<<<<<<<<<<------");
+                            cancelscheduledticket(response,sender,function (str){ cancelscheduledticketCallback(str,sender)});
+                            break;
+		        case "Rescheduleticket":
+                            console.log("----->>>>>>>>>>>> INSIDE Rescheduleticket <<<<<<<<<<<------");
+                            Rescheduleticket(response,sender,function (str){ RescheduleticketCallback(str,sender)});
+                            break;
+				    
+                            /*case "demowhatshot": 
                                      console.log("----->>>>>>>>>>>> INSIDE demowhatshot <<<<<<<<<<<------");
                                 demowhatshot(sender);
                                 break; */
+				    
                         default:
                             console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");
                             sendFBMessage(sender,  {text: responseText});
@@ -626,6 +636,168 @@ function getVzProfile(apireq,callback) {
         }
     );
 } 
+	
+//******************** cancelscheduledticket
+	function cancelscheduledticket(apireq,sender,callback) { 
+    console.log('inside cancelscheduledticket call '+ apireq.contexts);
+    var struserid = ''; 
+    for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
+        if (apireq.result.contexts[i].name == "sessionuserid") {
+
+            struserid = apireq.result.contexts[i].parameters.Userid;
+            console.log("original userid " + ": " + struserid);
+        }
+    } 
+	
+    if (struserid == '' || struserid == undefined) struserid='lt6sth2'; //hardcoding if its empty
+	
+    console.log('struserid '+ struserid);
+    var headersInfo = { "Content-Type": "application/json" };
+    var args = {
+        "headers": headersInfo,
+        "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+            Request: {ThisValue: 'CancelTicket',
+		       BotProviderId :sender, 
+		      Userid:''} 
+        }		
+    };
+console.log("args=" + JSON.stringify(args));
+    request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+             
+                console.log("body " + body);
+                callback(body);
+            }
+            else
+                console.log('error: ' + error + ' body: ' + body);
+        }
+    );
+} 
+  
+function cancelscheduledticketCallBack(apiresp,usersession) {
+    var objToJson = {};
+    objToJson = apiresp;
+    var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
+	console.log("Canceltickets=" + JSON.stringify(subflow));
+    //fix to single element array 
+    if (subflow != null 
+         && subflow.facebook != null 
+         && subflow.facebook.attachment != null 
+         && subflow.facebook.attachment.payload != null 
+         && subflow.facebook.attachment.payload.buttons != null) {
+        try {
+            var pgms = subflow.facebook.attachment.payload.buttons;
+            console.log ("Is array? "+ util.isArray(pgms))
+            if (!util.isArray(pgms))
+            {
+                subflow.facebook.attachment.payload.buttons = [];
+                subflow.facebook.attachment.payload.buttons.push(pgms);
+                console.log("CancelopenticketsCallBack=After=" + JSON.stringify(subflow));
+            }
+        }catch (err) { console.log(err); }
+    } 
+    console.log("cancelscheduledticketCallBack=" + JSON.stringify(subflow));
+	
+	if (subflow != null 
+        && subflow.facebook != null 
+        && subflow.facebook.text != null && subflow.facebook.text =='UserNotFound')
+	{
+		console.log ("cancelscheduledticketCallBack subflow "+ subflow.facebook.text);
+		var respobj ={"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[
+		{"title":"You have to Login to Verizon to proceed","image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","buttons":[
+			{"type":"account_link","url":"https://www98.verizon.com/vzssobot/upr/preauth"}]}]}}}};		
+		sendFBMessage(usersession,  respobj.facebook);
+	}
+	else
+	{	
+         sendFBMessage(usersession,  subflow.facebook);
+	}
+   
+} 
+
+//********************
+	
+//******************** Rescheduledticket
+function Rescheduleticket(apireq,sender,callback) { 
+    console.log('inside Rescheduleticket call '+ apireq.contexts);
+    var struserid = ''; 
+    for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
+        if (apireq.result.contexts[i].name == "sessionuserid") {
+
+            struserid = apireq.result.contexts[i].parameters.Userid;
+            console.log("original userid " + ": " + struserid);
+        }
+    } 
+	
+    if (struserid == '' || struserid == undefined) struserid='lt6sth2'; //hardcoding if its empty
+	
+    console.log('struserid '+ struserid);
+    var headersInfo = { "Content-Type": "application/json" };
+    var args = {
+        "headers": headersInfo,
+        "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+            Request: {ThisValue: 'ticketreschedule',
+		       BotProviderId :sender, 
+		      Userid:''} 
+        }		
+    };
+console.log("args=" + JSON.stringify(args));
+    request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+             
+                console.log("body " + body);
+                callback(body);
+            }
+            else
+                console.log('error: ' + error + ' body: ' + body);
+        }
+    );
+} 
+  
+function RescheduleticketCallBack(apiresp,usersession) {
+    var objToJson = {};
+    objToJson = apiresp;
+    var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
+	console.log("Rescheduleticket=" + JSON.stringify(subflow));
+    //fix to single element array 
+    if (subflow != null 
+         && subflow.facebook != null 
+         && subflow.facebook.attachment != null 
+         && subflow.facebook.attachment.payload != null 
+         && subflow.facebook.attachment.payload.buttons != null) {
+        try {
+            var pgms = subflow.facebook.attachment.payload.buttons;
+            console.log ("Is array? "+ util.isArray(pgms))
+            if (!util.isArray(pgms))
+            {
+                subflow.facebook.attachment.payload.buttons = [];
+                subflow.facebook.attachment.payload.buttons.push(pgms);
+                console.log("CancelopenticketsCallBack=After=" + JSON.stringify(subflow));
+            }
+        }catch (err) { console.log(err); }
+    } 
+    console.log("RescheduleticketCallBack=" + JSON.stringify(subflow));
+	
+	if (subflow != null 
+        && subflow.facebook != null 
+        && subflow.facebook.text != null && subflow.facebook.text =='UserNotFound')
+	{
+		console.log ("RescheduleticketCallBack subflow "+ subflow.facebook.text);
+		var respobj ={"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[
+		{"title":"You have to Login to Verizon to proceed","image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","buttons":[
+			{"type":"account_link","url":"https://www98.verizon.com/vzssobot/upr/preauth"}]}]}}}};		
+		sendFBMessage(usersession,  respobj.facebook);
+	}
+	else
+	{	
+         sendFBMessage(usersession,  subflow.facebook);
+	}
+   
+} 
+
+//********************
 
 function stationsearch(apireq,callback) { 
 	console.log("srationSearch called " );
