@@ -726,7 +726,9 @@ console.log('Inside showopenticketsCallback');
 //******************** cancelscheduledticket
 	function cancelscheduledticket(apireq,sender,callback) { 
     console.log('inside cancelscheduledticket call '+ apireq.contexts);
+    var strCancelTicketNumber =  apireq.result.parameters.CancelTicketNumber;
     var struserid = ''; 
+		
     for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
         if (apireq.result.contexts[i].name == "sessionuserid") {
 
@@ -744,6 +746,7 @@ console.log('Inside showopenticketsCallback');
         "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
             Request: {ThisValue: 'CancelTicket',
 		       BotProviderId :sender, 
+		       CancelTicketNumber:strCancelTicketNumber,
 		      Userid:''} 
         }		
     };
