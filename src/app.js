@@ -679,7 +679,9 @@ console.log("args=" + JSON.stringify(args));
     );
 } 
   
-function showopenticketsCallBack(apiresp,usersession) {
+function showopenticketsCallback(apiresp,usersession) {
+	
+console.log('Inside showopenticketsCallback');
     var objToJson = {};
     objToJson = apiresp;
     var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
