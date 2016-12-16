@@ -642,7 +642,7 @@ function getVzProfile(apireq,callback) {
 } 
 	
 //=====================showopentickets
-	function cancelscheduledticket(apireq,sender,callback) { 
+	function showopentickets(apireq,sender,callback) { 
     console.log('inside showopentickets call '+ apireq.contexts);
     var struserid = ''; 
     for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
@@ -679,7 +679,7 @@ console.log("args=" + JSON.stringify(args));
     );
 } 
   
-function cancelscheduledticketCallBack(apiresp,usersession) {
+function showopenticketsCallBack(apiresp,usersession) {
     var objToJson = {};
     objToJson = apiresp;
     var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
@@ -703,20 +703,7 @@ function cancelscheduledticketCallBack(apiresp,usersession) {
     } 
     console.log("showopenticketsCallBack=" + JSON.stringify(subflow));
 	
-	if (subflow != null 
-        && subflow.facebook != null 
-        && subflow.facebook.text != null && subflow.facebook.text =='UserNotFound')
-	{
-		console.log ("showopenticketsCallBack subflow "+ subflow.facebook.text);
-		var respobj ={"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[
-		{"title":"You have to Login to Verizon to proceed","image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","buttons":[
-			{"type":"account_link","url":"https://www98.verizon.com/vzssobot/upr/preauth"}]}]}}}};		
-		sendFBMessage(usersession,  respobj.facebook);
-	}
-	else
-	{	
-         sendFBMessage(usersession,  subflow.facebook);
-	}
+	
    
 } 
 //====================================
