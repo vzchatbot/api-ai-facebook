@@ -238,8 +238,8 @@ console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringi
                             console.log("----->>>>>>>>>>>> INSIDE showopentickets <<<<<<<<<<<------");
                             showopentickets(response,sender,function (str){ showopenticketsCallback(str,sender)});
                             break;
-			case "showopentickets":
-                            console.log("----->>>>>>>>>>>> INSIDE showopentickets <<<<<<<<<<<------");
+			case "showOutagetickets":
+                            console.log("----->>>>>>>>>>>> INSIDE showOutagetickets <<<<<<<<<<<------");
                             showOutagetickets(response,sender,function (str){ showOutageticketsCallback(str,sender)});
                             break;
 				    
