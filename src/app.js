@@ -668,7 +668,7 @@ function getVzProfile(apireq,callback) {
         }		
     };
 console.log("args=" + JSON.stringify(args));
-    request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+    request.post("https://www98.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
              
