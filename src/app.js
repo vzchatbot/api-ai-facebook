@@ -686,20 +686,34 @@ console.log('Inside showopenticketsCallback');
     objToJson = apiresp;
     //var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
 	var subflow= {
-  "facebook": {
+  "root": {
     "OpenTroubleTickets": {
-      "OpenTroubleTicket": {
-        "-TroubleReportNum": "MAEH08TQAS",
-        "-TroubleReportStatus": "OPN",
-        "-ReportedDate": "12/18/2016 10:13",
-        "-ProductType": "F1",
-        "-OutOfServiceInd": "Y",
-        "-TroubleTypeCode": "ACO",
-        "-ReportCategory": "CR",
-        "-AgeofTicket": "0000",
-        "-LineId": "89/VAXA/424552    /VZMA",
-        "-EnhancedServiceClass": "FV   "
-      }
+      "OpenTroubleTicket": [
+        {
+          "-TroubleReportNum": "MAEH08TQAS",
+          "-TroubleReportStatus": "OPN",
+          "-ReportedDate": "12/18/2016 10:13",
+          "-ProductType": "F1",
+          "-OutOfServiceInd": "Y",
+          "-TroubleTypeCode": "ACO",
+          "-ReportCategory": "CR",
+          "-AgeofTicket": "0000",
+          "-LineId": "89/VAXA/424552    /VZMA",
+          "-EnhancedServiceClass": "FV   "
+        },
+        {
+          "-TroubleReportNum": "MAEH08TQAS",
+          "-TroubleReportStatus": "OPN",
+          "-ReportedDate": "12/18/2016 10:13",
+          "-ProductType": "F1",
+          "-OutOfServiceInd": "Y",
+          "-TroubleTypeCode": "ACO",
+          "-ReportCategory": "CR",
+          "-AgeofTicket": "0000",
+          "-LineId": "89/VAXA/424552    /VZMA",
+          "-EnhancedServiceClass": "FV   "
+        }
+      ]
     },
     "Outages": {
       "Outage": [
@@ -725,6 +739,22 @@ console.log('Inside showopenticketsCallback');
 };
 
 	console.log("showopentickets=>>>>>>" + JSON.stringify(subflow));
+	
+	  if (subflow != null&& subflow.root != null && subflow.root.OpenTroubleTickets != null && subflow.root.OpenTroubleTickets
+	     && subflow.root.OpenTroubleTickets.OpenTroubleTicket) 
+	  {
+		try {
+		    var pgms =subflow.root.OpenTroubleTickets.OpenTroubleTicket;
+		    console.log ("Is array? "+ util.isArray(pgms))
+			console.log("showopentickets=Before=" + JSON.stringify(subflow));
+		    if (!util.isArray(pgms))
+		    {
+			subflow.facebook.attachment.payload.buttons = [];
+			subflow.facebook.attachment.payload.buttons.push(pgms);
+			console.log("showopentickets=After=" + JSON.stringify(subflow));
+		    }
+		}catch (err) { console.log(err); }
+    } 
     //fix to single element array 
     if (subflow != null 
          && subflow.facebook != null 
