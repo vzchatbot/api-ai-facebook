@@ -739,6 +739,10 @@ console.log('Inside showopenticketsCallback');
 };
 
 	console.log("showopentickets=>>>>>>" + JSON.stringify(subflow));
+	console.log("root=>>>>>>" + JSON.stringify(subflow.root));
+	console.log("root.OpenTroubleTickets=>>>>>>" + JSON.stringify(subflow.root.OpenTroubleTickets));
+	console.log("root.OpenTroubleTickets.OpenTroubleTicket=>>>>>>" + JSON.stringify(subflow.root.OpenTroubleTickets.OpenTroubleTicket));
+
 	
 	  if (subflow != null&& subflow.root != null && subflow.root.OpenTroubleTickets != null && subflow.root.OpenTroubleTickets
 	     && subflow.root.OpenTroubleTickets.OpenTroubleTicket) 
