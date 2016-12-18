@@ -749,13 +749,12 @@ console.log('Inside showopenticketsCallback');
 	  {
 		try {
 		    var pgms =subflow.root.OpenTroubleTickets.OpenTroubleTicket;
-		    console.log ("Is array? "+ util.isArray(pgms))
-			console.log("showopentickets=Before=" + JSON.stringify(subflow));
-		    if (!util.isArray(pgms))
+		    console.log ("Is array? "+ util.isArray(pgms))			
+		    if (util.isArray(pgms))
 		    {
-			subflow.facebook.attachment.payload.buttons = [];
-			subflow.facebook.attachment.payload.buttons.push(pgms);
-			console.log("showopentickets=After=" + JSON.stringify(subflow));
+			//subflow.facebook.attachment.payload.buttons = [];
+			//subflow.facebook.attachment.payload.buttons.push(pgms);
+			console.log("This is array" + JSON.stringify(subflow));
 		    }
 		}catch (err) { console.log(err); }
     } 
