@@ -684,8 +684,47 @@ function showopenticketsCallback(apiresp,usersession) {
 console.log('Inside showopenticketsCallback');
     var objToJson = {};
     objToJson = apiresp;
-    var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
-	console.log("showopentickets=" + JSON.stringify(subflow));
+    //var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
+	var subflow= {
+  "facebook": {
+    "OpenTroubleTickets": {
+      "OpenTroubleTicket": {
+        "-TroubleReportNum": "MAEH08TQAS",
+        "-TroubleReportStatus": "OPN",
+        "-ReportedDate": "12/18/2016 10:13",
+        "-ProductType": "F1",
+        "-OutOfServiceInd": "Y",
+        "-TroubleTypeCode": "ACO",
+        "-ReportCategory": "CR",
+        "-AgeofTicket": "0000",
+        "-LineId": "89/VAXA/424552    /VZMA",
+        "-EnhancedServiceClass": "FV   "
+      }
+    },
+    "Outages": {
+      "Outage": [
+        {
+          "-EstRestoralDate": "12/18/2016 15:30",
+          "-GroupTroubleReportNum": "MAEQ038807",
+          "-GroupType": "LCO",
+          "-CommonCauseInd": "N",
+          "-GroupReason": "F",
+          "-GroupTRStatus": "OPN"
+        },
+        {
+          "-EstRestoralDate": "12/18/2016 20:45",
+          "-GroupTroubleReportNum": "MAEQ038830",
+          "-GroupType": "LCO",
+          "-CommonCauseInd": "N",
+          "-GroupReason": "F",
+          "-GroupTRStatus": "OPN"
+        }
+      ]
+    }
+  }
+};
+
+	console.log("showopentickets=>>>>>>" + JSON.stringify(subflow));
     //fix to single element array 
     if (subflow != null 
          && subflow.facebook != null 
