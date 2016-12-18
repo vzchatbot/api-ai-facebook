@@ -238,6 +238,10 @@ console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringi
                             console.log("----->>>>>>>>>>>> INSIDE showopentickets <<<<<<<<<<<------");
                             showopentickets(response,sender,function (str){ showopenticketsCallback(str,sender)});
                             break;
+			case "showopentickets":
+                            console.log("----->>>>>>>>>>>> INSIDE showopentickets <<<<<<<<<<<------");
+                            showOutagetickets(response,sender,function (str){ showOutageticketsCallback(str,sender)});
+                            break;
 				    
                             /*case "demowhatshot": 
                                      console.log("----->>>>>>>>>>>> INSIDE demowhatshot <<<<<<<<<<<------");
@@ -639,8 +643,86 @@ function getVzProfile(apireq,callback) {
                 console.log('error: ' + error + ' body: ' + body);
         }
     );
-} 
+} 	
+//=====================showOutage
+	function showOutagetickets(apireq,sender,callback) { 
+    console.log('inside showOutagetickets call '+ apireq.contexts);
+    var struserid = ''; 
+    for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
+        if (apireq.result.contexts[i].name == "sessionuserid") {
+
+            struserid = apireq.result.contexts[i].parameters.Userid;
+            console.log("original userid " + ": " + struserid);
+        }
+    } 	
+    if (struserid == '' || struserid == undefined) struserid='lt6sth2'; //hardcoding if its empty
 	
+    console.log('struserid '+ struserid);
+    var headersInfo = { "Content-Type": "application/json" };
+    var args = {
+        "headers": headersInfo,
+        "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+            Request: {ThisValue: 'showOutage',
+		       BotProviderId :sender, 
+		      Userid:''} 
+        }		
+    };
+console.log("args=" + JSON.stringify(args));
+    request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+             
+                console.log("body " + body);
+                callback(body);
+            }
+            else
+                console.log('error: ' + error + ' body: ' + body);
+        }
+    );
+} 
+  
+function showOutageticketsCallback(apiresp,usersession) 
+	{	
+console.log('Inside showOutageCallback');
+    var objToJson = {};
+    objToJson = apiresp;
+    var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
+	console.log("showOutagetickets=" + JSON.stringify(subflow));
+    //fix to single element array 
+    if (subflow != null 
+         && subflow.facebook != null 
+         && subflow.facebook.attachment != null 
+         && subflow.facebook.attachment.payload != null 
+         && subflow.facebook.attachment.payload.buttons != null) {
+        try {
+            var pgms = subflow.facebook.attachment.payload.buttons;
+            console.log ("Is array? "+ util.isArray(pgms))
+            if (!util.isArray(pgms))
+            {
+                subflow.facebook.attachment.payload.buttons = [];
+                subflow.facebook.attachment.payload.buttons.push(pgms);
+                console.log("showOutagetickets=After=" + JSON.stringify(subflow));
+            }
+        }catch (err) { console.log(err); }
+    } 
+	 console.log("showOutageticketsCallBack=" + JSON.stringify(subflow));	
+	if (subflow != null 
+        && subflow.facebook != null 
+        && subflow.facebook.text != null && subflow.facebook.text =='UserNotFound')
+	{
+		console.log ("showOutageticketsCallBack subflow "+ subflow.facebook.text);
+		var respobj ={"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[
+		{"title":"You have to Login to Verizon to proceed","image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","buttons":[
+			{"type":"account_link","url":"https://www98.verizon.com/vzssobot/upr/preauth"}]}]}}}};		
+		sendFBMessage(usersession,  respobj.facebook);
+	}
+	else
+	{	
+         sendFBMessage(usersession,  subflow.facebook);
+	}
+} 
+
+//====================================
 //=====================showopentickets
 	function showopentickets(apireq,sender,callback) { 
     console.log('inside showopentickets call '+ apireq.contexts);
@@ -679,85 +761,13 @@ console.log("args=" + JSON.stringify(args));
     );
 } 
   
-function showopenticketsCallback(apiresp,usersession) {
-	
+function showopenticketsCallback(apiresp,usersession) 
+	{	
 console.log('Inside showopenticketsCallback');
     var objToJson = {};
     objToJson = apiresp;
-    //var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
-	var subflow= {
-  "root": {
-    "OpenTroubleTickets": {
-      "OpenTroubleTicket": [
-        {
-          "-TroubleReportNum": "MAEH08TQAS",
-          "-TroubleReportStatus": "OPN",
-          "-ReportedDate": "12/18/2016 10:13",
-          "-ProductType": "F1",
-          "-OutOfServiceInd": "Y",
-          "-TroubleTypeCode": "ACO",
-          "-ReportCategory": "CR",
-          "-AgeofTicket": "0000",
-          "-LineId": "89/VAXA/424552    /VZMA",
-          "-EnhancedServiceClass": "FV   "
-        },
-        {
-          "-TroubleReportNum": "MAEH08TQAS",
-          "-TroubleReportStatus": "OPN",
-          "-ReportedDate": "12/18/2016 10:13",
-          "-ProductType": "F1",
-          "-OutOfServiceInd": "Y",
-          "-TroubleTypeCode": "ACO",
-          "-ReportCategory": "CR",
-          "-AgeofTicket": "0000",
-          "-LineId": "89/VAXA/424552    /VZMA",
-          "-EnhancedServiceClass": "FV   "
-        }
-      ]
-    },
-    "Outages": {
-      "Outage": [
-        {
-          "-EstRestoralDate": "12/18/2016 15:30",
-          "-GroupTroubleReportNum": "MAEQ038807",
-          "-GroupType": "LCO",
-          "-CommonCauseInd": "N",
-          "-GroupReason": "F",
-          "-GroupTRStatus": "OPN"
-        },
-        {
-          "-EstRestoralDate": "12/18/2016 20:45",
-          "-GroupTroubleReportNum": "MAEQ038830",
-          "-GroupType": "LCO",
-          "-CommonCauseInd": "N",
-          "-GroupReason": "F",
-          "-GroupTRStatus": "OPN"
-        }
-      ]
-    }
-  }
-};
-
-	console.log("showopentickets=>>>>>>" + JSON.stringify(subflow));
-	console.log("root=>>>>>>" + JSON.stringify(subflow.root));
-	console.log("root.OpenTroubleTickets=>>>>>>" + JSON.stringify(subflow.root.OpenTroubleTickets));
-	console.log("root.OpenTroubleTickets.OpenTroubleTicket=>>>>>>" + JSON.stringify(subflow.root.OpenTroubleTickets.OpenTroubleTicket));
-
-	
-	  if (subflow != null&& subflow.root != null && subflow.root.OpenTroubleTickets != null && subflow.root.OpenTroubleTickets
-	     && subflow.root.OpenTroubleTickets.OpenTroubleTicket) 
-	  {
-		try {
-		    var pgms =subflow.root.OpenTroubleTickets.OpenTroubleTicket;
-		    console.log ("Is array? "+ util.isArray(pgms))			
-		    if (util.isArray(pgms))
-		    {
-			//subflow.facebook.attachment.payload.buttons = [];
-			//subflow.facebook.attachment.payload.buttons.push(pgms);
-			console.log("This is array" + JSON.stringify(subflow));
-		    }
-		}catch (err) { console.log(err); }
-    } 
+    var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
+	console.log("showopentickets=" + JSON.stringify(subflow));
     //fix to single element array 
     if (subflow != null 
          && subflow.facebook != null 
@@ -793,6 +803,7 @@ console.log('Inside showopenticketsCallback');
    
    
 } 
+
 //====================================
 	
 //******************** cancelscheduledticket
