@@ -655,16 +655,17 @@ function getVzProfile(apireq,callback) {
             console.log("original userid " + ": " + struserid);
         }
     } 	
-    if (struserid == '' || struserid == undefined) struserid='lt6sth2'; //hardcoding if its empty
+    if (struserid == '' || struserid == undefined) struserid='lt6sth4'; //hardcoding if its empty
 	
     console.log('struserid '+ struserid);
+   console.log('Sender JJJ '+ sender);
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
         "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
             Request: {ThisValue: 'showOutage',
 		       BotProviderId :sender, 
-		      Userid:''} 
+		       Userid:''} 
         }		
     };
 console.log("args=" + JSON.stringify(args));
