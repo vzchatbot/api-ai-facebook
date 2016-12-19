@@ -684,7 +684,7 @@ console.log("args=" + JSON.stringify(args));
                 console.log("body " + JSON.stringify(body));
                 callback(body);
             }
-	     console.log("body " + JSON.stringify(body));
+	    
             else
                 console.log('error: ' + error + ' body: ' + body);
         }
