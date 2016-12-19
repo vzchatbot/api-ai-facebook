@@ -670,7 +670,7 @@ function getVzProfile(apireq,callback) {
 console.log("args=" + JSON.stringify(args));
     request.post(" http://www98.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {
-	    console.log("args---- " + args);
+	    console.log("error---- " + error);
 	    console.log("statusCode---- " +  JSON.stringify(response.statusCode));
 	     console.log("response---- " + response);
             if (!error && response.statusCode == 200) {             
@@ -745,8 +745,7 @@ console.log('Inside showOutageCallback');
         "headers": headersInfo,
         "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
             Request: {ThisValue: 'ShowOpenTicket',
-		       BotProviderId :sender, 
-		      Userid:''} 
+		       BotProviderId :sender} 
         }		
     };
 console.log("args=" + JSON.stringify(args));
@@ -831,8 +830,7 @@ console.log('Inside showopenticketsCallback');
         "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
             Request: {ThisValue: 'CancelTicket',
 		       BotProviderId :sender, 
-		       CancelTicketNumber:strCancelTicketNumber,
-		      Userid:''} 
+		       CancelTicketNumber:strCancelTicketNumber} 
         }		
     };
 console.log("args=" + JSON.stringify(args));
