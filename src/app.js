@@ -494,7 +494,7 @@ function getvzUserID(authCode, apireq, senderid) {
     }
     console.log('args ' + JSON.stringify(args));
     request({
-        url: 'https://www25.verizon.com/fiostv/myservices/admin/botapinew.ashx',
+        url: 'https://www.verizon.com/fiostv/myservices/admin/botapinew.ashx',
         proxy: '',
         headers: headersInfo,
         method: 'POST',
@@ -592,7 +592,7 @@ function getVzProfileAccountUpdateCallBack(apiresp,senderid) {
         console.log('args FBACCOUNTLINKACTIVITY' + JSON.stringify(args));
 
         request({
-            url: 'https://www25.verizon.com/fiostv/myservices/admin/botapinew.ashx',
+            url: 'https://www.verizon.com/fiostv/myservices/admin/botapinew.ashx',
             proxy: '',
             headers: headersInfo,
             method: 'POST',
