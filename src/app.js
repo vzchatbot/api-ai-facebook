@@ -659,15 +659,11 @@ function getVzProfile(apireq,callback) {
   
 console.log("args=" + JSON.stringify(args));
     request.post(" https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
-        function (error, response, body) {
-	    console.log("error---- " + error);
-	    console.log("statusCode---- " +  JSON.stringify(response.statusCode));
-	     console.log("response---- " + response);
+        function (error, response, body) {	 
             if (!error && response.statusCode == 200) {             
                 console.log("body " + JSON.stringify(body));
                 callback(body);
-            }
-	    
+            }	    
             else
                 console.log('error: ' + error + ' body: ' + body);
         }
@@ -680,9 +676,10 @@ console.log('Inside showOutageCallback');
     var objToJson = {};
     objToJson = apiresp;
     var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
-	console.log("showOutagetickets=" + JSON.stringify(subflow));
+    console.log("showOutagetickets=" + JSON.stringify(subflow));
+		
     //fix to single element array 
-    if (subflow != null 
+   if (subflow != null 
          && subflow.facebook != null 
          && subflow.facebook.attachment != null 
          && subflow.facebook.attachment.payload != null 
@@ -694,7 +691,7 @@ console.log('Inside showOutageCallback');
             {
                 subflow.facebook.attachment.payload.buttons = [];
                 subflow.facebook.attachment.payload.buttons.push(pgms);
-                console.log("showOutagetickets=After=" + JSON.stringify(subflow));
+                console.log("showopentickets=After=" + JSON.stringify(subflow));
             }
         }catch (err) { console.log(err); }
     } 
@@ -739,9 +736,7 @@ console.log('Inside showOutageCallback');
             Request: {ThisValue: 'ShowOpenTicket',
 		       BotProviderId :sender} 
         }		
-    };
-		
-		
+    };	
     //var args = {"json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',Request: {ThisValue: 'ShowOpenTicket',BotProviderId :sender}}};
 		
 console.log("args=" + JSON.stringify(args));
