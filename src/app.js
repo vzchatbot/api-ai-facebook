@@ -72,8 +72,6 @@ function processEvent(event) {
     console.log("senderid", sender);
     ChatHistoryLog.log("senderid", sender);
 	
-	
-	
     if ((event.message && event.message.text) || (event.postback && event.postback.payload)) 
     {
         var text = event.message ? event.message.text : event.postback.payload;      
@@ -624,13 +622,7 @@ function getVzProfile(apireq,callback) {
     console.log('struserid '+ struserid);
         
     var headersInfo = { "Content-Type": "application/json" };
-    var args = {
-        "headers": headersInfo,
-        "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
-            Request: {ThisValue: 'GetProfile',Userid:struserid} 
-        }
-		
-    };
+    var args = {"headers":headersInfo,"json":{Flow:'TroubleShooting Flows\\Test\\APIChatBot.xml',Request:{ThisValue:'GetProfile',Userid:struserid}}};
     console.log('args ' + JSON.stringify(args));
     request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {
