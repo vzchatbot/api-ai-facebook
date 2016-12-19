@@ -664,13 +664,13 @@ function getVzProfile(apireq,callback) {
         "headers": headersInfo,
         "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
             Request: {ThisValue: 'showOutage',
-		       BotProviderId :sender, 
-		       Userid:''} 
+		       BotProviderId :sender} 
         }		
     };
 console.log("args=" + JSON.stringify(args));
     request.post("https://www98.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {
+	    console.log("args---- " + args);
 	    console.log("statusCode---- " + response.statusCode);
 	     console.log("response---- " + response);
             if (!error && response.statusCode == 200) {             
