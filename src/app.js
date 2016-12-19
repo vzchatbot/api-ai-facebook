@@ -673,7 +673,7 @@ console.log("args=" + JSON.stringify(args));
 	    console.log("error---- " + error);
 	    console.log("statusCode---- " +  JSON.stringify(response.statusCode));
 	     console.log("response---- " + response);
-            if (!error && response.statusCode == 200) {             
+            if (!error) {             
                 console.log("body " + body);
                 callback(body);
             }
