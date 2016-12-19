@@ -658,7 +658,7 @@ function getVzProfile(apireq,callback) {
    // var args = {"json":{Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',Request:{ThisValue: 'showOutage',BotProviderId :sender}}};	
   
 console.log("args=" + JSON.stringify(args));
-    request.post(" http://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+    request.post(" https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {
 	    console.log("error---- " + error);
 	    console.log("statusCode---- " +  JSON.stringify(response.statusCode));
