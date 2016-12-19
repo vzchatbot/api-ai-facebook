@@ -662,7 +662,7 @@ function getVzProfile(apireq,callback) {
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
-        "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+        "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
             Request: {ThisValue: 'showOutage',
 		       BotProviderId :sender, 
 		       Userid:''} 
@@ -743,7 +743,7 @@ console.log('Inside showOutageCallback');
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
-        "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+        "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
             Request: {ThisValue: 'ShowOpenTicket',
 		       BotProviderId :sender, 
 		      Userid:''} 
@@ -828,7 +828,7 @@ console.log('Inside showopenticketsCallback');
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
-        "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+        "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
             Request: {ThisValue: 'CancelTicket',
 		       BotProviderId :sender, 
 		       CancelTicketNumber:strCancelTicketNumber,
@@ -910,7 +910,7 @@ function Rescheduleticket(apireq,sender,callback) {
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
-        "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+        "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
             Request: {ThisValue: 'ticketreschedule',
 		       BotProviderId :sender, 
 		      Userid:''} 
@@ -984,7 +984,7 @@ function stationsearch(apireq,callback) {
         var headersInfo = { "Content-Type": "application/json" };
 	var args = {
 		"headers": headersInfo,
-		"json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+		"json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
 			 Request: {
 				 ThisValue: 'StationSearch',
 				 BotRegionID : strRegionid ,
@@ -1340,7 +1340,7 @@ function CategoryList(apireq,usersession) {
 	
 	var args = {
 		"headers": headersInfo,
-		"json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+		"json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
 			 Request: {ThisValue: 'AdvProgramSearch', //  EnhProgramSearch
 				   BotProviderId :sender, //'1113342795429187',  // usersession ; sender id
 				   BotstrTitleValue:strProgram, 
@@ -1423,7 +1423,7 @@ function ChnlSearch(apireq,callback) {
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
-        "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+        "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
             Request: {ThisValue: 'ChannelSearch',BotstrStationCallSign:strChannelName} 
         }
 		
@@ -1473,7 +1473,7 @@ function recommendations(apireq,pgmtype,callback) {
         args = {
             "headers": headersInfo,
             "json": {
-                Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+                Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
                 Request: {
                     ThisValue:  'HydraTrending', 
                     BotPgmType :"MyDashBoard",
@@ -1600,7 +1600,7 @@ function STBList(apireq,sender,callback) {
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
-        "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+        "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
             Request: {ThisValue: 'AuthSTBList',
 		       BotProviderId :sender, 
 		      Userid:''} 
@@ -1702,7 +1702,7 @@ function DVRRecord(apireq,callback) {
         console.log ("Record Series");
         args = {
             "headers": headersInfo,
-            "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
+            "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
                 Request: {ThisValue: 'DVRSeriesSchedule',  //DVRSeriesSchedule
                     Userid : strUserid,
                     BotStbId:strSTBId, 
