@@ -674,7 +674,7 @@ console.log("args=" + JSON.stringify(args));
 	    console.log("statusCode---- " +  JSON.stringify(response.statusCode));
 	     console.log("response---- " + response);
             if (!error) {             
-                console.log("body " + body);
+                console.log("body " + JSON.stringify(body));
                 callback(body);
             }
             else
