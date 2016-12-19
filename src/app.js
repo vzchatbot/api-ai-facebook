@@ -659,6 +659,7 @@ function getVzProfile(apireq,callback) {
 	
     console.log('struserid '+ struserid);
    console.log('Sender JJJ '+ sender);
+		/**
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
@@ -667,13 +668,9 @@ function getVzProfile(apireq,callback) {
 		       BotProviderId :sender} 
         }		
     };
-	/**
-    var args = {"json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
-            Request: {ThisValue: 'showOutage',
-		       BotProviderId :sender} 
-        }		
-    };	
-    **/
+	**/
+    var args = {"json":{Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',Request:{ThisValue: 'showOutage',BotProviderId :sender}}};	
+  
 console.log("args=" + JSON.stringify(args));
     request.post(" http://www98.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {
@@ -748,7 +745,7 @@ console.log('Inside showOutageCallback');
     if (struserid == '' || struserid == undefined) struserid='lt6sth2'; //hardcoding if its empty
 	
     console.log('struserid '+ struserid);
-		/**
+		
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
@@ -758,9 +755,8 @@ console.log('Inside showOutageCallback');
         }		
     };
 		
-		**/
 		
-    var args = {"json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',Request: {ThisValue: 'ShowOpenTicket',BotProviderId :sender}}};
+    //var args = {"json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',Request: {ThisValue: 'ShowOpenTicket',BotProviderId :sender}}};
 		
 console.log("args=" + JSON.stringify(args));
     request.post("https://www98.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
