@@ -748,6 +748,7 @@ console.log('Inside showOutageCallback');
     if (struserid == '' || struserid == undefined) struserid='lt6sth2'; //hardcoding if its empty
 	
     console.log('struserid '+ struserid);
+		/**
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
@@ -756,6 +757,11 @@ console.log('Inside showOutageCallback');
 		       BotProviderId :sender} 
         }		
     };
+		
+		**/
+		
+    var args = {"json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',Request: {ThisValue: 'ShowOpenTicket',BotProviderId :sender}}};
+		
 console.log("args=" + JSON.stringify(args));
     request.post("https://www98.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {
