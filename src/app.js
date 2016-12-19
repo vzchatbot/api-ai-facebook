@@ -659,24 +659,31 @@ function getVzProfile(apireq,callback) {
 	
     console.log('struserid '+ struserid);
    console.log('Sender JJJ '+ sender);
-    var headersInfo = { "Content-Type": "application/json" };
+   /** var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
         "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
             Request: {ThisValue: 'showOutage',
 		       BotProviderId :sender} 
         }		
-    };
+    };**/
+	
+    var args = {"json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
+            Request: {ThisValue: 'showOutage',
+		       BotProviderId :sender} 
+        }		
+    };	
 console.log("args=" + JSON.stringify(args));
     request.post(" http://www98.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {
 	    console.log("error---- " + error);
 	    console.log("statusCode---- " +  JSON.stringify(response.statusCode));
 	     console.log("response---- " + response);
-            if (!error) {             
+            if (!error && response.statusCode == 200) {             
                 console.log("body " + JSON.stringify(body));
                 callback(body);
             }
+	     console.log("body " + JSON.stringify(body));
             else
                 console.log('error: ' + error + ' body: ' + body);
         }
