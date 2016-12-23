@@ -802,8 +802,8 @@ console.log('Inside showopenticketsCallback');
     console.log('inside cancelscheduledticket call '+ apireq.contexts);
     var strCancelTicketNumber =  apireq.result.parameters.CancelTicketNumber;
     var strTCStateCode =  apireq.result.parameters.TktRegion;
-		console.log(' strCancelTicketNumber '+ strCancelTicketNumber);
-		console.log(' cancelscheduledticket '+ strTCStateCode);
+		console.log(' strCancelTicketNumber '+ JSON.stringify(strCancelTicketNumber));
+		console.log(' cancelscheduledticket '+ JSON.stringify(strTCStateCode));
     var struserid = ''; 
 		
     for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
