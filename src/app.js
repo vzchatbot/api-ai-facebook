@@ -224,7 +224,7 @@ console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringi
                             console.log("----->>>>>>>>>>>> INSIDE Billing <<<<<<<<<<<------");
                             stationsearch(sender);
                             break;
-		        case "cancelappointmentconfirmed":
+		        case "cancelappointmentnotconfirmed":
                             console.log("----->>>>>>>>>>>> INSIDE cancelappointment <<<<<<<<<<<------");
                             cancelscheduledticket(response,sender,function (str){ cancelscheduledticketCallback(str,sender)});
                             break;
@@ -826,19 +826,21 @@ console.log('Inside showopenticketsCallback');
         }		
     };
 console.log("args=" + JSON.stringify(args));
-	 var straction =response.result.action;
-                    console.log("Selected_action : "+ straction);           
-                    switch (straction)
+	 var strConfirmation =apireq.result.parameters.Tktcancelconfirmation;
+		 var isconfirm ="";
+                    console.log("Selected_action : "+ strConfirmation);           
+                    switch (strConfirmation)
 			{	  case "cancelappointmentnotconfirmed":
+				     isconfirm ="canConfirmed";
 				     var respobj ={"facebook":{"attachment":{"type":"template","payload":
 {"template_type":"button","text":"Are you sure to cancel this appointment ?"+ strCancelTicketNumber +",
  "buttons":[{"type":"postback","title":"Cancel","payload":"Open Tickets"},
-	    {"type":"postback","title":"Yes","payload":"want to cancel"+strCancelTicketNumber+"appointment"+strTCStateCode}
-	   ]}}}};
-    sendFBMessage(usersession,  respobj.facebook);
-				 
+	    {"type":"postback","title":"Yes",
+"payload":"Confirmed cancel "+strCancelTicketNumber+"statecode"+strTCStateCode+ "cancel status"+ isconfirm }
+	   ]}}}};	    
+    sendFBMessage(usersession,  respobj.facebook);				 
 				    break;
-				      case "cancelappointmentconfirmed":
+				      case "canConfirmed":
 				       request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
 					function (error, response, body)
 					{
