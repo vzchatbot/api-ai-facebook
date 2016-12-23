@@ -834,11 +834,10 @@ console.log("args=" + JSON.stringify(args));
 			{	  case "cancelappointmentnotconfirmed":
 				     isconfirm ="canConfirmed";
 				     var respobj ={"facebook":{"attachment":{"type":"template","payload":
-{"template_type":"button","text":"Are you sure to cancel this appointment ?"+ strCancelTicketNumber +,
- "buttons":[{"type":"postback","title":"Cancel","payload":"Open Tickets"},
-	    {"type":"postback","title":"Yes",
-"payload":"Confirmed cancel "+strCancelTicketNumber+"statecode"+strTCStateCode+ "cancel status"+ isconfirm }
-	   ]}}}};	    
+                      {"template_type":"button","text":"Are you sure to cancel this appointment ?" +strCancelTicketNumber+,"buttons":[
+		       {"type":"postback","title":"Cancel","payload":"Open Tickets"},
+			{"type":"postback","title":"Confirm","payload":"Confirmed cancel "+strCancelTicketNumber+"statecode"+strTCStateCode+ "cancel status"+ isconfirm }
+			]}}}};	    
     sendFBMessage(usersession,  respobj.facebook);				 
 				    break;
 				      case "canConfirmed":
