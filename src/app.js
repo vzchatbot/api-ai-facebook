@@ -828,12 +828,13 @@ console.log('Inside showopenticketsCallback');
 console.log("args=" + JSON.stringify(args));
 	 var strConfirmation =apireq.result.parameters.Tktcancelconfirmation;
 		 var isconfirm ="";
-                    console.log("Selected_action : "+ strConfirmation);           
+                    console.log("Selected_strConfirmation : "+ strConfirmation);
+		    console.log("Selected_isconfirm : "+ isconfirm);       
                     switch (strConfirmation)
 			{	  case "cancelappointmentnotconfirmed":
 				     isconfirm ="canConfirmed";
 				     var respobj ={"facebook":{"attachment":{"type":"template","payload":
-{"template_type":"button","text":"Are you sure to cancel this appointment ?"+ strCancelTicketNumber +",
+{"template_type":"button","text":"Are you sure to cancel this appointment ?"+ strCancelTicketNumber +,
  "buttons":[{"type":"postback","title":"Cancel","payload":"Open Tickets"},
 	    {"type":"postback","title":"Yes",
 "payload":"Confirmed cancel "+strCancelTicketNumber+"statecode"+strTCStateCode+ "cancel status"+ isconfirm }
