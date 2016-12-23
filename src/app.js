@@ -831,7 +831,7 @@ console.log("args=" + JSON.stringify(args));
                     console.log("Selected_strConfirmation : "+ strConfirmation);
 		    console.log("Selected_isconfirm : "+ isconfirm);       
                     switch (strConfirmation)
-			{	  case "cancelappointmentnotconfirmed":
+			{	  case " ":
 				     isconfirm ="canConfirmed";
 				     var respobj ={"facebook":{"attachment":{"type":"template","payload":
                       {"template_type":"button","text":"Are you sure to cancel this appointment ?","buttons":[
