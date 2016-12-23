@@ -837,7 +837,7 @@ console.log("args=" + JSON.stringify(args));
 			 var respobj ={"facebook":{"attachment":{"type":"template","payload":
                       {"template_type":"button","text":"Are you sure to cancel this appointment ?","buttons":[
 		       {"type":"postback","title":"Cancel","payload":"Open Tickets"},
-			{"type":"postback","title":"Confirm","payload":"Want to cancel "+strCancelTicketNumber +" statecode "+strTCStateCode+" cancel status canConfirmed}
+			{"type":"postback","title":"Confirm","payload":"Want to cancel "+ strCancelTicketNumber + " statecode "+ strTCStateCode + " cancel status canConfirmed"}
 			]}}}};	    
                          sendFBMessage(usersession,  respobj.facebook);				 
 		     }
