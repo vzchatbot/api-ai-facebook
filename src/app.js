@@ -832,17 +832,17 @@ console.log("args=" + JSON.stringify(args));
 		 var isconfirm ="";
                     console.log("Selected_strConfirmation : "+ strConfirmation);
 		    console.log("Selected_isconfirm : "+ isconfirm);       
-                     if(strConfirmation == null)
+                     if(strConfirmation == null && strConfirmation == undefined && strConfirmation == "")
 		     {
-				     isconfirm ="canConfirmed";
-				     var respobj ={"facebook":{"attachment":{"type":"template","payload":
+			 var respobj ={"facebook":{"attachment":{"type":"template","payload":
                       {"template_type":"button","text":"Are you sure to cancel this appointment ?","buttons":[
 		       {"type":"postback","title":"Cancel","payload":"Open Tickets"},
-			{"type":"postback","title":"Confirm","payload":"Want to cancel "+strCancelTicketNumber +" statecode "+strTCStateCode+" cancel status "+isconfirm }
+			{"type":"postback","title":"Confirm","payload":"Want to cancel "+strCancelTicketNumber +" statecode "+strTCStateCode+" cancel status canConfirmed}
 			]}}}};	    
                          sendFBMessage(usersession,  respobj.facebook);				 
 		     }
-		else if(strConfirmation == 'canConfirmed')
+		else
+			if(strConfirmation == 'canConfirmed')
 		{	     
 				       request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
 					function (error, response, body)
