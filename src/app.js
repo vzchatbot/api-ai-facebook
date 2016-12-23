@@ -802,6 +802,8 @@ console.log('Inside showopenticketsCallback');
     console.log('inside cancelscheduledticket call '+ apireq.contexts);
     var strCancelTicketNumber =  apireq.result.parameters.CancelTicketNumber;
     var strTCStateCode =  apireq.result.parameters.TktRegion;
+		console.log(' strCancelTicketNumber '+ strCancelTicketNumber);
+		console.log(' cancelscheduledticket '+ strTCStateCode);
     var struserid = ''; 
 		
     for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
@@ -830,17 +832,18 @@ console.log("args=" + JSON.stringify(args));
 		 var isconfirm ="";
                     console.log("Selected_strConfirmation : "+ strConfirmation);
 		    console.log("Selected_isconfirm : "+ isconfirm);       
-                    switch (strConfirmation)
-			{	   default:
+                     if(strConfirmation == null)
+		     {
 				     isconfirm ="canConfirmed";
 				     var respobj ={"facebook":{"attachment":{"type":"template","payload":
                       {"template_type":"button","text":"Are you sure to cancel this appointment ?","buttons":[
 		       {"type":"postback","title":"Cancel","payload":"Open Tickets"},
-			{"type":"postback","title":"Confirm","payload":"Confirmed cancel "+strCancelTicketNumber+"statecode"+strTCStateCode+ "cancel status"+ isconfirm }
+			{"type":"postback","title":"Confirm","payload":"Want to cancel "+strCancelTicketNumber +" statecode "+strTCStateCode+" cancel status "+isconfirm }
 			]}}}};	    
-    sendFBMessage(usersession,  respobj.facebook);				 
-				    break;
-				      case "canConfirmed":
+                         sendFBMessage(usersession,  respobj.facebook);				 
+		     }
+		else if()
+		{	     
 				       request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
 					function (error, response, body)
 					{
@@ -852,8 +855,7 @@ console.log("args=" + JSON.stringify(args));
 					    else
 						console.log('error: ' + error + ' body: ' + body);
 					});
-				    break;
-			 }
+		}
 } 
   
 function cancelscheduledticketCallBack(apiresp,usersession) {
