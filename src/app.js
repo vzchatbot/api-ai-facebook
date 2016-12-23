@@ -624,7 +624,7 @@ function getVzProfile(apireq,callback) {
     var headersInfo = { "Content-Type": "application/json" };
     var args = {"headers":headersInfo,"json":{Flow:'TroubleShooting Flows\\Test\\APIChatBot.xml',Request:{ThisValue:'GetProfile',Userid:struserid}}};
     console.log('args ' + JSON.stringify(args));
-    request.post("https://www98.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+    request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
              
@@ -658,7 +658,7 @@ function getVzProfile(apireq,callback) {
    // var args = {"json":{Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',Request:{ThisValue: 'showOutage',BotProviderId :sender}}};	
   
 console.log("args=" + JSON.stringify(args));
-    request.post(" https://www98.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+    request.post(" https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {	 
             if (!error && response.statusCode == 200) {             
                 console.log("body " + JSON.stringify(body));
@@ -740,7 +740,7 @@ console.log('Inside showOutageCallback');
     //var args = {"json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',Request: {ThisValue: 'ShowOpenTicket',BotProviderId :sender}}};
 		
 console.log("args=" + JSON.stringify(args));
-    request.post("https://www98.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+    request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log("body " + body);
@@ -826,7 +826,7 @@ console.log('Inside showopenticketsCallback');
         }		
     };
 console.log("args=" + JSON.stringify(args));
-    request.post("https://www98.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+    request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
              
@@ -907,7 +907,7 @@ function Rescheduleticket(apireq,sender,callback) {
         }		
     };
 console.log("args=" + JSON.stringify(args));
-    request.post("https://www98.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+    request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
              
