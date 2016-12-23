@@ -842,7 +842,7 @@ console.log("args=" + JSON.stringify(args));
 			]}}}};	    
                          sendFBMessage(usersession,  respobj.facebook);				 
 		     }
-		else if()
+		else if(strConfirmation == 'canConfirmed')
 		{	     
 				       request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
 					function (error, response, body)
