@@ -224,7 +224,7 @@ console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringi
                             console.log("----->>>>>>>>>>>> INSIDE Billing <<<<<<<<<<<------");
                             stationsearch(sender);
                             break;
-		        case "cancelappointment":
+		        case "cancelappointmentconfirmed":
                             console.log("----->>>>>>>>>>>> INSIDE cancelappointment <<<<<<<<<<<------");
                             cancelscheduledticket(response,sender,function (str){ cancelscheduledticketCallback(str,sender)});
                             break;
@@ -826,17 +826,32 @@ console.log('Inside showopenticketsCallback');
         }		
     };
 console.log("args=" + JSON.stringify(args));
-    request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
-        function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-             
-                console.log("body " + body);
-                callback(body);
-            }
-            else
-                console.log('error: ' + error + ' body: ' + body);
-        }
-    );
+	 var straction =response.result.action;
+                    console.log("Selected_action : "+ straction);           
+                    switch (straction)
+			{	  case "cancelappointmentnotconfirmed":
+				     var respobj ={"facebook":{"attachment":{"type":"template","payload":
+{"template_type":"button","text":"Are you sure to cancel this appointment ?"+ strCancelTicketNumber +",
+ "buttons":[{"type":"postback","title":"Cancel","payload":"Open Tickets"},
+	    {"type":"postback","title":"Yes","payload":"want to cancel"+strCancelTicketNumber+"appointment"+strTCStateCode}
+	   ]}}}};
+    sendFBMessage(usersession,  respobj.facebook);
+				 
+				    break;
+				      case "cancelappointmentconfirmed":
+				       request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+					function (error, response, body)
+					{
+					    if (!error && response.statusCode == 200) 
+					    {             
+						console.log("body" + body);
+						callback(body);
+					    }
+					    else
+						console.log('error: ' + error + ' body: ' + body);
+					});
+				    break;
+			 }
 } 
   
 function cancelscheduledticketCallBack(apiresp,usersession) {
@@ -1267,7 +1282,10 @@ function welcomeMsg(usersession)
 function MainMenu(usersession)
 {
     // var respobj = {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":"Are you looking for something to watch, or do you want to see more options? Type or tap below.","buttons":[{"type":"postback","title":"What's on tonight?","payload":"On Later"},{"type":"postback","title":"More Options","payload":"More Options"}]}}}};
-    var respobj ={"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":"Are you looking for something to watch, or do you want to see more options? Type or tap below.","buttons":[{"type":"postback","title":"On Now","payload":"On Now"},{"type":"postback","title":"On Later","payload":"On Later"},{"type":"postback","title":"More Options","payload":"More Options"}]}}}};
+    var respobj ={"facebook":{"attachment":{"type":"template","payload":
+{"template_type":"button","text":"Are you looking for something to watch, or do you want to see more options? Type or tap below.",
+ "buttons":[{"type":"postback","title":"On Now","payload":"On Now"},{"type":"postback","title":"On Later","payload":"On Later"},
+	    {"type":"postback","title":"More Options","payload":"More Options"}]}}}};
     sendFBMessage(usersession,  respobj.facebook);
 }
 
