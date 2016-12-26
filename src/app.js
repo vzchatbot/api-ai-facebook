@@ -836,6 +836,7 @@ console.log("args=" + JSON.stringify(args));
 		    console.log("Selected_isconfirm : "+ isconfirm);       
                      if(strConfirmation == null)
 		     {
+			     console.log("inside IF");
 		/*	 var respobj ={"facebook":{"attachment":{"type":"template","payload":
                       {"template_type":"button","text":"Are you sure to cancel this appointment ?","buttons":[
 		       {"type":"postback","title":"Cancel","payload":"Open Tickets"},
