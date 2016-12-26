@@ -849,17 +849,17 @@ console.log("args=" + JSON.stringify(args));
 		     }
 		else
 			if(strConfirmation == 'canConfirmed')
-		{	  console.log("ARGS===========" + JSON.stringify(args));
+		{	  
 				       request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
 					function (error, response, body)
 					{
 					    if (!error && response.statusCode == 200) 
 					    {             
-						console.log("body" + body);
+						console.log("AFter ASHX call" + JSON.stringify(body));
 						callback(body);
 					    }
 					    else
-						console.log('error: ' + error + ' body: ' + body);
+						console.log('error: ' + error + ' body: ' + JSON.stringify(body));
 					});
 		}
 } 
@@ -867,6 +867,7 @@ console.log("args=" + JSON.stringify(args));
 function cancelscheduledticketCallBack(apiresp,usersession) {
     var objToJson = {};
     objToJson = apiresp;
+	console.log("APIRESP===" + JSON.stringify(objToJson));
     var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
 	console.log("Canceltickets=" + JSON.stringify(subflow));
     //fix to single element array 
@@ -897,11 +898,11 @@ function cancelscheduledticketCallBack(apiresp,usersession) {
 		{"title":"You have to Login to Verizon to proceed","image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","buttons":[
 			{"type":"account_link","url":"https://www98.verizon.com/vzssobot/upr/preauth"}]}]}}}};		
 		
-		sendFBMessage(usersession,  respobj.facebook);
+		sendFBMessage(usersession, respobj.facebook);
 	}
 	else
 	{	
-         sendFBMessage(usersession,  subflow.facebook);
+         sendFBMessage(usersession, subflow.facebook);
 	}
    
 } 
