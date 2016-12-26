@@ -799,7 +799,7 @@ console.log('Inside showopenticketsCallback');
 	
 //******************** cancelscheduledticket
 	function cancelscheduledticket(apireq,sender,callback) { 
-    console.log('inside cancelscheduledticket call '+ apireq.contexts);
+    console.log('inside cancelscheduledticket call '+ JSON.stringify(apireq.contexts));
  //   var strCancelTicketNumber =  apireq.result.parameters.CancelTicketNumber;
   //  var strTCStateCode =  apireq.result.parameters.TktRegion;
 		strCancelTicketNumber='MAEH08TQAS';
@@ -834,7 +834,7 @@ console.log("args=" + JSON.stringify(args));
 		 var isconfirm ='';
                     console.log("Selected_strConfirmation : "+ strConfirmation);
 		    console.log("Selected_isconfirm : "+ isconfirm);       
-                     if(strConfirmation == null || strConfirmation == undefined || strConfirmation == "")
+                     if(strConfirmation == null)
 		     {
 			 var respobj ={"facebook":{"attachment":{"type":"template","payload":
                       {"template_type":"button","text":"Are you sure to cancel this appointment ?","buttons":[
