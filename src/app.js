@@ -856,10 +856,12 @@ console.log("args=" + JSON.stringify(args));
 					    if (!error && response.statusCode == 200) 
 					    {             
 						console.log("AFter ASHX call" + JSON.stringify(body));
+						console.log("RESPONSE" + JSON.stringify(response));
 						callback(body);
 					    }
 					    else
 						console.log('error: ' + error + ' body: ' + JSON.stringify(body));
+					       console.log("ELSE RESPONSE" + JSON.stringify(response));
 					});
 		}
 } 
@@ -896,8 +898,7 @@ function cancelscheduledticketCallBack(apiresp,usersession) {
 		console.log ("cancelscheduledticketCallBack subflow "+ subflow.facebook.text);
 		var respobj ={"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[
 		{"title":"You have to Login to Verizon to proceed","image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","buttons":[
-			{"type":"account_link","url":"https://www98.verizon.com/vzssobot/upr/preauth"}]}]}}}};		
-		
+			{"type":"account_link","url":"https://www98.verizon.com/vzssobot/upr/preauth"}]}]}}}};
 		sendFBMessage(usersession, respobj.facebook);
 	}
 	else
