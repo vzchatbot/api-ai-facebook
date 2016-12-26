@@ -849,7 +849,7 @@ console.log("args=" + JSON.stringify(args));
 		     }
 		else
 			if(strConfirmation == 'canConfirmed')
-		{	     console.log("ARGS-----" + args);
+		{	  console.log("ARGS===========" + JSON.stringify(args));
 				       request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
 					function (error, response, body)
 					{
