@@ -226,19 +226,19 @@ console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringi
                             break;
 		        case "cancelappointmentnotconfirmed":
                             console.log("----->>>>>>>>>>>> INSIDE cancelappointment <<<<<<<<<<<------");
-                            cancelscheduledticket(response,sender,function (str){ cancelscheduledticketCallback(str,sender)});
+                            cancelscheduledticket(response,sender,function (str){cancelscheduledticketCallBack(str,sender)});
                             break;
 		        case "Rescheduleticket":
                             console.log("----->>>>>>>>>>>> INSIDE Rescheduleticket <<<<<<<<<<<------");
-                            Rescheduleticket(response,sender,function (str){ RescheduleticketCallback(str,sender)});
+                            Rescheduleticket(response,sender,function (str){RescheduleticketCallback(str,sender)});
                             break;
 			case "showopentickets":
                             console.log("----->>>>>>>>>>>> INSIDE showopentickets <<<<<<<<<<<------");
-                            showopentickets(response,sender,function (str){ showopenticketsCallback(str,sender)});
+                            showopentickets(response,sender,function (str){showopenticketsCallback(str,sender)});
                             break;
 			case "showOutagetickets":
                             console.log("----->>>>>>>>>>>> INSIDE showOutagetickets <<<<<<<<<<<------");
-                            showOutagetickets(response,sender,function (str){ showOutageticketsCallback(str,sender)});
+                            showOutagetickets(response,sender,function (str){showOutageticketsCallback(str,sender)});
                             break;
 				    
                             /*case "demowhatshot": 
@@ -849,7 +849,7 @@ console.log("args=" + JSON.stringify(args));
 		     }
 		else
 			if(strConfirmation == 'canConfirmed')
-		{	     
+		{	     console.log("ARGS-----" + args);
 				       request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
 					function (error, response, body)
 					{
@@ -895,8 +895,7 @@ function cancelscheduledticketCallBack(apiresp,usersession) {
 		console.log ("cancelscheduledticketCallBack subflow "+ subflow.facebook.text);
 		var respobj ={"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[
 		{"title":"You have to Login to Verizon to proceed","image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","buttons":[
-			{"type":"account_link","url":"https://www98.verizon.com/vzssobot/upr/preauth"}]}]}}}};	
-		
+			{"type":"account_link","url":"https://www98.verizon.com/vzssobot/upr/preauth"}]}]}}}};		
 		
 		sendFBMessage(usersession,  respobj.facebook);
 	}
