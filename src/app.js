@@ -840,16 +840,12 @@ console.log("args=" + JSON.stringify(args));
 	  	 var respobj ={"facebook":{"attachment":{"type":"template","payload":
                       {"template_type":"button","text":"Are you sure to cancel this appointment ?","buttons":[
 		       {"type":"postback","title":"Cancel","payload":"Open Tickets"},
-			{"type":"postback","title":"Confirm","payload":"Want to cancel"+strCancelTicketNumber+ " statecode "+strTCStateCode+ " cancel status canConfirmed"}
+			{"type":"postback","title":"Confirm","payload":"Want to cancel "+strCancelTicketNumber+ " statecode "+strTCStateCode+ " cancel status canConfirmed"}
 			]}}}};
 			     
-			     /* var respobj ={"facebook":{"attachment":{"type":"template","payload":
-{"template_type":"button","text":"Are you looking for something to watch, or do you want to see more options? Type or tap below.",
- "buttons":[{"type":"postback","title":"On Now","payload":"On Now"},{"type":"postback","title":"On Later","payload":"On Later"},
-	    {"type":"postback","title":"More Options","payload":"More Options"}]}}}};
-			     */
+			   
 			 console.log(JSON.stringify(respobj));
-                         sendFBMessage(usersession,  respobj.facebook);				 
+                         sendFBMessage(sender, respobj.facebook);				 
 		     }
 		else
 			if(strConfirmation == 'canConfirmed')
