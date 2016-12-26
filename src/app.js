@@ -826,7 +826,8 @@ console.log('Inside showopenticketsCallback');
             Request: {ThisValue: 'CancelTicket',
 		       BotProviderId :sender, 
 		       CancelTicketNumber:strCancelTicketNumber,
-		       BotTCStateCode:strTCStateCode} 
+		       BotTCStateCode:strTCStateCode,
+		       Platform:'Web'} 
         }		
     };
 console.log("args=" + JSON.stringify(args));
