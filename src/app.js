@@ -800,8 +800,9 @@ console.log('Inside showopenticketsCallback');
 //******************** cancelscheduledticket
 	function cancelscheduledticket(apireq,sender,callback) { 
     console.log('inside cancelscheduledticket call '+ apireq.contexts);
-    var strCancelTicketNumber =  apireq.result.parameters.CancelTicketNumber;
-    var strTCStateCode =  apireq.result.parameters.TktRegion;
+ //   var strCancelTicketNumber =  apireq.result.parameters.CancelTicketNumber;
+  //  var strTCStateCode =  apireq.result.parameters.TktRegion;
+		strCancelTicketNumber='MAEH08TQAS';
 		strTCStateCode='MA';
 		console.log(' strCancelTicketNumber '+ JSON.stringify(strCancelTicketNumber));
 		console.log(' cancelscheduledticket '+ JSON.stringify(strTCStateCode));
@@ -830,7 +831,7 @@ console.log('Inside showopenticketsCallback');
     };
 console.log("args=" + JSON.stringify(args));
 	 var strConfirmation =apireq.result.parameters.Tktcancelconfirmation;
-		 var isconfirm ="";
+		 var isconfirm ='';
                     console.log("Selected_strConfirmation : "+ strConfirmation);
 		    console.log("Selected_isconfirm : "+ isconfirm);       
                      if(strConfirmation == null || strConfirmation == undefined || strConfirmation == "")
