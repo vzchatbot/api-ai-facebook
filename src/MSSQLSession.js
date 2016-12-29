@@ -64,13 +64,13 @@ module.exports = function(session) {
     var self = this;
     var request = new sql.Request(self.options.connection);
     request.input('ttl', sql.Int, self.options.ttl);
-    request.query('delete [Session] where lastTouchedUtc <= dateadd(second, -1 * @ttl, getutcdate());', self.options.reapCallback);
+    request.query('delete [BotSession] where lastTouchedUtc <= dateadd(second, -1 * @ttl, getutcdate());', self.options.reapCallback);
   };
 
   MssqlStore.prototype.get = function(sessionId, callback) {
     debug('get', sessionId);
     var self = this;
-    var stmt = 'select sessionData from [Session] where sessionId = @sessionId;';
+    var stmt = 'select sessionData from [BotSession] where sessionId = @sessionId;';
     var request = new sql.Request(self.options.connection);
     request.input('sessionId', sql.NVarChar(450), sessionId);
     request.query(stmt, function(err, recordset) {
@@ -99,13 +99,13 @@ module.exports = function(session) {
   MssqlStore.prototype.set = function(sessionId, session, callback) {
     debug('set', sessionId, session);
     var self = this;
-    var stmt = 'if exists(select sessionId from [Session] where sessionId = @sessionId)\
+    var stmt = 'if exists(select sessionId from [BotSession] where sessionId = @sessionId)\
                   begin\
-                    update [Session] set sessionData = @sessionData where sessionId = @sessionId;\
+                    update [BotSession] set sessionData = @sessionData where sessionId = @sessionId;\
                   end\
                   else\
                   begin\
-                    insert into [Session] (sessionId, sessionData, lastTouchedUtc) values(@sessionId, @sessionData, getutcdate());\
+                    insert into [BotSession] (sessionId, sessionData, lastTouchedUtc) values(@sessionId, @sessionData, getutcdate());\
                   end';
     var request = new sql.Request(self.options.connection);
     request.input('sessionId', sql.NVarChar(450), sessionId);
@@ -115,7 +115,7 @@ module.exports = function(session) {
 
   MssqlStore.prototype.destroy = function(sessionId, callback) {
     debug('destroy', sessionId);
-    var stmt = 'delete [Session] where sessionId = @sessionId';
+    var stmt = 'delete [BotSession] where sessionId = @sessionId';
     var request = new sql.Request(this.options.connection);
     request.input('sessionId', sql.NVarChar(450), sessionId);
     request.query(stmt, callback);
@@ -123,7 +123,7 @@ module.exports = function(session) {
 
   MssqlStore.prototype.touch = function(sessionId, session, callback) {
     debug('touch', sessionId);
-    var stmt = 'update [Session] set lastTouchedUtc = getutcdate() where sessionId = @sessionId';
+    var stmt = 'update [BotSession] set lastTouchedUtc = getutcdate() where sessionId = @sessionId';
     var request = new sql.Request(this.options.connection);
     request.input('sessionId', sql.NVarChar(450), sessionId);
     request.query(stmt, callback);
@@ -132,7 +132,7 @@ module.exports = function(session) {
 
   MssqlStore.prototype.length = function(callback) {
     debug('length');
-    var stmt = 'select count(*) from [Session]';
+    var stmt = 'select count(*) from [BotSession]';
     var request = new sql.Request(this.options.connection);
     request.query(stmt, function(err, recordset) {
       if (err) return callback(err);
@@ -143,7 +143,7 @@ module.exports = function(session) {
 
   MssqlStore.prototype.clear = function(callback) {
     debug('clear');
-    var stmt = 'delete [Session]';
+    var stmt = 'delete [BotSession]';
     var request = new sql.Request(this.options.connection);
     request.query(stmt, callback);
   };
