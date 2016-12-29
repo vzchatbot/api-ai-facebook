@@ -14,7 +14,7 @@ var util = require('util');
 
 var session = require('express-session');
 var sql = require('mssql');
-var MssqlStore = require('../src/MSSQLsession')(session);
+var MssqlStore = require('../src')(session);
 
 var REST_PORT = (process.env.PORT || process.env.port || process.env.OPENSHIFT_NODEJS_PORT || 5000);
 var SEVER_IP_ADDR = process.env.OPENSHIFT_NODEJS_IP || process.env.HEROKU_IP ;
