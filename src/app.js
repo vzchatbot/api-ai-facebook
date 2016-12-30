@@ -29,37 +29,7 @@ var userData = new Map();
 
 //===========================
 
-var start = function(callback) {
-  callback = callback || function() {};
 
-	var dbConfig = {
-  server: "10.77.41.138,1433",
-  database: "UFD",
-  user: "erepairstg",
-  password: "testrepairstg"
-};
-	
-  sql.connect(dbConfig, function(err) {
-    if (err) return callback(err);
-    var app = express();
-    app.use(session({
-      secret: 'EAAEziYhGZAZAIBAABLZAuLkFLCRcrbEg0wPlNtHwvENI2vOikW7uSoqpUZABfNSUZAWSwIVdqLThflu78IC2ic8AjUcEFSfTNtTq9ht03TPZCYvbCZAJaLiUnahD9krlEC0WsxEOcmcdDNUsTt4JJRPZB1ZAuYfS4eRILvbQZB8uXp2QZDZD',
-      resave: false,
-      saveUninitialized: false,
-      store: new MssqlStore({ reapInterval: 10, ttl: 10 })
-    }));
-
-    app.get('/', function (req, res) {
-      req.session.visits = (req.session.visits || 0) + 1;
-      res.send('You have visited ' + req.session.visits + 'times.');
-    });
-
-    var server = app.listen(5000, function (err) {
-      if (err) return callback(err);
-      callback();
-    });
-  });
-};
 
 //======================
 log4js.configure({
@@ -167,6 +137,39 @@ function processEvent(event) {
 		    
 		// ssn(response,sender); 
  // Handlesession(ReqSenderID);
+		    //======================
+		    
+  var start = function(callback) {
+  callback = callback || function() {};
+
+  var dbConfig = {
+  server: "10.77.41.138,1433",
+  database: "UFD",
+  user: "erepairstg",
+  password: "testrepairstg"
+};
+	
+  sql.connect(dbConfig, function(err) {
+    if (err) return callback(err);
+    var app = express();
+    app.use(session({
+      secret: 'EAAEziYhGZAZAIBAABLZAuLkFLCRcrbEg0wPlNtHwvENI2vOikW7uSoqpUZABfNSUZAWSwIVdqLThflu78IC2ic8AjUcEFSfTNtTq9ht03TPZCYvbCZAJaLiUnahD9krlEC0WsxEOcmcdDNUsTt4JJRPZB1ZAuYfS4eRILvbQZB8uXp2QZDZD',
+      resave: false,
+      saveUninitialized: false,
+      store: new MssqlStore({ reapInterval: 10, ttl: 10 })
+    }));
+
+    app.get('/', function (req, res) {
+      req.session.visits = (req.session.visits || 0) + 1;
+      res.send('You have visited ' + req.session.visits + 'times.');
+    });
+
+    var server = app.listen(5000, function (err) {
+      if (err) return callback(err);
+      callback();
+    });
+  });
+};
 		   
 if (require.main === module) {
 	console.log("Inside 1======");
@@ -176,7 +179,7 @@ else {
 	console.log("Inside 2======");
   module.exports = { start: start };
 }
-
+//=======================
 		    
 console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
  
