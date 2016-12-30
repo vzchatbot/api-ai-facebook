@@ -195,7 +195,7 @@ function processEvent(event) {
                 console.log('action : - '+ action );
                 console.log('intent : - '+ intent );	
 		    
-		 ssn(response,sender);    
+		// ssn(response,sender);    
 console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
  
 		    
