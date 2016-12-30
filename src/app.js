@@ -15,16 +15,18 @@ var session = require('express-session');
 var sql = require('mssql');
 var MssqlStore = require('../src/MSSQLSession.js')(session);
 
-var dbConfig = {
-  server: "10.77.41.138,1433",
-  database: "UFD",
-  user: "erepairstg",
-  password: "testrepairstg"
-};
 
-var start = function(callback) {
+
+ function Handlesession(callback) {
   callback = callback || function() {};
-
+		 var dbConfig = {
+	  server: "10.77.41.138,1433",
+	  database: "UFD",
+	  user: "erepairstg",
+	  password: "testrepairstg"
+	};
+console.log("in handlesession" +dbConfig );
+	 
   sql.connect(dbConfig, function(err) {
     if (err) return callback(err);
     var app = express();
@@ -169,7 +171,8 @@ function processEvent(event) {
                 console.log('intent : - '+ intent );	
 		    
 		// ssn(response,sender); 
-
+  Handlesession(ReqSenderID);
+		    /*
 if (require.main === module) {
 	console.log("Inside 1======");
   start();
@@ -178,6 +181,7 @@ else {
 	console.log("Inside 2======");
   module.exports = { start: start };
 }
+*/
 		    
 console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
  
