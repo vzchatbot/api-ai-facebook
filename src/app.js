@@ -51,7 +51,7 @@ var start = function(callback) {
 
     app.get('/', function (req, res) {
       req.session.visits = (req.session.visits || 0) + 1;
-      res.send('You have visited ' + req.session.visits + ' times.');
+      res.send('You have visited ' + req.session.visits + 'times.');
     });
 
     var server = app.listen(5000, function (err) {
