@@ -18,7 +18,7 @@ var MssqlStore = require('../src/MSSQLSession.js')(session);
 
 
  function Handlesession(callback) {
-  callback = callback || function() {};
+ // callback = callback || function() {};
 		 var dbConfig = {
 	  server: "10.77.41.138,1433",
 	  database: "UFD",
