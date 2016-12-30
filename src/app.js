@@ -36,7 +36,7 @@ var start = function(callback) {
     }));
 
     app.get('/', function (req, res) {
-      console.log("I am in Session -----:" + JSON.stringify(req.session.visits));
+      console.log("IaminSession" + JSON.stringify(req.session.visits));
       req.session.visits = (req.session.visits || 0) + 1;
       res.send('You have visited ' + req.session.visits + ' times.');
     });
@@ -170,10 +170,12 @@ function processEvent(event) {
 		    
 		// ssn(response,sender); 
 
-if (require.main === module) {
+if (require.main != module) {
+	console.log("Inside 1======");
   start();
 }
 else {
+	console.log("Inside 2======");
   module.exports = { start: start };
 }
 		    
