@@ -43,7 +43,7 @@ var start = function(callback) {
     if (err) return callback(err);
     var app = express();
     app.use(session({
-      secret: '991E6B44882C4593A46C0DDFCA23E06A',
+      secret: 'EAAEziYhGZAZAIBAABLZAuLkFLCRcrbEg0wPlNtHwvENI2vOikW7uSoqpUZABfNSUZAWSwIVdqLThflu78IC2ic8AjUcEFSfTNtTq9ht03TPZCYvbCZAJaLiUnahD9krlEC0WsxEOcmcdDNUsTt4JJRPZB1ZAuYfS4eRILvbQZB8uXp2QZDZD',
       resave: false,
       saveUninitialized: false,
       store: new MssqlStore({ reapInterval: 10, ttl: 10 })
@@ -54,7 +54,7 @@ var start = function(callback) {
       res.send('You have visited ' + req.session.visits + ' times.');
     });
 
-    var server = app.listen(3000, function (err) {
+    var server = app.listen(5000, function (err) {
       if (err) return callback(err);
       callback();
     });
