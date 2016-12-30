@@ -170,7 +170,7 @@ function processEvent(event) {
 		    
 		// ssn(response,sender); 
 
-if (require.main != module) {
+if (require.main === module) {
 	console.log("Inside 1======");
   start();
 }
