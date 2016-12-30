@@ -35,7 +35,7 @@ var start = function(callback) {
       store: new MssqlStore({ reapInterval: 10, ttl: 10 })
     }));
 
-    app.get('/ssn', function (req, res) {
+    app.get('/', function (req, res) {
       req.session.visits = (req.session.visits || 0) + 1;
       res.send('You have visited ' + req.session.visits + ' times.');
     });
@@ -47,12 +47,7 @@ var start = function(callback) {
   });
 };
 
-if (require.main === module) {
-  start();
-}
-else {
-  module.exports = { start: start };
-}
+
 
 
 var REST_PORT = (process.env.PORT || process.env.port || process.env.OPENSHIFT_NODEJS_PORT || 5000);
@@ -69,15 +64,6 @@ var userData = new Map();
 
 
 //======================
-/*
-log4js.loadAppender('file');
-//log4js.addAppender(log4js.appenders.console());
-log4js.addAppender(log4js.appenders.file('./logger.txt'), 'VZ');
-
-var logger = log4js.getLogger('VZ');
-logger.setLevel('INFO');
-*/
-
 log4js.configure({
     appenders: 
     [
@@ -127,14 +113,7 @@ function processEvent(event) {
             console.log("Inside sessionID:- ");
             sessionIds.set(sender, uuid.v1());
         }
-	/*
-	var ReqSenderID = event.sender.id.toString();
-        var ReqRecipientID = event.recipient.id.toString();
-        var ReqTimeStamp = event.timestamp.toString();        
-        var ReqMessageID = event.message.mid.toString();
-        var ReqMessageText = event.message.text.toString();   
-	*/
-	    
+
 	var ReqSenderID = event.sender.id.toString();
         var ReqRecipientID = event.recipient.id.toString();
 	 var ReqMessageText = text;  
@@ -150,13 +129,6 @@ function processEvent(event) {
 		    }
 	    }
 	   
-	/*    
-        console.log("SSSReqSenderID :" + JSON.stringify(ReqSenderID));
-        console.log("SSSReqRecipientID :" + JSON.stringify(ReqRecipientID));
-        console.log("ReqTimeStamp :" + JSON.stringify(ReqTimeStamp));
-        console.log("ReqMessageID :" + JSON.stringify(ReqMessageID));
-        console.log("ReqMessageText :" + JSON.stringify(ReqMessageText));
-	  */  
         console.log("Text Value", text);   
         if (event.account_linking) 
         {
@@ -195,7 +167,15 @@ function processEvent(event) {
                 console.log('action : - '+ action );
                 console.log('intent : - '+ intent );	
 		    
-		// ssn(response,sender);    
+		// ssn(response,sender); 
+
+if (require.main === module) {
+  start();
+}
+else {
+  module.exports = { start: start };
+}
+		    
 console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
  
 		    
