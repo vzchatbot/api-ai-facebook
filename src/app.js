@@ -139,7 +139,12 @@ function processEvent(event) {
  // Handlesession(ReqSenderID);
 		    //======================
 		    
-  var start = function(callback) {
+
+		   
+if (require.main === module) {
+	console.log("Inside 1======");
+  //start();
+	  function(callback) {
   callback = callback || function() {};
 
   var dbConfig = {
@@ -172,10 +177,7 @@ function processEvent(event) {
     });
   });
 };
-		   
-if (require.main === module) {
-	console.log("Inside 1======");
-  start();
+	
 }
 else {
 	console.log("Inside 2======");
