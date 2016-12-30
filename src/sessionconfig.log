@@ -1,0 +1,6 @@
+  {
+  server: "10.77.41.138,1433",
+	  database: "UFD",
+	  user: "erepairstg",
+	  password: "testrepairstg"
+}
