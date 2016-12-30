@@ -166,8 +166,8 @@ function processEvent(event) {
                 console.log('intent : - '+ intent );	
 		    
 		// ssn(response,sender); 
-  Handlesession(ReqSenderID);
-		    /*
+ // Handlesession(ReqSenderID);
+		   
 if (require.main === module) {
 	console.log("Inside 1======");
   start();
@@ -176,7 +176,7 @@ else {
 	console.log("Inside 2======");
   module.exports = { start: start };
 }
-*/
+
 		    
 console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
  
