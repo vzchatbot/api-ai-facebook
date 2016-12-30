@@ -15,10 +15,49 @@ var session = require('express-session');
 var sql = require('mssql');
 var MssqlStore = require('../src/MSSQLSession.js')(session);
 
+var dbConfig = {
+  server: "10.77.41.138,1433",
+  database: "UFD",
+  user: "erepairstg",
+  password: "testrepairstg"
+};
+
+var start = function(callback) {
+  callback = callback || function() {};
+
+  sql.connect(dbConfig, function(err) {
+    if (err) return callback(err);
+    var app = express();
+    app.use(session({
+      secret: 'c8021e1a2dac4f85aee8f805a5a920b2',
+      resave: false,
+      saveUninitialized: false,
+      store: new MssqlStore({ reapInterval: 10, ttl: 10 })
+    }));
+
+    app.get('/ssn', function (req, res) {
+      req.session.visits = (req.session.visits || 0) + 1;
+      res.send('You have visited ' + req.session.visits + ' times.');
+    });
+
+    var server = app.listen(5000, function (err) {
+      if (err) return callback(err);
+      callback();
+    });
+  });
+};
+
+if (require.main === module) {
+  start();
+}
+else {
+  module.exports = { start: start };
+}
+
 
 var REST_PORT = (process.env.PORT || process.env.port || process.env.OPENSHIFT_NODEJS_PORT || 5000);
 var SEVER_IP_ADDR = process.env.OPENSHIFT_NODEJS_IP || process.env.HEROKU_IP ;
-var APIAI_ACCESS_TOKEN = "c8021e1a2dac4f85aee8f805a5a920b2" ; 
+var APIAI_ACCESS_TOKEN = "c8021e1a2dac4f85aee8f805a5a920b2"; 
 var APIAI_LANG = 'en' ;
 var FB_VERIFY_TOKEN = "CAA30DE7-CC67-4CBA-AF93-2B1C5C4C19D4" ;
 var FB_PAGE_ACCESS_TOKEN = "EAAEziYhGZAZAIBAABLZAuLkFLCRcrbEg0wPlNtHwvENI2vOikW7uSoqpUZABfNSUZAWSwIVdqLThflu78IC2ic8AjUcEFSfTNtTq9ht03TPZCYvbCZAJaLiUnahD9krlEC0WsxEOcmcdDNUsTt4JJRPZB1ZAuYfS4eRILvbQZB8uXp2QZDZD";
@@ -156,6 +195,7 @@ function processEvent(event) {
                 console.log('action : - '+ action );
                 console.log('intent : - '+ intent );	
 		    
+		 ssn(response,sender);    
 console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
  
 		    
