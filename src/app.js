@@ -160,12 +160,13 @@ function processEvent(event) {
     }));
 
     app.get('/', function (req, res) {
-	console.log("Inside 3 ======");
+	console.log("Inside 3 ======" +  req.session.visits);
       req.session.visits = (req.session.visits || 0) + 1;
       res.send('You have visited ' + req.session.visits + 'times.');
     });
 
     var server = app.listen(5000, function (err) {
+	    console.log("Inside 4 ======" +  server);
       if (err) return callback(err);
       callback();
     });
