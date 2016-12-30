@@ -16,43 +16,6 @@ var sql = require('mssql');
 var MssqlStore = require('../src/MSSQLSession.js')(session);
 
 
-
- function Handlesession(callback) {
- // callback = callback || function() {};
-		 var dbConfig = {
-	  server: "10.77.41.138,1433",
-	  database: "UFD",
-	  user: "erepairstg",
-	  password: "testrepairstg"
-	};
-console.log("in handlesession" +dbConfig );
-	 
-  sql.connect(dbConfig, function(err) {
-    if (err) return callback(err);
-    var app = express();
-    app.use(session({
-      secret: 'c8021e1a2dac4f85aee8f805a5a920b2',
-      resave: false,
-      saveUninitialized: false,
-      store: new MssqlStore({ reapInterval: 10, ttl: 10 })
-    }));
-
-    app.get('/', function (req, res) {
-      console.log("IaminSession" + JSON.stringify(req.session.visits));
-      req.session.visits = (req.session.visits || 0) + 1;
-      res.send('You have visited ' + req.session.visits + ' times.');
-    });
-	
-    var server = app.listen(5000, function (err) {
-      if (err) return callback(err);
-      callback();
-    });
-  });
-};
-
-
-
-
 var REST_PORT = (process.env.PORT || process.env.port || process.env.OPENSHIFT_NODEJS_PORT || 5000);
 var SEVER_IP_ADDR = process.env.OPENSHIFT_NODEJS_IP || process.env.HEROKU_IP ;
 var APIAI_ACCESS_TOKEN = "c8021e1a2dac4f85aee8f805a5a920b2"; 
