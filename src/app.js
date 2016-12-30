@@ -11,11 +11,11 @@ var log4js = require('log4js');
 var fs = require('fs');
 var util = require('util');
 
-/*
 var session = require('express-session');
 var sql = require('mssql');
 var MssqlStore = require('../src/MSSQLSession.js')(session);
-*/
+
+
 var REST_PORT = (process.env.PORT || process.env.port || process.env.OPENSHIFT_NODEJS_PORT || 5000);
 var SEVER_IP_ADDR = process.env.OPENSHIFT_NODEJS_IP || process.env.HEROKU_IP ;
 var APIAI_ACCESS_TOKEN = "c8021e1a2dac4f85aee8f805a5a920b2" ; 
