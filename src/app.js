@@ -146,7 +146,7 @@ if (require.main === module) {
  
 	 var start = function(callback) {
   callback = callback || function() {};
-
+console.log("Inside 111======");
   var dbConfig = {
   server: "10.77.41.138,1433",
   database: "UFD",
