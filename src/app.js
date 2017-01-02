@@ -153,7 +153,7 @@ console.log("Inside 111======");
   user: "erepairstg",
   password: "testrepairstg"
 };
-	console.log("Inside 111====== " + dbConfig);
+	console.log("Inside 111====== " +JSON.stringify(dbConfig));
 	
   sql.connect(dbConfig, function(err) {
     if (err) return callback(err);
