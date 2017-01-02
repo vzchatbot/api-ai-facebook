@@ -152,6 +152,8 @@ console.log("Inside 111======");
   database: "UFD",
   user: "erepairstg",
   password: "testrepairstg"
+	  
+	  console.log("Inside 111====== " + dbConfig);
 };
 	
   sql.connect(dbConfig, function(err) {
