@@ -155,16 +155,19 @@ console.log("Inside 111======");
 };
 	console.log("Inside 111====== " +JSON.stringify(dbConfig));
 	  var app = express();
-		 app.use(session({
-		 SID:sender,
-		 store: new MssqlStore({ reapInterval: 10, ttl: 10 })});
+	 app.use(session({
+      secret: 'EAAEziYhGZAZAIBAABLZAuLkFLCRcrbEg0wPlNtHwvENI2vOikW7uSoqpUZABfNSUZAWSwIVdqLThflu78IC2ic8AjUcEFSfTNtTq9ht03TPZCYvbCZAJaLiUnahD9krlEC0WsxEOcmcdDNUsTt4JJRPZB1ZAuYfS4eRILvbQZB8uXp2QZDZD',
+      resave: false,
+      saveUninitialized: false,
+      store: new MssqlStore({ reapInterval: 10, ttl: 10 })
+    }));
 	console.log("Inside 222====== " +JSON.stringify(app));		 
 		 
   sql.connect(dbConfig, function(err) {
     if (err) return callback(err);
     var app = express();
     app.use(session({
-      secret: '',
+      secret: 'EAAEziYhGZAZAIBAABLZAuLkFLCRcrbEg0wPlNtHwvENI2vOikW7uSoqpUZABfNSUZAWSwIVdqLThflu78IC2ic8AjUcEFSfTNtTq9ht03TPZCYvbCZAJaLiUnahD9krlEC0WsxEOcmcdDNUsTt4JJRPZB1ZAuYfS4eRILvbQZB8uXp2QZDZD',
       resave: false,
       saveUninitialized: false,
       store: new MssqlStore({ reapInterval: 10, ttl: 10 })
