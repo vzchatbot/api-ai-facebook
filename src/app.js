@@ -29,10 +29,10 @@ var userData = new Map();
 
 //===========================
  var dbConfig = {
-  server: "10.77.41.138,1433",
+  server: "10.77.40.252,1167",
   database: "UFD",
-  user: "erepairstg",
-  password: "testrepairstg"
+  user: "ufdtest",
+  password: "ufdtest123"
 };
 
 if (require.main === module) {
