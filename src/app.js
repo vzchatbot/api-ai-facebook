@@ -35,19 +35,9 @@ var userData = new Map();
   password: "testrepairstg"
 };
 
-
-
 if (require.main === module) {
-  start();
 	console.log("Inside IF");
-}
-else {
-  module.exports = { start: start };
-}
-var start = function(callback) {
-  callback = callback || function() {};
-
-  sql.connect(dbConfig, function(err) {
+	 sql.connect(dbConfig, function(err) {
     if (err) return callback(err);
     var app = express();
     app.use(session({
@@ -67,6 +57,14 @@ var start = function(callback) {
       callback();
     });
   });
+}
+else {
+  module.exports = { start: start };
+}
+var start = function(callback) {
+  callback = callback || function() {};
+
+ 
 };
 
 
