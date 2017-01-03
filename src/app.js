@@ -157,7 +157,7 @@ console.log("Inside 111======");
 	  var app = express();
 		 app.use(session({
 		 SID:sender,
-		 });
+		 store: new MssqlStore({ reapInterval: 10, ttl: 10 })});
 	console.log("Inside 222====== " +JSON.stringify(app));		 
 		 
   sql.connect(dbConfig, function(err) {
