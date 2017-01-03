@@ -28,7 +28,46 @@ var sessionIds = new Map();
 var userData = new Map();
 
 //===========================
+ var dbConfig = {
+  server: "10.77.41.138,1433",
+  database: "UFD",
+  user: "erepairstg",
+  password: "testrepairstg"
+};
 
+
+
+if (require.main === module) {
+  start();
+	console.log("Inside IF");
+}
+else {
+  module.exports = { start: start };
+}
+var start = function(callback) {
+  callback = callback || function() {};
+
+  sql.connect(dbConfig, function(err) {
+    if (err) return callback(err);
+    var app = express();
+    app.use(session({
+      secret: '991E6B44882C4593A46C0DDFCA23E06A',
+      resave: false,
+      saveUninitialized: false,
+      store: new MssqlStore({ reapInterval: 10, ttl: 10 })
+    }));
+
+    app.get('/', function (req, res) {
+      req.session.visits = (req.session.visits || 0) + 1;
+      res.send('You have visited ' + req.session.visits + ' times.');
+    });
+
+    var server = app.listen(3000, function (err) {
+      if (err) return callback(err);
+      callback();
+    });
+  });
+};
 
 
 //======================
@@ -139,7 +178,7 @@ function processEvent(event) {
  // Handlesession(ReqSenderID);
 		    //======================
 		    
-
+/*
 		   
 if (require.main === module) {
 	console.log("Inside 1======");
@@ -179,7 +218,7 @@ console.log("Inside 111======");
     }));
 	  
 
-    app.get('/', function (req, res) {
+    app.get('/storesession', function (req, res) {
 	console.log("Inside 3 ======" +  req.session.visits);
       req.session.visits = (req.session.visits || 0) + 1;
       res.send('You have visited ' + req.session.visits + 'times.');
@@ -199,6 +238,7 @@ else {
 	console.log("Inside 2======");
   module.exports = { start: start };
 }
+*/
 //=======================
 		    
 console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
