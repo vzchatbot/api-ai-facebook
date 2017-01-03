@@ -161,7 +161,12 @@ console.log("Inside 111======");
       saveUninitialized: false,
       store: new MssqlStore({ reapInterval: 10, ttl: 10 })
     }));
-	console.log("Inside 222====== " +JSON.stringify(app));		 
+	console.log("Inside 222====== " + JSON.stringify(app));		
+	 app.get('/', function (req, res) {
+	 console.log("Inside 3 ======" +  req.session.visits);
+      req.session.visits = (req.session.visits || 0) + 1;
+      res.send('You have visited ' + req.session.visits + 'times.');
+    });
 		 
   sql.connect(dbConfig, function(err) {
     if (err) return callback(err);
