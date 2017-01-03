@@ -38,7 +38,7 @@ var userData = new Map();
 if (require.main === module) {
 	console.log("Inside IF");
 	 sql.connect(dbConfig, function(err) {
-    if (err) return callback(err);
+    if (err) return console.log("ERROR : "+err);
     var app = express();
     app.use(session({
       secret: '991E6B44882C4593A46C0DDFCA23E06A',
@@ -53,20 +53,13 @@ if (require.main === module) {
     });
 
     var server = app.listen(3000, function (err) {
-      if (err) return callback(err);
-      callback();
+      if (err) return console.log("Server ERROR : "+ err);     
     });
   });
 }
 else {
-  module.exports = { start: start };
+console.log("Else Part");
 }
-var start = function(callback) {
-  callback = callback || function() {};
-
- 
-};
-
 
 //======================
 log4js.configure({
