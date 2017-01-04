@@ -29,10 +29,10 @@ var userData = new Map();
 
 //===========================
  var dbConfig = {
-  server: "10.77.40.252,1167",
+  server: "10.77.41.138",
   database: "UFD",
-  user: "ufdtest",
-  password: "ufdtest123"
+  user: "erepairstg",
+  password: "testrepairstg"
 };
 
 if (require.main === module) {
@@ -46,13 +46,14 @@ if (require.main === module) {
       saveUninitialized: false,
       store: new MssqlStore({ reapInterval: 10, ttl: 10 })
     }));
-
+console.log("SQL Conn"+JSON.stringify(dbconfig));
     app.get('/', function (req, res) {
+	    console.log("Inside function ");
       req.session.visits = (req.session.visits || 0) + 1;
       res.send('You have visited ' + req.session.visits + ' times.');
     });
 
-    var server = app.listen(3000, function (err) {
+    var server = app.listen(5000, function (err) {
       if (err) return console.log("Server ERROR : "+ err);     
     });
   });
