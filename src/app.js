@@ -29,40 +29,7 @@ var sessionIds = new Map();
 var userData = new Map();
 
 //===========================
- /*var dbConfig = {
-  server: "10.77.41.138",
-  database: "UFD",
-  user: "erepairstg",
-  password: "testrepairstg"
-};
 
-if (require.main === module) {
-	console.log("Inside IF");
-	 sql.connect(dbConfig, function(err) {
-    if (err) return console.log("ERROR : "+err);
-    var app = express();
-    app.use(session({
-      secret: '991E6B44882C4593A46C0DDFCA23E06A',
-      resave: false,
-      saveUninitialized: false,
-      store: new MssqlStore({ reapInterval: 10, ttl: 10 })
-    }));
-console.log("SQL Conn"+JSON.stringify(dbconfig));
-    app.get('/', function (req, res) {
-	    console.log("Inside function ");
-      req.session.visits = (req.session.visits || 0) + 1;
-      res.send('You have visited ' + req.session.visits + ' times.');
-    });
-
-    var server = app.listen(5000, function (err) {
-      if (err) return console.log("Server ERROR : "+ err);     
-    });
-  });
-}
-else {
-console.log("Else Part");
-}
-*/
 //======================
 log4js.configure({
     appenders: 
