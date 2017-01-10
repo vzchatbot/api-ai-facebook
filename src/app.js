@@ -20,16 +20,16 @@ var REST_PORT = (process.env.PORT || process.env.port || process.env.OPENSHIFT_N
 var SEVER_IP_ADDR = process.env.OPENSHIFT_NODEJS_IP || process.env.HEROKU_IP ;
 var APIAI_ACCESS_TOKEN = "c8021e1a2dac4f85aee8f805a5a920b2"; 
 var APIAI_LANG = 'en' ;
-var FB_VERIFY_TOKEN = "CAA30DE7-CC67-4CBA-AF93-2B1C5C4C19D4" ;
+var FB_VERIFY_TOKEN = "CAA30DE7-CC67-4CBA-AF93-2B1C5C4C19D4";
 //var FB_PAGE_ACCESS_TOKEN = "EAAEziYhGZAZAIBAABLZAuLkFLCRcrbEg0wPlNtHwvENI2vOikW7uSoqpUZABfNSUZAWSwIVdqLThflu78IC2ic8AjUcEFSfTNtTq9ht03TPZCYvbCZAJaLiUnahD9krlEC0WsxEOcmcdDNUsTt4JJRPZB1ZAuYfS4eRILvbQZB8uXp2QZDZD";
 var FB_PAGE_ACCESS_TOKEN = "EAAQzt7vuC9EBABFoF2syps2akXE1Hl38LLSiNgb59Qr77q7ijtqOafTH1d4Hy6BGdZCqUqZAFK3qrdaF14dE2DOFwVdyGma14zHFzkZBZCRA3k7Pf8OyZA6acdOmzfqVWHqtbYA5rjQnPsLU8K5qOIfYNMuRznij1Y7irX0NmgQZDZD";
-var APIAI_VERIFY_TOKEN = "verify123" ;
+var APIAI_VERIFY_TOKEN = "verify123";
 var apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
 var sessionIds = new Map();
 var userData = new Map();
 
 //===========================
- var dbConfig = {
+ /*var dbConfig = {
   server: "10.77.41.138",
   database: "UFD",
   user: "erepairstg",
@@ -62,7 +62,7 @@ console.log("SQL Conn"+JSON.stringify(dbconfig));
 else {
 console.log("Else Part");
 }
-
+*/
 //======================
 log4js.configure({
     appenders: 
