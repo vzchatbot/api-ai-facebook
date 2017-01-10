@@ -27,9 +27,6 @@ var APIAI_VERIFY_TOKEN = "verify123";
 var apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
 var sessionIds = new Map();
 var userData = new Map();
-
-//===========================
-
 //======================
 log4js.configure({
     appenders: 
