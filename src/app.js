@@ -60,6 +60,9 @@ var Errlogger = log4js.getLogger('errorlog');
 var ChatHistoryLog = log4js.getLogger('Debug');
 
 //=========================================================
+fs.readFile('DATA', 'utf8', function(err, contents) {
+    console.log(contents);
+});
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
