@@ -36,11 +36,14 @@ log4js.configure({
             type: 'dateFile', filename: 'D:\\app\\log\\bot\\botws.log', category: 'botws', "pattern": "-yyyy-MM-dd","alwaysIncludePattern": false
         },
         {
+		/*
             type: 'logLevelFilter',
             level: 'ERROR', appender: {
                 type: "dateFile",
                 filename: 'D:\\app\\log\\bot\\boterrors.log',
                 category: 'errorlog',"pattern": "-yyyy-MM-dd","alwaysIncludePattern": false
+		*/
+		
             }
         }
         ,
@@ -60,9 +63,43 @@ var Errlogger = log4js.getLogger('errorlog');
 var ChatHistoryLog = log4js.getLogger('Debug');
 
 //=========================================================
-fs.readFile('DATA', 'utf8', function(err, contents) {
-    console.log(contents);
-});
+
+{
+  "replaceConsole": true,     // Optional: if true, console.log 
+                              // will be replaced by log4js
+  "appenders": [{
+    "type": "console"         // This appender just sends
+                              // everything to the console.
+  }, {
+    "type": "logLevelFilter", // This is a recursive appender,
+                              // filters log messages and
+                              // sends them to its own appender.
+
+    "level": "ERROR",         // Include only error logs.
+
+    "appender": {             // the filter's appender, smtp
+      "type": "smtp",
+      "recipients": "prabu.kasinathan@verizon.com",
+      "sender": "prabu.kasinathan@verizon.com",
+      "sendInterval": 60,     // Batch log messages, and send via 
+                              // this interval in seconds (0 sends 
+                              // immediately, unbatched).
+      "transport": "SMTP",
+      "SMTP": {
+        "host": "smtp.verizon.com",  // Other SMTP options here.
+        "port": 25
+      }
+    }
+  }]
+}
+
+
+log4js.configure("D:\\app\\log\\bot\\boterrors.json")
+logger = log4js.getLogger();
+logger.error("This send you an email!");
+logger.info("But won't.");
+
+//=====================================
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
