@@ -35,14 +35,13 @@ log4js.configure({
         {
             type: 'dateFile', filename: 'D:\\app\\log\\bot\\botws.log', category: 'botws', "pattern": "-yyyy-MM-dd","alwaysIncludePattern": false
         },
-        {
-		/*
+        {		
             type: 'logLevelFilter',
             level: 'ERROR', appender: {
                 type: "dateFile",
                 filename: 'D:\\app\\log\\bot\\boterrors.log',
                 category: 'errorlog',"pattern": "-yyyy-MM-dd","alwaysIncludePattern": false
-		*/
+		
 		
             }
         }
