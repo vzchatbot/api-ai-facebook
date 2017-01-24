@@ -62,7 +62,7 @@ var Errlogger = log4js.getLogger('errorlog');
 var ChatHistoryLog = log4js.getLogger('Debug');
 
 //=========================================================
-
+/*
 {
   "replaceConsole": true,     // Optional: if true, console.log 
                               // will be replaced by log4js
@@ -97,7 +97,7 @@ log4js.configure("D:\\app\\log\\bot\\boterrors.json")
 logger = log4js.getLogger();
 logger.error("This send you an email!");
 logger.info("But won't.");
-
+*/
 //=====================================
 
 function processEvent(event) {
