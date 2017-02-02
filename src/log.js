@@ -13,3 +13,37 @@ var logger = new (winston.Logger)({
 });
 
 module.exports = logger;
+
+/*
+{
+  "id": "d91a367a-1c22-4cac-8840-599450b92865",
+  "name": "Program",
+  "isOverridable": true,
+  "entries": [
+    {
+      "value": "channel",
+      "synonyms": [
+        "HBO",
+        "AXN",
+        "STAR",
+        "channel"
+      ]
+    },
+    {
+      "value": "Shows",
+      "synonyms": [
+        "Shows"
+      ]
+    },
+    {
+      "value": "programname",
+      "synonyms": [
+        "programname"
+      ]
+    }
+  ],
+  "isEnum": false,
+  "automatedExpansion": false
+}
+
+*/
