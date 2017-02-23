@@ -1394,7 +1394,15 @@ function welcomeMsgWat(usersession, msg)
     sendFBMessage(usersession, {text: "Hi Welcome to Verizon. Experience the services of Watson"});
     sendFBMessage(usersession,  respobj.facebook);
 }
+
 	
+	
+function PgmName(usersession, msg)
+	{
+		console.log("inside PGMNAME");
+		var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title": msg, "image_url":"http://cdn03.cdn.justjared.com/wp-content/uploads/headlines/2016/01/mike-molly-officially-canclled.jpg","subtitle":"Enjoy the show","default_action":{"type":"web_url", "url":"http://tv.verizon.com/series/24045604/details/mike-molly","messenger_extensions": true,"webview_height_ratio": "tall", "fallback_url": ""},"buttons":[]}]}}}};
+		sendFBMessage(usersession,  respobj.facebook);
+	}
 
 function MainMenu(usersession)
 {
