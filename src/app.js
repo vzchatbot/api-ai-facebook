@@ -158,8 +158,8 @@ function processEvent(event) {
         }
 	
 var conversation = watson.conversation({
-    username: '31be4934-c02e-441a-96e6-d639b4ab69a8',
-    password: 'Q2hapKhopVRj',
+    username: '5ce24ee5-4326-4056-9df1-519fcb0af445',
+    password: 'h033JHyAbXph',
     version: 'v1',
     version_date: '2016-09-20'
 });    
@@ -169,7 +169,7 @@ var conversation = watson.conversation({
  function convMess(message) {
 console.log('In CONVMess  : ' + message);
     conversation.message({
-        workspace_id: 'b2d3a074-4d46-4b95-b902-f70d0000fdc6',
+        workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
         input: { 'text': message }	     
     }, function (err, response) {
         if (err) {
