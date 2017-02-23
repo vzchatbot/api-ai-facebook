@@ -1021,7 +1021,9 @@ function stationsearch(apireq,callback) {
 	var strChannelNo = getEntity(apireq.entities,"ChannelNo"); 
         var strRegionid = 91629;
 	
-    console.log("strChannelName : strChannelNo  : strRegionid  :" + strChannelName + strChannelNo + strRegionid);
+    console.log("strChannelName :   :   :" + JSONbig.stringify(strChannelName));
+	 console.log("strChannelNo :   :   :" + JSONbig.stringify(strChannelNo));
+	console.log("strRegionid :   :   :"+ JSONbig.stringify(strRegionid));
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
