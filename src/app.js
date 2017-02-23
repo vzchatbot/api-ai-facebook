@@ -1017,36 +1017,36 @@ function RescheduleticketCallBack(apiresp,usersession) {
 
 function stationsearch(apireq,callback) { 
 	console.log("srationSearch called " );
+	var strChannelName = getEntity(apireq.entities,"Channel"); 
+	var strChannelNo = getEntity(apireq.entities,"ChannelNo"); 
+        var strRegionid = 91629;
 	
-      var strChannelName =  apireq.result.parameters.Channel.toUpperCase();
-      var strChannelNo =  apireq.result.parameters.ChannelNo;
-      var strRegionid =  91629;
-	
-	  console.log("strChannelName " + strChannelName +" strChannelNo: "+strChannelNo);
-        var headersInfo = { "Content-Type": "application/json" };
-	var args = {
-		"headers": headersInfo,
-		"json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
-			 Request: {
-				 ThisValue: 'StationSearch',
-				 BotRegionID : strRegionid ,
-				 BotstrFIOSServiceId : strChannelNo, //channel number search
-				 BotstrStationCallSign:strChannelName
-			 	  } 
-			}
+    console.log("strChannelName : strChannelNo  : strRegionid  :" + strChannelName + strChannelNo + strRegionid);
+    var headersInfo = { "Content-Type": "application/json" };
+    var args = {
+        "headers": headersInfo,
+        "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
+           // Request: {ThisValue: 'ChannelSearch',BotstrStationCallSign:strChannelName} 
+		  Request: {
+                    ThisValue: 'StationSearch',
+                    BotRegionID : strRegionid ,
+                    BotstrFIOSServiceId : strChannelNo, //channel number search
+                    BotstrStationCallSign: strChannelName
+                }
+        }
 		
-	};
-  console.log("json " + String(args));
+    };
+    console.log("json " + String(args));
 	
-    request.post("https://www98.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+    request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
              
-                 console.log("body " + body);
+                console.log("body " + body);
                 callback(body);
             }
             else
-            	console.log('error: ' + error + ' body: ' + body);
+                console.log('error: ' + error + ' body: ' + body);
         }
     );
  } 
