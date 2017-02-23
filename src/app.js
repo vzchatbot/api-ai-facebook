@@ -1503,14 +1503,14 @@ function ChnlSearchCallback(apiresp,usersession) {
 function recommendations(apireq,pgmtype,callback) { 
     console.log('inside recommendations ');
 	
-  /*  var struserid = ''; 
-    for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
+    var struserid = ''; 
+   /* for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
         if (apireq.result.contexts[i].name == "sessionuserid") {
             struserid = apireq.result.contexts[i].parameters.Userid;
             console.log("original userid " + ": " + struserid);
         }
-    } 	
-    if (struserid == '' || struserid == undefined) struserid='lt6sth2'; *///hardcoding if its empty*/	
+    } 	*/
+    if (struserid == '' || struserid == undefined) struserid='lt6sth4'; //hardcoding if its empty*/	
     var headersInfo = { "Content-Type": "application/json" };
     var args={};
     if(pgmtype == "OnNow")
