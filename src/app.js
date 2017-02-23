@@ -135,8 +135,16 @@ function processEvent(event) {
             console.log('I got a response. Let me check');
             if (response.output.text.length != 0) {
                 console.log('Watson says:' + response.output.text[0]);
+		    
 		    console.log('Watson INTENT:' + response.intents[0].intent);
-		    welcomeMsgWat(sender, response.output.text[0]);
+		    if(response.intents[0].intent == 'program_search' && response.entities != '')
+		    {    console.log("USER QUERIED FOR PROGRAM SEARCH WITH PROGRAM NAME");
+		    		welcomeMsgWat(sender, response.output.text[0]);
+		    }
+		    else if(response.intents[0].intent == 'program_search' && response.entities == '')
+		    {    console.log("USER QUERIED FOR PROGRAM SEARCH WITHOUT PROGRAM NAME");
+		    		welcomeMsgWat(sender, response.output.text[0]);
+		    }
                 //console.log('Watson says:' + response.output.text[1]);
             }
         }
