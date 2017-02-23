@@ -180,7 +180,8 @@ console.log('In CONVMess  : ' + message);
             if (response.output.text.length != 0) {
                 console.log('Watson says:' + response.output.text[0]);		
                 console.log('Watson text 1 :' + response.output.text[1]);
-		console.log('Watson response:' + response.output);
+		console.log('Watson response:' + JSONbig.stringify(response.output));
+		    console.log('Watson response:' + JSONbig.stringify(response));
             }
         }
     });
