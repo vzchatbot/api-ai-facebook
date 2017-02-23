@@ -172,7 +172,7 @@ console.log('In CONVMess');
         input: { 'text': message }
     }, function (err, response) {
         if (err) {
-            console.log(err)
+            console.log('Watson error in CONVMess'+ err);
         }
         else {
             console.log('I got a response. Let me check');
