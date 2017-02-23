@@ -1371,7 +1371,7 @@ function CategoryList(apireq,usersession) {
 	function getEntity(entitycoll,entityValue) {
 	var i = null;
 	for (i = 0; entitycoll.length > i; i += 1) {
-		if (entitycoll[i].value === entityValue) {
+		if (entitycoll[i].entity === entityValue) {
 			return entitycoll[i].value;
 		}
 	}	
