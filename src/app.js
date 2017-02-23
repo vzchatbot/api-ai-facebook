@@ -136,7 +136,7 @@ function processEvent(event) {
             if (response.output.text.length != 0) {
                 console.log('Watson says:' + response.output.text[0]);
 		    console.log('Watson INTENT:' + response.intents[0].intent);
-		    welcomeMsgWat(sender);
+		    welcomeMsgWat(sender, response.intents[0].intent);
                 //console.log('Watson says:' + response.output.text[1]);
             }
         }
@@ -1366,12 +1366,12 @@ function welcomeMsg(usersession)
 }
 	
 	
-function welcomeMsgWat(usersession)
+function welcomeMsgWat(usersession, msg)
 {
 	//var authCode = "lt6sth2"; 
    // getvzUserID(authCode, function (str) { getvzUserIDCallBack(str, event) });
     console.log("inside Watson's welcomeMsg");
-    var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":response.intents[0].intent,"buttons":[{"type":"postback","title":"Learn More","payload":"Link Account"},{"type":"postback","title":"Maybe later","payload":"Main Menu"}]}}}};
+    var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":msg,"buttons":[{"type":"postback","title":"Learn More","payload":"Link Account"},{"type":"postback","title":"Maybe later","payload":"Main Menu"}]}}}};
     console.log(JSON.stringify(respobj)); 
     sendFBMessage(usersession, {text: "Hi Welcome to Verizon. Experience the services of Watson"});
     sendFBMessage(usersession,  respobj.facebook);
