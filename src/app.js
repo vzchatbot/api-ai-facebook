@@ -157,13 +157,14 @@ function processEvent(event) {
             }
         }
 	
-	    var conversation = watson.conversation({
+var conversation = watson.conversation({
     username: '31be4934-c02e-441a-96e6-d639b4ab69a8',
     password: 'Q2hapKhopVRj',
     version: 'v1',
     version_date: '2016-09-20'
 });    
 	    
+ convMess(text);
 	    
  function convMess(message) {
 console.log('In CONVMess' + message);
@@ -182,133 +183,8 @@ console.log('In CONVMess' + message);
             }
         }
     });
-}
-	    
-   
-
-        var apiaiRequest  = apiAiService.textRequest(text,{sessionId: sessionIds.get(sender)});
-	    convMess(apiaiRequest);
-        apiaiRequest .on('response', function (response)  {
-            if (isDefined(response.result)) {
-                var responseText = response.result.fulfillment.speech;
-                var responseData = response.result.fulfillment.data;
-                var action = response.result.action;		    
-                var intent = response.result.metadata.intentName;
-                console.log(JSON.stringify(response));
-                var Finished_Status=response.result.actionIncomplete;
-                console.log("Finished_Status "+ Finished_Status);		    
-                console.log('responseText  : - '+ responseText);
-                console.log('responseData  : - '+ responseData);
-                console.log('action : - '+ action );
-                console.log('intent : - '+ intent );	
-		    
-console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
- 
-		    
-                // see if the intent is not finished play the prompt of API.ai or fall back messages
-                if(Finished_Status == true || intent=="Default Fallback Intent" ) 
-                {
-                    sendFBMessage(sender, {text: responseText});
-                }
-                else //if the intent is complete do action
-                {
-                    console.log("----->>>>>>>>>>>> INTENT SELECTION <<<<<<<<<<<------");
-                    var straction =response.result.action;
-                    console.log("Selected_action : "+ straction);
-                    // Methods to be called based on action 
-                    switch (straction) 
-                    {
-                        case "getStarted":
-                            console.log("----->>>>>>>>>>>> INSIDE getStarted <<<<<<<<<<<------");
-                            welcomeMsg(sender);  
-                            break;
-                        case "LinkOptions":
-                            console.log("----->>>>>>>>>>>> INSIDE LinkOptions <<<<<<<<<<<------");
-                            accountlinking(response,sender);
-                            break;
-                        case "MoreOptions":
-                            console.log("----->>>>>>>>>>>> INSIDE MoreOptions <<<<<<<<<<<------");
-                            sendFBMessage(sender,  {text: responseText});
-                            break;
-                        case "MainMenu":
-                            console.log("----->>>>>>>>>>>> INSIDE MainMenu <<<<<<<<<<<------");
-                            MainMenu(sender);
-                            break;
-                        case "record":
-                            console.log("----->>>>>>>>>>>> INSIDE recordnew <<<<<<<<<<<------");	    
-                            RecordScenario (response,sender,sender); 
-                            break;  
-                        case "CategoryList":
-                            console.log("----->>>>>>>>>>>> INSIDE CategoryList <<<<<<<<<<<------");
-                            CategoryList(response,sender);
-                            break;
-                        case "recommendation":
-                            console.log("----->>>>>>>>>>>> INSIDE recommendation <<<<<<<<<<<------");
-                            recommendations(response,'OnLater',function (str) {recommendationsCallback(str,sender)}); 
-                            break;
-                        case "OnNowrecommendation":
-                            console.log("----->>>>>>>>>>>> INSIDE OnNowrecommendation <<<<<<<<<<<------");
-                            recommendations(response,'OnNow',function (str) {recommendationsCallback(str,sender)}); 
-                            break;
-                        case "channelsearch":
-                            console.log("----->>>>>>>>>>>> INSIDE channelsearch <<<<<<<<<<<------");
-                            //ChnlSearch(response,function (str){ ChnlSearchCallback(str,sender)}); 
-				    stationsearch(response,function (str){ stationsearchCallback(str,sender)}); 
-                            break;
-                        case "programSearch":
-                            console.log("----->>>>>>>>>>>> INSIDE programSearch <<<<<<<<<<<------");
-                            PgmSearch(response,sender,function (str){ PgmSearchCallback(str,sender)});
-                            break;
-                        case "support":
-                            console.log("----->>>>>>>>>>>> INSIDE support <<<<<<<<<<<------");
-                            support(sender);
-                            break;
-                        case "upgradeDVR":
-                            console.log("----->>>>>>>>>>>> INSIDE upgradeDVR <<<<<<<<<<<------");
-                            upgradeDVR(response,sender);
-                            break;
-                        case "upsell":
-                            console.log("----->>>>>>>>>>>> INSIDE upsell <<<<<<<<<<<------");
-                            upsell(response,sender);
-                            break;
-                        case "Billing":
-                            console.log("----->>>>>>>>>>>> INSIDE Billing <<<<<<<<<<<------");
-                            stationsearch(sender);
-                            break;
-		        case "cancelappointmentnotconfirmed":
-                            console.log("----->>>>>>>>>>>> INSIDE cancelappointment <<<<<<<<<<<------");
-                            cancelscheduledticket(response,sender,function (str){cancelscheduledticketCallBack(str,sender)});
-                            break;
-		        case "Rescheduleticket":
-                            console.log("----->>>>>>>>>>>> INSIDE Rescheduleticket <<<<<<<<<<<------");
-                            Rescheduleticket(response,sender,function (str){RescheduleticketCallback(str,sender)});
-                            break;
-			case "showopentickets":
-                            console.log("----->>>>>>>>>>>> INSIDE showopentickets <<<<<<<<<<<------");
-                            showopentickets(response,sender,function (str){showopenticketsCallback(str,sender)});
-                            break;
-			case "showOutagetickets":
-                            console.log("----->>>>>>>>>>>> INSIDE showOutagetickets <<<<<<<<<<<------");
-                            showOutagetickets(response,sender,function (str){showOutageticketsCallback(str,sender)});
-                            break;
-				    
-                            /*case "demowhatshot": 
-                                     console.log("----->>>>>>>>>>>> INSIDE demowhatshot <<<<<<<<<<<------");
-                                demowhatshot(sender);
-                                break; */
-				    
-                        default:
-                            console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");
-                            sendFBMessage(sender,  {text: responseText});
-                    }
-                }
-		    
-            }    
-                
-        });
-
-        // apiaiRequest.on('error', function (error) {console.error(error)});
-        apiaiRequest.end();
+}    
+     
     }
 }
 
