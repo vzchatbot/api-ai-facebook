@@ -182,8 +182,8 @@ console.log('In CONVMess  : ' + message);
              
 		console.log('Watson response:' + JSONbig.stringify(response.intents[0].intent));
 		    
-		 //    var strIntent =response.intents[0].intent;
-		    var strIntent ="MoreOptions";
+		     var strIntent =response.intents[0].intent;
+		   // var strIntent ="MoreOptions";
 		     var responseText = response.output.text[0];
 		    console.log('strIntent:' + JSONbig.stringify(response.intents.intent));
 		    if(strIntent == '')
