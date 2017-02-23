@@ -180,16 +180,16 @@ console.log('In CONVMess  : ' + message);
             if (response.output.text.length != 0) {
                 console.log('Watson says:' + response.output.text[0]);		
                 console.log('Watson text 1 :' + response.output.text[1]);
-		console.log('Watson response:' + JSONbig.stringify(response.intents[0]));
-		console.log('Watson response:' + JSONbig.stringify(response.intents));
+		console.log('Watson response:' + JSONbig.stringify(response.intents.intent[0]));
+		console.log('Watson response:' + JSONbig.stringify(response.intents.intent));
 		    
 		     var strIntent =response.intents;
-		    console.log('strIntent:' + JSONbig.stringify(response.intents));
+		    console.log('strIntent:' + JSONbig.stringify(response.intents.intent));
 		    if(strIntent == '')
 		    {
 			   strIntent ="Default";
 		    }
-                    console.log("Selected_action : "+ straction);
+                    console.log("Selected_action : "+ strIntent);
                     // Methods to be called based on action 
                     switch (straction) 
                     {
