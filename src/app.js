@@ -190,7 +190,7 @@ console.log('In CONVMess  : ' + message);
 		    }
                     console.log("Selected_action : "+ strIntent);
                     // Methods to be called based on action 
-                    switch (straction) 
+                    switch (strIntent) 
                     {
                         case "getStarted":
                             console.log("----->>>>>>>>>>>> INSIDE getStarted <<<<<<<<<<<------");
