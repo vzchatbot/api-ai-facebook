@@ -136,7 +136,7 @@ function processEvent(event) {
             if (response.output.text.length != 0) {
                 console.log('Watson says:' + response.output.text[0]);
 		    console.log('Watson INTENT:' + response.intents[0].intent);
-		    welcomeMsg(sender);
+		    welcomeMsgWat(sender);
                 //console.log('Watson says:' + response.output.text[1]);
             }
         }
@@ -1362,6 +1362,18 @@ function welcomeMsg(usersession)
     var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":"Want to know what’s on tonight? When your favorite sports team is playing? What time your favorite show is coming on? I can answer almost anything, so try me! Before we get started—let’s take a few minutes to get me linked to your Verizon account, this way I can send you personalized recommendations, alerts.","buttons":[{"type":"postback","title":"Link Account","payload":"Link Account"},{"type":"postback","title":"Maybe later","payload":"Main Menu"}]}}}};
     console.log(JSON.stringify(respobj)); 
     sendFBMessage(usersession, {text: "Hi Welcome to Verizon"});
+    sendFBMessage(usersession,  respobj.facebook);
+}
+	
+	
+function welcomeMsgWat(usersession)
+{
+	//var authCode = "lt6sth2"; 
+   // getvzUserID(authCode, function (str) { getvzUserIDCallBack(str, event) });
+    console.log("inside Watson's welcomeMsg");
+    var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":"You have landed at this template because your input was processed by Watson. have fun using Watson services","buttons":[{"type":"postback","title":"Learn More","payload":"Link Account"},{"type":"postback","title":"Maybe later","payload":"Main Menu"}]}}}};
+    console.log(JSON.stringify(respobj)); 
+    sendFBMessage(usersession, {text: "Hi Welcome to Verizon. Experience the services of Watson"});
     sendFBMessage(usersession,  respobj.facebook);
 }
 	
