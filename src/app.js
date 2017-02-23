@@ -178,19 +178,18 @@ console.log('In CONVMess  : ' + message);
         else {
             console.log('I got a response. Let me check');
             if (response.output.text.length != 0) {
-                console.log('Watson says:' + response.output.text[0]);	
-             
-		console.log('Watson response:' + JSONbig.stringify(response.intents[0].intent));
+                console.log('Watson response Text:' + response.output.text[0]);	             
+		console.log('Watson Intent:' + JSONbig.stringify(response.intents[0].intent));
 		    
 		     var strIntent =response.intents[0].intent;
 		   // var strIntent ="MoreOptions";
 		     var responseText = response.output.text[0];
-		    console.log('strIntent:' + JSONbig.stringify(response.intents.intent));
+		    console.log('strIntent:' + JSONbig.stringify(response.intents[0].intent));
 		    if(strIntent == '')
 		    {
 			   strIntent ="Default";
 		    }
-                    console.log("Selected_action : "+ strIntent);
+                    console.log("Selected_Intent : "+ strIntent);
                     // Methods to be called based on action 
                     switch (strIntent) 
                     {
