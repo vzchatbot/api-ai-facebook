@@ -135,6 +135,7 @@ function processEvent(event) {
             console.log('I got a response. Let me check');
             if (response.output.text.length != 0) {
                 console.log('Watson says:' + response.output.text[0]);
+		    welcomeMsg(sender);
                 //console.log('Watson says:' + response.output.text[1]);
             }
         }
