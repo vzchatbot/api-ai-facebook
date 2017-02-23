@@ -275,6 +275,12 @@ console.log('In CONVMess  : ' + message);
                             //sendFBMessage(sender,  {text: responseText});	    
 			  welcomeMsg(sender);    
                     }
+		    else
+		    {			       
+                            console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");
+				responseText="Hey ...I Didnt understand ....I am here to help you on Verizon Services";    
+			      sendFBMessage(sender,  {text: responseText});
+		    }
             }
         }
     });
