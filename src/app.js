@@ -153,6 +153,7 @@ function processEvent(event) {
 		    else
 		    {
 			    console.log('UNIDENTIFIED INTENT');
+			  //  var respobj= {"facebook":{"attachment":{"message":{"text":msg}}}};
 			    sendFBMessage(usersession, {text: "Sorry I am unable to follow your message"});
 		    }
                 //console.log('Watson says:' + response.output.text[1]);
@@ -1400,7 +1401,7 @@ function welcomeMsgWat(usersession, msg)
 function PgmName(usersession, msg)
 	{
 		console.log("inside PGMNAME");
-		var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":msg,"buttons":[]}}}};
+		var respobj= {"facebook":{"attachment":{"message":{"text":msg}}}};
 		//var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title": msg, "image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","subtitle":"Enjoy the show","default_action":{"type":"web_url", "url":"https://tv.verizon.com/series/24045604/details/mike-molly","messenger_extensions": true,"webview_height_ratio": "tall", "fallback_url": ""},"buttons":[]}]}}}};
 		sendFBMessage(usersession,  respobj.facebook);
 	}
