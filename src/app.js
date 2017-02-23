@@ -115,9 +115,32 @@ function processEvent(event) {
             }
         }
 	    
-    
+    var conversation = watson.conversation({
+    username: '31be4934-c02e-441a-96e6-d639b4ab69a8',
+    password: 'Q2hapKhopVRj',
+    version: 'v1',
+    version_date: '2016-09-20'
+});
    
-        var apiaiRequest  = apiAiService.textRequest(text,{sessionId: sessionIds.get(sender)});
+	    
+	    conversation.message({
+        workspace_id: 'b2d3a074-4d46-4b95-b902-f70d0000fdc6',
+        input: { 'text': text }
+    }, function (err, response) {
+        if (err) {
+		console.log('WATSON ERROR');
+            console.log(err)
+        }
+        else {
+            console.log('I got a response. Let me check');
+            if (response.output.text.length != 0) {
+                console.log('Watson says:' + response.output.text[0]);
+                //console.log('Watson says:' + response.output.text[1]);
+            }
+        }
+    });
+	    
+       /* var apiaiRequest  = apiAiService.textRequest(text,{sessionId: sessionIds.get(sender)});
         apiaiRequest .on('response', function (response)  {
             if (isDefined(response.result)) {
                 var responseText = response.result.fulfillment.speech;
@@ -130,7 +153,7 @@ function processEvent(event) {
                 console.log('responseText  : - '+ responseText);
                 console.log('responseData  : - '+ responseData);
                 console.log('action : - '+ action );
-                console.log('intent : - '+ intent );	
+                console.log('intent : - '+ intent );	*/
 		    
 		// ssn(response,sender); 
  // Handlesession(ReqSenderID);
