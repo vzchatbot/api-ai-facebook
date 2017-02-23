@@ -136,7 +136,7 @@ function processEvent(event) {
             if (response.output.text.length != 0) {
                 console.log('Watson says:' + response.output.text[0]);
 		    console.log('Watson INTENT:' + response.intents[0].intent);
-		    welcomeMsgWat(sender, response.intents[0].intent);
+		    welcomeMsgWat(sender, response.output.text[0]);
                 //console.log('Watson says:' + response.output.text[1]);
             }
         }
