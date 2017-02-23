@@ -137,13 +137,23 @@ function processEvent(event) {
                 console.log('Watson says:' + response.output.text[0]);
 		    
 		    console.log('Watson INTENT:' + response.intents[0].intent);
-		    if(response.intents[0].intent == 'program_search' && response.entities != '')
+		    if(response.intents[0].intent == 'greetings')
+		    {
+			    console.log('USER HAS STARTED WITH A GREETING');
+			    welcomeMsgWat(sender, response.output.text[0]);
+		    }
+		    else if(response.intents[0].intent == 'program_search' && response.entities != '')
 		    {    console.log("USER QUERIED FOR PROGRAM SEARCH WITH PROGRAM NAME");
-		    		welcomeMsgWat(sender, response.output.text[0]);
+		    		PgmName(sender, response.output.text[0]);
 		    }
 		    else if(response.intents[0].intent == 'program_search' && response.entities == '')
 		    {    console.log("USER QUERIED FOR PROGRAM SEARCH WITHOUT PROGRAM NAME");
-		    		welcomeMsgWat(sender, response.output.text[0]);
+		    		PgmListing(sender, response.output.text[0]);
+		    }
+		    else
+		    {
+			    console.log('UNIDENTIFIED INTENT');
+			    sendFBMessage(usersession, {text: "Sorry I am unable to follow your message"});
 		    }
                 //console.log('Watson says:' + response.output.text[1]);
             }
