@@ -268,12 +268,12 @@ console.log('In CONVMess  : ' + message);
                             break;				    
                         case "Default":
                             console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");
-				    var responseText ="Hi , Welcome to Verizon . I can help you on verizon service....";
-                            sendFBMessage(sender,  {text: responseText});
+				responseText="Hey .....I am here to help you on Verizon Services";    
+			      sendFBMessage(sender,  {text: responseText});
 			 case "greetings":
-                            console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");				   
-                            sendFBMessage(sender,  {text: responseText});	    
-				    
+                            console.log("----->>>>>>>>>>>> INSIDE greetings <<<<<<<<<<<------");				   
+                            //sendFBMessage(sender,  {text: responseText});	    
+			  welcomeMsg(sender);    
                     }
             }
         }
