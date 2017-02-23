@@ -1480,7 +1480,7 @@ function ChnlSearch(apireq,callback) {
 	var strChannelNo = getEntity(apireq.entities,"ChannelNo"); 
         var strRegionid = 91629;
 	
-    console.log("strChannelName " + strChannelName);
+    console.log("strChannelName : strChannelNo  : strRegionid  :" + strChannelName + strChannelNo + strRegionid);
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
