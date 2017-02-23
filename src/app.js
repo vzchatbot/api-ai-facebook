@@ -154,7 +154,7 @@ function processEvent(event) {
         }
 	    
     
-   
+
         var apiaiRequest  = apiAiService.textRequest(text,{sessionId: sessionIds.get(sender)});
         apiaiRequest .on('response', function (response)  {
             if (isDefined(response.result)) {
@@ -169,7 +169,8 @@ function processEvent(event) {
                 console.log('responseData  : - '+ responseData);
                 console.log('action : - '+ action );
                 console.log('intent : - '+ intent );	
-		    
+
+	    
 		// ssn(response,sender); 
  // Handlesession(ReqSenderID);
 		    //======================
