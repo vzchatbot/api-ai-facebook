@@ -11,6 +11,8 @@ var log4js = require('log4js');
 var fs = require('fs');
 var util = require('util');
 
+var watson = require('watson-developer-cloud');
+
 var session = require('express-session');
 var sql = require('mssql');
 var MssqlStore = require('../src/MSSQLSession.js')(session);
@@ -153,7 +155,7 @@ function processEvent(event) {
             }
         }
 	    
-    
+    /*
 
         var apiaiRequest  = apiAiService.textRequest(text,{sessionId: sessionIds.get(sender)});
         apiaiRequest .on('response', function (response)  {
@@ -169,7 +171,11 @@ function processEvent(event) {
                 console.log('responseData  : - '+ responseData);
                 console.log('action : - '+ action );
                 console.log('intent : - '+ intent );	
-
+*/
+	    
+	    
+	    
+	    
 	    
 		// ssn(response,sender); 
  // Handlesession(ReqSenderID);
