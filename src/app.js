@@ -63,12 +63,7 @@ var logger = log4js.getLogger("botws");
 var Errlogger = log4js.getLogger('errorlog');
 var ChatHistoryLog = log4js.getLogger('Debug');
 
- var conversation = watson.conversation({
-    username: '31be4934-c02e-441a-96e6-d639b4ab69a8',
-    password: 'Q2hapKhopVRj',
-    version: 'v1',
-    version_date: '2016-09-20'
-});    
+ 
 
 //=========================================================
 /*
@@ -161,26 +156,38 @@ function processEvent(event) {
                 //Place holder code to unlink.
             }
         }
+	
+	    var conversation = watson.conversation({
+    username: '31be4934-c02e-441a-96e6-d639b4ab69a8',
+    password: 'Q2hapKhopVRj',
+    version: 'v1',
+    version_date: '2016-09-20'
+});    
 	    
-	      conversation.message({
+	    
+ function convMess(message) {
+console.log('In CONVMess');
+    conversation.message({
         workspace_id: 'b2d3a074-4d46-4b95-b902-f70d0000fdc6',
-        input: { 'text': text }
+        input: { 'text': message }
     }, function (err, response) {
         if (err) {
             console.log(err)
         }
         else {
-	
             console.log('I got a response. Let me check');
             if (response.output.text.length != 0) {
-                console.log('Watson says:' + response.output.text[0]);                
+                console.log('Watson says:' + response.output.text[0]);
+                //console.log('Watson says:' + response.output.text[1]);
             }
         }
     });
+}
 	    
    
-/*
+
         var apiaiRequest  = apiAiService.textRequest(text,{sessionId: sessionIds.get(sender)});
+	    convMess(apiaiRequest);
         apiaiRequest .on('response', function (response)  {
             if (isDefined(response.result)) {
                 var responseText = response.result.fulfillment.speech;
@@ -194,78 +201,6 @@ function processEvent(event) {
                 console.log('responseData  : - '+ responseData);
                 console.log('action : - '+ action );
                 console.log('intent : - '+ intent );	
-
-  
-	    
-	    
-	    
-	    
-		// ssn(response,sender); 
- // Handlesession(ReqSenderID);
-		    //======================
-		    
-/*
-		   
-if (require.main === module) {
-	console.log("Inside 1======");
- 
-	 var start = function(callback) {
-  callback = callback || function() {};
-console.log("Inside 111======");
-  var dbConfig = {
-  server: "10.77.41.138,1433",
-  database: "UFD",
-  user: "erepairstg",
-  password: "testrepairstg"
-};
-	console.log("Inside 111====== " +JSON.stringify(dbConfig));
-	  var app = express();
-	 app.use(session({
-      secret: 'EAAEziYhGZAZAIBAABLZAuLkFLCRcrbEg0wPlNtHwvENI2vOikW7uSoqpUZABfNSUZAWSwIVdqLThflu78IC2ic8AjUcEFSfTNtTq9ht03TPZCYvbCZAJaLiUnahD9krlEC0WsxEOcmcdDNUsTt4JJRPZB1ZAuYfS4eRILvbQZB8uXp2QZDZD',
-      resave: false,
-      saveUninitialized: false,
-      store: new MssqlStore({ reapInterval: 10, ttl: 10 })
-    }));
-	console.log("Inside 222====== " + JSON.stringify(app));		
-	 app.get('/', function (req, res) {
-	 console.log("Inside 3 ======" +  req.session.visits);
-      req.session.visits = (req.session.visits || 0) + 1;
-      res.send('You have visited ' + req.session.visits + 'times.');
-    });
-		 
-  sql.connect(dbConfig, function(err) {
-    if (err) return callback(err);
-    var app = express();
-    app.use(session({
-      secret: 'EAAEziYhGZAZAIBAABLZAuLkFLCRcrbEg0wPlNtHwvENI2vOikW7uSoqpUZABfNSUZAWSwIVdqLThflu78IC2ic8AjUcEFSfTNtTq9ht03TPZCYvbCZAJaLiUnahD9krlEC0WsxEOcmcdDNUsTt4JJRPZB1ZAuYfS4eRILvbQZB8uXp2QZDZD',
-      resave: false,
-      saveUninitialized: false,
-      store: new MssqlStore({ reapInterval: 10, ttl: 10 })
-    }));
-	  
-
-    app.get('/storesession', function (req, res) {
-	console.log("Inside 3 ======" +  req.session.visits);
-      req.session.visits = (req.session.visits || 0) + 1;
-      res.send('You have visited ' + req.session.visits + 'times.');
-    });
-
-    var server = app.listen(5000, function (err) {
-	    console.log("Inside 4 ======" +  server);
-      if (err) return callback(err);
-      callback();
-    });
-  });
-};
-	start();
-	
-}
-else {
-	console.log("Inside 2======");
-  module.exports = { start: start };
-}
-*/
-//=======================
 		    
 console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
  
@@ -377,7 +312,7 @@ console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringi
     }
 }
 
-*/
+
 function splitResponse(str) {
     if (str.length <= 320) {
         return [str];
