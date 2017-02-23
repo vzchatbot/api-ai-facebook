@@ -1412,7 +1412,8 @@ function PgmName(usersession, msg)
 function PgmListing(usersession, msg)
 	{
 		console.log("inside PGMLISTING");
-		var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":msg,"buttons":[{"type":"postback","title":"Mike and Molly","payload":"Link Account"},{"type":"postback","title":"Friends","payload":"Main Menu"}]}}}};
+		//var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":msg,"buttons":[{"type":"postback","title":"Learn More","payload":"Link Account"},{"type":"postback","title":"Maybe later","payload":"Main Menu"}]}}}};
+		var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":msg,"buttons":[{"type":"postback","title":"Mike & Molly","payload":"Link Account"},{"type":"postback","title":"Friends","payload":"Main Menu"}]}}}};
 		//var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title": msg, "image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","subtitle":"Enjoy the show","default_action":{"type":"web_url", "url":"https://tv.verizon.com/series/24045604/details/mike-molly","messenger_extensions": true,"webview_height_ratio": "tall", "fallback_url": ""},"buttons":[]}]}}}};
 		sendFBMessage(usersession,  respobj.facebook);
 	}
