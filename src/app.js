@@ -221,7 +221,7 @@ else {
 }
 */
 //=======================
-		    
+		    /*
 console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringify(ReqRecipientID) +"||"+ JSON.stringify(ReqTimeStamp) + "||" + JSON.stringify(ReqMessageID) + "|| "+ JSON.stringify(ReqMessageText)+ "||"  + JSON.stringify(action) + "||"+  JSON.stringify(intent)+ "|| Undefined");	    
  
 		    
@@ -317,7 +317,7 @@ console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringi
                                 demowhatshot(sender);
                                 break; */
 				    
-                        default:
+                     /*   default:
                             console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");
                             sendFBMessage(sender,  {text: responseText});
                     }
@@ -325,10 +325,10 @@ console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringi
 		    
             }    
                 
-        });
+        });*/
 
         // apiaiRequest.on('error', function (error) {console.error(error)});
-        apiaiRequest.end();
+       // apiaiRequest.end();
     }
 }
 
