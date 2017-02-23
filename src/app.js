@@ -178,7 +178,7 @@ console.log('In CONVMess  : ' + message);
         else {
             console.log('I got a response. Let me check');
 		console.log('Watson response:' + JSONbig.stringify(response));
-            if (response.output.text.length != 0) {
+            if (response != '') {
                 console.log('Watson response Text:' + response.output.text[0]);	             
 		console.log('Watson response:' + JSONbig.stringify(response));
 		    
