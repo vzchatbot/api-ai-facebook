@@ -1368,21 +1368,33 @@ function CategoryList(apireq,usersession) {
 	
 } 
 
+	function getEntity(entitycoll,entityValue) {
+	var i = null;
+	for (i = 0; entitycoll.length > i; i += 1) {
+		if (entitycoll[i].value === entityValue) {
+			return entitycoll[i].value;
+		}
+	}	
+	return '';
+        }
 	
 	function PgmSearch(watres,sender,callback) 
 	{ 
 	 console.log("<<<Inside PgmSearch>>>");	
 	 console.log("<<<sender>>>" + sender);
-         var strProgram = watres.entities[0].value;
-		 console.log("<<<strProgram   : >>>"+strProgram);	
-	// var strGenre =  watres.entities.entity("Genre").value;
-	// var strdate =  watres.entities.entity("Date").value;
-	 var strChannelName =  watres.entities[0].entity;
-	// var strFiosId =  watres.entities.entity("FiosID").value;
-	// var strStationId =  watres.entities.entity("Stationid").value;
+		
+         //var strProgram = watres.entities[0].value;
+	 var strProgram =  getEntity("Programs");
+	 console.log("<<<strProgram   : >>>"+ strProgram);
+	 var strGenre =  getEntity("Genre");	
+	 var strdate =  getEntity("date");
+	 var strChannelName =  getEntity("channel");
+	 console.log("<<<strChannelName   : >>>" + strChannelName);	 
+	 var strFiosId =getEntity("FiosID"); 
+	 var strStationId = getEntity("Stationid");
 	 var strRegionId = "";	
 	
-        var headersInfo = { "Content-Type": "application/json" };
+         var headersInfo = { "Content-Type": "application/json" };
 	
 	var args = {
 		"headers": headersInfo,
