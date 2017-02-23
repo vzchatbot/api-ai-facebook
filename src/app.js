@@ -1384,14 +1384,14 @@ function CategoryList(apireq,usersession) {
 	 console.log("<<<sender>>>" + sender);
 		
          //var strProgram = watres.entities[0].value;
-	 var strProgram =  getEntity("Programs");
+	 var strProgram =  getEntity(watres.entities,"Programs");
 	 console.log("<<<strProgram   : >>>"+ strProgram);
-	 var strGenre =  getEntity("Genre");	
-	 var strdate =  getEntity("date");
-	 var strChannelName =  getEntity("channel");
+	 var strGenre =  getEntity(watres.entities,"Genre");	
+	 var strdate =  getEntity(watres.entities,"date");
+	 var strChannelName =  getEntity(watres.entities,"channel");
 	 console.log("<<<strChannelName   : >>>" + strChannelName);	 
-	 var strFiosId =getEntity("FiosID"); 
-	 var strStationId = getEntity("Stationid");
+	 var strFiosId =getEntity(watres.entities,"FiosID"); 
+	 var strStationId = getEntity(watres.entities,"Stationid");
 	 var strRegionId = "";	
 	
          var headersInfo = { "Content-Type": "application/json" };
