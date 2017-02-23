@@ -1400,7 +1400,7 @@ function welcomeMsgWat(usersession, msg)
 function PgmName(usersession, msg)
 	{
 		console.log("inside PGMNAME");
-		var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title": msg, "image_url":"http://cdn03.cdn.justjared.com/wp-content/uploads/headlines/2016/01/mike-molly-officially-canclled.jpg","subtitle":"Enjoy the show","default_action":{"type":"web_url", "url":"http://tv.verizon.com/series/24045604/details/mike-molly","messenger_extensions": true,"webview_height_ratio": "tall", "fallback_url": ""},"buttons":[]}]}}}};
+		var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title": msg, "image_url":"https://s-media-cache-ak0.pinimg.com/736x/ae/a5/01/aea50181597b3d71220ce4aca31f97b2.jpg","subtitle":"Enjoy the show","default_action":{"type":"web_url", "url":"https://tv.verizon.com/series/24045604/details/mike-molly","messenger_extensions": true,"webview_height_ratio": "tall", "fallback_url": ""},"buttons":[]}]}}}};
 		sendFBMessage(usersession,  respobj.facebook);
 	}
 
