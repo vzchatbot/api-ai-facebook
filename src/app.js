@@ -181,7 +181,96 @@ console.log('In CONVMess  : ' + message);
                 console.log('Watson says:' + response.output.text[0]);		
                 console.log('Watson text 1 :' + response.output.text[1]);
 		console.log('Watson response:' + JSONbig.stringify(response.intents[0]));
-		    console.log('Watson response:' + JSONbig.stringify(response.intents));
+		console.log('Watson response:' + JSONbig.stringify(response.intents));
+		    
+		     var strIntent =response.intents;
+		    console.log('strIntent:' + JSONbig.stringify(response.intents));
+		    if(strIntent == '')
+		    {
+			   strIntent ="Default";
+		    }
+                    console.log("Selected_action : "+ straction);
+                    // Methods to be called based on action 
+                    switch (straction) 
+                    {
+                        case "getStarted":
+                            console.log("----->>>>>>>>>>>> INSIDE getStarted <<<<<<<<<<<------");
+                            welcomeMsg(sender);  
+                            break;
+                        case "LinkOptions":
+                            console.log("----->>>>>>>>>>>> INSIDE LinkOptions <<<<<<<<<<<------");
+                            accountlinking(response,sender);
+                            break;
+                        case "MoreOptions":
+                            console.log("----->>>>>>>>>>>> INSIDE MoreOptions <<<<<<<<<<<------");
+                            sendFBMessage(sender,  {text: responseText});
+                            break;
+                        case "MainMenu":
+                            console.log("----->>>>>>>>>>>> INSIDE MainMenu <<<<<<<<<<<------");
+                            MainMenu(sender);
+                            break;
+                        case "record":
+                            console.log("----->>>>>>>>>>>> INSIDE recordnew <<<<<<<<<<<------");	    
+                            RecordScenario (response,sender,sender); 
+                            break;  
+                        case "CategoryList":
+                            console.log("----->>>>>>>>>>>> INSIDE CategoryList <<<<<<<<<<<------");
+                            CategoryList(response,sender);
+                            break;
+                        case "recommendation":
+                            console.log("----->>>>>>>>>>>> INSIDE recommendation <<<<<<<<<<<------");
+                            recommendations(response,'OnLater',function (str) {recommendationsCallback(str,sender)}); 
+                            break;
+                        case "OnNowrecommendation":
+                            console.log("----->>>>>>>>>>>> INSIDE OnNowrecommendation <<<<<<<<<<<------");
+                            recommendations(response,'OnNow',function (str) {recommendationsCallback(str,sender)}); 
+                            break;
+                        case "channelsearch":
+                            console.log("----->>>>>>>>>>>> INSIDE channelsearch <<<<<<<<<<<------");
+                            //ChnlSearch(response,function (str){ ChnlSearchCallback(str,sender)}); 
+				    stationsearch(response,function (str){ stationsearchCallback(str,sender)}); 
+                            break;
+                        case "programSearch":
+                            console.log("----->>>>>>>>>>>> INSIDE programSearch <<<<<<<<<<<------");
+                            PgmSearch(response,sender,function (str){ PgmSearchCallback(str,sender)});
+                            break;
+                        case "support":
+                            console.log("----->>>>>>>>>>>> INSIDE support <<<<<<<<<<<------");
+                            support(sender);
+                            break;
+                        case "upgradeDVR":
+                            console.log("----->>>>>>>>>>>> INSIDE upgradeDVR <<<<<<<<<<<------");
+                            upgradeDVR(response,sender);
+                            break;
+                        case "upsell":
+                            console.log("----->>>>>>>>>>>> INSIDE upsell <<<<<<<<<<<------");
+                            upsell(response,sender);
+                            break;
+                        case "Billing":
+                            console.log("----->>>>>>>>>>>> INSIDE Billing <<<<<<<<<<<------");
+                            stationsearch(sender);
+                            break;
+		        case "cancelappointmentnotconfirmed":
+                            console.log("----->>>>>>>>>>>> INSIDE cancelappointment <<<<<<<<<<<------");
+                            cancelscheduledticket(response,sender,function (str){cancelscheduledticketCallBack(str,sender)});
+                            break;
+		        case "Rescheduleticket":
+                            console.log("----->>>>>>>>>>>> INSIDE Rescheduleticket <<<<<<<<<<<------");
+                            Rescheduleticket(response,sender,function (str){RescheduleticketCallback(str,sender)});
+                            break;
+			case "showopentickets":
+                            console.log("----->>>>>>>>>>>> INSIDE showopentickets <<<<<<<<<<<------");
+                            showopentickets(response,sender,function (str){showopenticketsCallback(str,sender)});
+                            break;
+			case "showOutagetickets":
+                            console.log("----->>>>>>>>>>>> INSIDE showOutagetickets <<<<<<<<<<<------");
+                            showOutagetickets(response,sender,function (str){showOutageticketsCallback(str,sender)});
+                            break;				    
+                        case "Default":
+                            console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");
+				    var responseText ="Hi , Welcome to Verizon . I can help you on verizon service......";
+                            sendFBMessage(sender,  {text: responseText});
+                    }
             }
         }
     });
