@@ -1475,14 +1475,23 @@ function PgmSearchCallback(apiresp,usersession) {
 function ChnlSearch(apireq,callback) { 
     console.log("ChnlSearch called " );
 	
-    var strChannelName =  apireq.result.parameters.Channel.toUpperCase();
+    //var strChannelName =  apireq.result.parameters.Channel.toUpperCase();
+    	var strChannelName = getEntity(apireq.entities,"Channel"); 
+	var strChannelNo = getEntity(apireq.entities,"ChannelNo"); 
+        var strRegionid = 91629;
 	
     console.log("strChannelName " + strChannelName);
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
         "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
-            Request: {ThisValue: 'ChannelSearch',BotstrStationCallSign:strChannelName} 
+           // Request: {ThisValue: 'ChannelSearch',BotstrStationCallSign:strChannelName} 
+		  Request: {
+                    ThisValue: 'StationSearch',
+                    BotRegionID : strRegionid ,
+                    BotstrFIOSServiceId : strChannelNo, //channel number search
+                    BotstrStationCallSign: strChannelName
+                }
         }
 		
     };
@@ -1516,13 +1525,7 @@ function ChnlSearchCallback(apiresp,usersession) {
 function recommendations(apireq,pgmtype,callback) { 
     console.log('inside recommendations ');
 	
-    var struserid = ''; 
-   /* for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
-        if (apireq.result.contexts[i].name == "sessionuserid") {
-            struserid = apireq.result.contexts[i].parameters.Userid;
-            console.log("original userid " + ": " + struserid);
-        }
-    } 	*/
+    var struserid = '';
     if (struserid == '' || struserid == undefined) struserid='lt6sth4'; //hardcoding if its empty*/	
     var headersInfo = { "Content-Type": "application/json" };
     var args={};
