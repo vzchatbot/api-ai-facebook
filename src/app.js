@@ -1373,12 +1373,13 @@ function CategoryList(apireq,usersession) {
 	{ 
 	 console.log("<<<Inside PgmSearch>>>");	
 	 console.log("<<<sender>>>" + sender);
-         var strProgram =  watres.entities.entity("Programs").value;
-	 var strGenre =  watres.entities.entity("Genre").value;
-	 var strdate =  watres.entities.entity("Date").value;
-	 var strChannelName =  watres.entities.entity("channel").value;
-	 var strFiosId =  watres.entities.entity("FiosID").value;
-	 var strStationId =  watres.entities.entity("Stationid").value;
+         var strProgram = watres.entities[0].value;
+		 console.log("<<<strProgram   : >>>"+strProgram);	
+	// var strGenre =  watres.entities.entity("Genre").value;
+	// var strdate =  watres.entities.entity("Date").value;
+	 var strChannelName =  watres.entities[0].entity;
+	// var strFiosId =  watres.entities.entity("FiosID").value;
+	// var strStationId =  watres.entities.entity("Stationid").value;
 	 var strRegionId = "";	
 	
         var headersInfo = { "Content-Type": "application/json" };
@@ -1389,12 +1390,12 @@ function CategoryList(apireq,usersession) {
 			 Request: {ThisValue: 'AdvProgramSearch', //  EnhProgramSearch
 				   BotProviderId :sender, //'1113342795429187',  // usersession ; sender id
 				   BotstrTitleValue:strProgram, 
-				   BotdtAirStartDateTime : strdate,
-				   BotstrGenreRootId : strGenre,
-				   BotstrStationCallSign:strChannelName,
-				   BotstrFIOSRegionID : strRegionId,
-				   BotstrFIOSID : strFiosId,
-				   BotstrFIOSServiceId : strStationId		   
+				   BotdtAirStartDateTime : '',
+				   BotstrGenreRootId : '',
+				   BotstrStationCallSign:'',
+				   BotstrFIOSRegionID : '',
+				   BotstrFIOSID : '',
+				   BotstrFIOSServiceId : ''		   
 				  } 
 			}
 		};
