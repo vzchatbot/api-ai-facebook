@@ -1369,16 +1369,16 @@ function CategoryList(apireq,usersession) {
 } 
 
 	
-	function PgmSearch(apireq,sender,callback) 
+	function PgmSearch(watres,sender,callback) 
 	{ 
 	 console.log("<<<Inside PgmSearch>>>");	
 	 console.log("<<<sender>>>" + sender);
-         var strProgram =  apireq.result.parameters.Programs;
-	 var strGenre =  apireq.result.parameters.Genre;
-	 var strdate =  apireq.result.parameters.date;
-	 var strChannelName =  apireq.result.parameters.Channel;
-	 var strFiosId =  apireq.result.parameters.FiosId;
-	 var strStationId =  apireq.result.parameters.StationId;
+         var strProgram =  watres.entities["Programs"].value;
+	 var strGenre =  watres.entities["Genre"].value;;
+	 var strdate =  watres.entities["Date"].value;;
+	 var strChannelName =  watres.entities["channel"].value;;
+	 var strFiosId =  watres.entities["FiosID"].value;;
+	 var strStationId =  watres.entities["Stationid"].value;;
 	 var strRegionId = "";	
 	
         var headersInfo = { "Content-Type": "application/json" };
