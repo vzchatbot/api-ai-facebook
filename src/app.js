@@ -1400,10 +1400,19 @@ function welcomeMsgWat(usersession, msg)
 function PgmName(usersession, msg)
 	{
 		console.log("inside PGMNAME");
-		var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title": msg, "image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","subtitle":"Enjoy the show","default_action":{"type":"web_url", "url":"https://tv.verizon.com/series/24045604/details/mike-molly","messenger_extensions": true,"webview_height_ratio": "tall", "fallback_url": ""},"buttons":[]}]}}}};
+		var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":msg,"buttons":[]}}}};
+		//var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title": msg, "image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","subtitle":"Enjoy the show","default_action":{"type":"web_url", "url":"https://tv.verizon.com/series/24045604/details/mike-molly","messenger_extensions": true,"webview_height_ratio": "tall", "fallback_url": ""},"buttons":[]}]}}}};
 		sendFBMessage(usersession,  respobj.facebook);
 	}
 
+function PgmListing(usersession, msg)
+	{
+		console.log("inside PGMLISTING");
+		var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":msg,"buttons":[{"type":"postback","title":"Mike and Molly","payload":"Link Account"},{"type":"postback","title":"Friends","payload":"Main Menu"},{"type":"postback","title":"Big Bang Theory","payload":"Main Menu"}]}}}};
+		//var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title": msg, "image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","subtitle":"Enjoy the show","default_action":{"type":"web_url", "url":"https://tv.verizon.com/series/24045604/details/mike-molly","messenger_extensions": true,"webview_height_ratio": "tall", "fallback_url": ""},"buttons":[]}]}}}};
+		sendFBMessage(usersession,  respobj.facebook);
+	}
+	
 function MainMenu(usersession)
 {
     // var respobj = {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":"Are you looking for something to watch, or do you want to see more options? Type or tap below.","buttons":[{"type":"postback","title":"What's on tonight?","payload":"On Later"},{"type":"postback","title":"More Options","payload":"More Options"}]}}}};
