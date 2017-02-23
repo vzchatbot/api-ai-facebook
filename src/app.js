@@ -178,11 +178,11 @@ console.log('In CONVMess  : ' + message);
         else {
             console.log('I got a response. Let me check');
             if (response.output.text.length != 0) {
-                console.log('Watson says:' + response.output.text[0]);		
-                console.log('Watson text 1 :' + response.output.text[1]);		
-		console.log('Watson response:' + JSONbig.stringify(response.intents.intent));
+                console.log('Watson says:' + response.output.text[0]);	
+             
+		console.log('Watson response:' + JSONbig.stringify(response.intents[0].intent));
 		    
-		     var strIntent =response.intents;
+		     var strIntent =response.intents[0].intent;
 		    console.log('strIntent:' + JSONbig.stringify(response.intents.intent));
 		    if(strIntent == '')
 		    {
