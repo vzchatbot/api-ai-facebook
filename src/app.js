@@ -162,24 +162,7 @@ function processEvent(event) {
             }
         }
 	    
-    /*
-
-        var apiaiRequest  = apiAiService.textRequest(text,{sessionId: sessionIds.get(sender)});
-        apiaiRequest .on('response', function (response)  {
-            if (isDefined(response.result)) {
-                var responseText = response.result.fulfillment.speech;
-                var responseData = response.result.fulfillment.data;
-                var action = response.result.action;		    
-                var intent = response.result.metadata.intentName;
-                console.log(JSON.stringify(response));
-                var Finished_Status=response.result.actionIncomplete;
-                console.log("Finished_Status "+ Finished_Status);		    
-                console.log('responseText  : - '+ responseText);
-                console.log('responseData  : - '+ responseData);
-                console.log('action : - '+ action );
-                console.log('intent : - '+ intent );	
-*/
-    conversation.message({
+	      conversation.message({
         workspace_id: 'b2d3a074-4d46-4b95-b902-f70d0000fdc6',
         input: { 'text': text }
     }, function (err, response) {
@@ -194,6 +177,25 @@ function processEvent(event) {
             }
         }
     });
+	    
+   
+/*
+        var apiaiRequest  = apiAiService.textRequest(text,{sessionId: sessionIds.get(sender)});
+        apiaiRequest .on('response', function (response)  {
+            if (isDefined(response.result)) {
+                var responseText = response.result.fulfillment.speech;
+                var responseData = response.result.fulfillment.data;
+                var action = response.result.action;		    
+                var intent = response.result.metadata.intentName;
+                console.log(JSON.stringify(response));
+                var Finished_Status=response.result.actionIncomplete;
+                console.log("Finished_Status "+ Finished_Status);		    
+                console.log('responseText  : - '+ responseText);
+                console.log('responseData  : - '+ responseData);
+                console.log('action : - '+ action );
+                console.log('intent : - '+ intent );	
+
+  
 	    
 	    
 	    
@@ -375,7 +377,7 @@ console.log("ProcessEvent||" + JSON.stringify(ReqSenderID) + "||" + JSON.stringi
     }
 }
 
-
+*/
 function splitResponse(str) {
     if (str.length <= 320) {
         return [str];
