@@ -166,11 +166,10 @@ function processEvent(event) {
 	    
 	    
  function convMess(message) {
-console.log('In CONVMess');
+console.log('In CONVMess' + message);
     conversation.message({
         workspace_id: 'b2d3a074-4d46-4b95-b902-f70d0000fdc6',
-        input: { 'text': message }
-	      console.log('Input Text :-----'+ message );
+        input: { 'text': message }	     
     }, function (err, response) {
         if (err) {
             console.log('Watson error in CONVMess'+ err);
