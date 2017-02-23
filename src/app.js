@@ -1373,12 +1373,12 @@ function CategoryList(apireq,usersession) {
 	{ 
 	 console.log("<<<Inside PgmSearch>>>");	
 	 console.log("<<<sender>>>" + sender);
-         var strProgram =  watres.entities["Programs"].value;
-	 var strGenre =  watres.entities["Genre"].value;;
-	 var strdate =  watres.entities["Date"].value;;
-	 var strChannelName =  watres.entities["channel"].value;;
-	 var strFiosId =  watres.entities["FiosID"].value;;
-	 var strStationId =  watres.entities["Stationid"].value;;
+         var strProgram =  watres.entities.entity["Programs"].value;
+	 var strGenre =  watres.entities.entity["Genre"].value;;
+	 var strdate =  watres.entities.entity["Date"].value;;
+	 var strChannelName =  watres.entities.entity["channel"].value;;
+	 var strFiosId =  watres.entities.entity["FiosID"].value;;
+	 var strStationId =  watres.entities.entity["Stationid"].value;;
 	 var strRegionId = "";	
 	
         var headersInfo = { "Content-Type": "application/json" };
