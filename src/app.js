@@ -183,6 +183,7 @@ console.log('In CONVMess  : ' + message);
 		console.log('Watson response:' + JSONbig.stringify(response.intents[0].intent));
 		    
 		     var strIntent =response.intents[0].intent;
+		     var responseText = response.output.text[0];
 		    console.log('strIntent:' + JSONbig.stringify(response.intents.intent));
 		    if(strIntent == '')
 		    {
@@ -267,8 +268,12 @@ console.log('In CONVMess  : ' + message);
                             break;				    
                         case "Default":
                             console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");
-				    var responseText ="Hi , Welcome to Verizon . I can help you on verizon service......";
+				    var responseText ="Hi , Welcome to Verizon . I can help you on verizon service....";
                             sendFBMessage(sender,  {text: responseText});
+			 case "greetings":
+                            console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");				   
+                            sendFBMessage(sender,  {text: responseText});	    
+				    
                     }
             }
         }
