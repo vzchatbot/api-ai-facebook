@@ -167,7 +167,7 @@ var conversation = watson.conversation({
  convMess(text);
 	    
  function convMess(message) {
-console.log('In CONVMess' + message);
+console.log('In CONVMess  : ' + message);
     conversation.message({
         workspace_id: 'b2d3a074-4d46-4b95-b902-f70d0000fdc6',
         input: { 'text': message }	     
@@ -179,6 +179,7 @@ console.log('In CONVMess' + message);
             console.log('I got a response. Let me check');
             if (response.output.text.length != 0) {
                 console.log('Watson says:' + response.output.text[0]);
+		 console.log('Watson response:' + response);
                 //console.log('Watson says:' + response.output.text[1]);
             }
         }
