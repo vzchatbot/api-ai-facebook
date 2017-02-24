@@ -43,8 +43,6 @@ log4js.configure({
                 type: "dateFile",
                 filename: 'D:\\app\\log\\bot\\boterrors.log',
                 category: 'errorlog',"pattern": "-yyyy-MM-dd","alwaysIncludePattern": false
-		
-		
             }
         }
         ,
@@ -63,47 +61,6 @@ var logger = log4js.getLogger("botws");
 var Errlogger = log4js.getLogger('errorlog');
 var ChatHistoryLog = log4js.getLogger('Debug');
 
- 
-
-//=========================================================
-/*
-{
-  "replaceConsole": true,     // Optional: if true, console.log 
-                              // will be replaced by log4js
-  "appenders": [{
-    "type": "console"         // This appender just sends
-                              // everything to the console.
-  }, {
-    "type": "logLevelFilter", // This is a recursive appender,
-                              // filters log messages and
-                              // sends them to its own appender.
-
-    "level": "ERROR",         // Include only error logs.
-
-    "appender": {             // the filter's appender, smtp
-      "type": "smtp",
-      "recipients": "prabu.kasinathan@verizon.com",
-      "sender": "prabu.kasinathan@verizon.com",
-      "sendInterval": 60,     // Batch log messages, and send via 
-                              // this interval in seconds (0 sends 
-                              // immediately, unbatched).
-      "transport": "SMTP",
-      "SMTP": {
-        "host": "smtp.verizon.com",  // Other SMTP options here.
-        "port": 25
-      }
-    }
-  }]
-}
-
-
-log4js.configure("D:\\app\\log\\bot\\boterrors.json")
-logger = log4js.getLogger();
-logger.error("This send you an email!");
-logger.info("But won't.");
-*/
-//=====================================
-
 function processEvent(event) {
     var sender = event.sender.id.toString();
     console.log("senderid", sender);
@@ -113,8 +70,6 @@ function processEvent(event) {
     {
         var text = event.message ? event.message.text : event.postback.payload;      
         console.log("Before Account Linking ");  
-	
-	    
         if (!sessionIds.has(sender))
         {
             console.log("Inside sessionID:- ");
@@ -283,8 +238,6 @@ console.log('In CONVMess  : ' + message);
      
     }
 }
-
-
 function splitResponse(str) {
     if (str.length <= 320) {
         return [str];
@@ -1028,12 +981,11 @@ function stationsearch(apireq,callback) {
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
-        "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
-           // Request: {ThisValue: 'ChannelSearch',BotstrStationCallSign:strChannelName} 
+        "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',   
 		  Request: {
                     ThisValue: 'StationSearch',
                     BotRegionID : strRegionid ,
-                    BotstrFIOSServiceId : strChannelNo, //channel number search
+                    BotstrFIOSServiceId : strChannelNo, 
                     BotstrStationCallSign: strChannelName
                 }
         }
@@ -1095,15 +1047,12 @@ function stationsearchCallback(apiresp,usersession) {
 			}
 
 	 	sendFBMessage(usersession, respobj.facebook);
-	 	//var msg = new builder.Message(usersession).sourceEvent(respobj);              
-          	//usersession.send(msg);
+	 
 	}
 	else
 	{
 		 console.log("Sorry i dont find channel details");
 		sendFBMessage(usersession,  {text: "Sorry I dont find the channel details. Can you try another."});
-		
-		//usersession.send("Sorry I dont find the channel details. Can you try another.");
 	}
 	
 } 	
@@ -1430,8 +1379,6 @@ function PgmSearchCallback(apiresp,usersession) {
 	
 function ChnlSearch(apireq,callback) { 
     console.log("ChnlSearch called " );
-	
-    //var strChannelName =  apireq.result.parameters.Channel.toUpperCase();
     	var strChannelName = getEntity(apireq.entities,"Channel"); 
 	var strChannelNo = getEntity(apireq.entities,"ChannelNo"); 
         var strRegionid = 91629;
@@ -1441,7 +1388,7 @@ function ChnlSearch(apireq,callback) {
     var args = {
         "headers": headersInfo,
         "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
-           // Request: {ThisValue: 'ChannelSearch',BotstrStationCallSign:strChannelName} 
+          
 		  Request: {
                     ThisValue: 'StationSearch',
                     BotRegionID : strRegionid ,
@@ -1480,7 +1427,6 @@ function ChnlSearchCallback(apiresp,usersession) {
 	
 function recommendations(apireq,pgmtype,callback) { 
     console.log('inside recommendations ');
-	
     var struserid = '';
     if (struserid == '' || struserid == undefined) struserid='lt6sth4'; //hardcoding if its empty*/	
     var headersInfo = { "Content-Type": "application/json" };
