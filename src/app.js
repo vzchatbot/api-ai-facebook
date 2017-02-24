@@ -125,8 +125,8 @@ function processEvent(event) {
 	    
 	    conversation.message({
         workspace_id: 'b2d3a074-4d46-4b95-b902-f70d0000fdc6',
-        input: { 'text': ReqMessageText },
-  "alternate_intents": false
+        'input': { 'text': ReqMessageText },
+  	'alternate_intents': false
     }, function (err, response) {
         if (err) {
 		console.log('WATSON ERROR');
