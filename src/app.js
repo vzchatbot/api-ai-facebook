@@ -142,7 +142,7 @@ console.log('In CONVMess  : ' + message);
 		   // var strIntent ="MoreOptions";
 		     var responseText = response.output.text[0];
 		    console.log('strIntent:' + JSONbig.stringify(response.intents[0].intent));
-		    var fallback = response.nodes_visited["nodes_visited["fallback intent"];
+		    var fallback = response.nodes_visited["fallback intent"];
 		   console.log('strIntent:' + JSONbig.stringify(fallback));							  
 		    if(strIntent == '')
 		    {
