@@ -1358,12 +1358,12 @@ function CategoryList(apireq,usersession) {
 			 Request: {ThisValue: 'AdvProgramSearch', //  EnhProgramSearch
 				   BotProviderId :sender, //'1113342795429187',  // usersession ; sender id
 				   BotstrTitleValue:strProgram, 
-				   BotdtAirStartDateTime : '',
-				   BotstrGenreRootId : '',
-				   BotstrStationCallSign:'',
-				   BotstrFIOSRegionID : '',
-				   BotstrFIOSID : '',
-				   BotstrFIOSServiceId : ''		   
+				   BotdtAirStartDateTime : strdate,
+				   BotstrGenreRootId : strGenre,
+				   BotstrStationCallSign:strChannelName,
+				   BotstrFIOSRegionID : strRegionId,
+				   BotstrFIOSID : strFiosId,
+				   BotstrFIOSServiceId : strStationId		   
 				  } 
 			}
 		};
