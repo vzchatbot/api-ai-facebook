@@ -186,6 +186,8 @@ console.log('In CONVMess  : ' + message);
                             //ChnlSearch(response,function (str){ ChnlSearchCallback(str,sender)}); 
 				    stationsearch(response,function (str){ stationsearchCallback(str,sender)}); 
                             break;
+			case "GenreSearch":
+			case "castwise":	    
                         case "programSearch":
                             console.log("----->>>>>>>>>>>> INSIDE programSearch <<<<<<<<<<<------");
                             PgmSearch(response,sender,function (str){ PgmSearchCallback(str,sender)});
