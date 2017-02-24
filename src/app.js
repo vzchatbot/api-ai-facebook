@@ -125,7 +125,8 @@ var conversation = watson.conversation({
 console.log('In CONVMess  : ' + message);
     conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
-        input: { 'text': message }	     
+        input: { 'text': message }, 
+	alternate_intents: false
     }, function (err, response) {
         if (err) {
             console.log('Watson error in CONVMess'+ err);
