@@ -126,7 +126,7 @@ function processEvent(event) {
 	    conversation.message({
         workspace_id: 'b2d3a074-4d46-4b95-b902-f70d0000fdc6',
         input: { 'text': ReqMessageText },
-  	alternate_intents : false
+  	alternate_intents : true
     }, function (err, response) {
         if (err) {
 		console.log('WATSON ERROR');
@@ -137,7 +137,7 @@ function processEvent(event) {
             if (response.output.text.length != 0) {
                 console.log('Watson says:' + response.output.text[0]);
 		    
-		    console.log('Watson INTENT:' + response.intents[0].intent + '\n' + response.intents[1].intent);
+		    console.log('Watson INTENT:' + response.intents[1].intent);
 		    if(response.intents[0].intent == 'greetings')
 		    {
 			    console.log('USER HAS STARTED WITH A GREETING');
