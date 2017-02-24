@@ -152,7 +152,7 @@ function processEvent(event) {
 		    {    console.log("USER QUERIED FOR PROGRAM SEARCH WITHOUT PROGRAM NAME");
 		    		PgmListing(sender, response.output.text[0]);
 		    }
-		    else if(response.intents[] == '') 
+		    else if(response.intents[0].intent == '') 
 		    {
 			    console.log('UNIDENTIFIED INTENT');
 			  defaultReply(sender, response.output.text[0]);
