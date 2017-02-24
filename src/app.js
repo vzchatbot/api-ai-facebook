@@ -137,7 +137,7 @@ function processEvent(event) {
             if (response.output.text.length != 0) {
                 console.log('Watson says:' + response.output.text[0]);
 		    
-		    console.log('Watson INTENT:' + response.intents[0].intent);
+		    console.log('Watson INTENT:' + response.intents[0].intent + '\n' + response.intents[1].intent);
 		    if(response.intents[0].intent == 'greetings')
 		    {
 			    console.log('USER HAS STARTED WITH A GREETING');
