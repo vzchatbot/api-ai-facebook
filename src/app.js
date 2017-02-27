@@ -119,7 +119,7 @@ function processEvent(event) {
     username: '31be4934-c02e-441a-96e6-d639b4ab69a8',
     password: 'Q2hapKhopVRj',
     version: 'v1',
-    version_date: '2016-09-20'
+    version_date: '2017-02-03'
 });
    
 	    
