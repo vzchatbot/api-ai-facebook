@@ -126,7 +126,7 @@ function processEvent(event) {
 	    conversation.message({
         workspace_id: 'b2d3a074-4d46-4b95-b902-f70d0000fdc6',
         input: { 'text': ReqMessageText },
-  	alternate_intents : true
+  	alternate_intents : false
     }, function (err, response) {
         if (err) {
 		console.log('WATSON ERROR');
@@ -138,10 +138,10 @@ function processEvent(event) {
                 console.log('Watson says:' + response.output.text[0]);
 		    
 		    console.log('Watson INTENT:' + response.intents[1].intent);
-		    if(response.intents[0].intent == 'greetings')
+		    if(!response.intents[])
 		    {
-			    console.log('USER HAS STARTED WITH A GREETING');
-			    welcomeMsgWat(sender, response.output.text[0]);
+			    console.log('UNIDENTIFIED INTENT');
+			  defaultReply(sender, response.output.text[0]);
 		    }
 		    else if(response.intents[0].intent == 'program_search' && response.entities != '')
 		    {    console.log("USER QUERIED FOR PROGRAM SEARCH WITH PROGRAM NAME");
@@ -152,10 +152,10 @@ function processEvent(event) {
 		    {    console.log("USER QUERIED FOR PROGRAM SEARCH WITHOUT PROGRAM NAME");
 		    		PgmListing(sender, response.output.text[0]);
 		    }
-		    else if(response.intents[0].intent == '') 
+		    else if(response.intents[0].intent == 'greetings') 
 		    {
-			    console.log('UNIDENTIFIED INTENT');
-			  defaultReply(sender, response.output.text[0]);
+			    console.log('USER HAS STARTED WITH A GREETING');
+			    welcomeMsgWat(sender, response.output.text[0]);
 		    }
                 //console.log('Watson says:' + response.output.text[1]);
             }
