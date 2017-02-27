@@ -116,7 +116,7 @@ var conversation = watson.conversation({
     username: '5ce24ee5-4326-4056-9df1-519fcb0af445',
     password: 'h033JHyAbXph',
     version: 'v1',
-    version_date: '2016-09-20'
+    version_date: '2017-02-03'
 });    
 	    
  convMess(text);
