@@ -191,7 +191,8 @@ console.log('In CONVMess  : ' + message);
                             break;
 			case "TeamSearch":
 			case "GenreSearch":
-			case "castwise":	    
+			case "castwise":
+			case "PgmDetails":
                         case "programSearch":
                             console.log("----->>>>>>>>>>>> INSIDE programSearch <<<<<<<<<<<------");
                             PgmSearch(response,sender,function (str){ PgmSearchCallback(str,sender)});
