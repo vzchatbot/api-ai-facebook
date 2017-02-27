@@ -1298,6 +1298,8 @@ function CategoryList(apireq,usersession) {
 	 var strProgram =  getEntity(watres.entities,"Programs");
 	 console.log("<<<strProgram   : >>>"+ strProgram);
 	 var strGenre =  getEntity(watres.entities,"Genre");	
+	 var strCast =  getEntity(watres.entities,"cast");	
+	 var strTeam =  getEntity(watres.entities,"Teams");	
 	 var strdate =  getEntity(watres.entities,"date");
 	 var strChannelName =  getEntity(watres.entities,"channel");
 	 console.log("<<<strChannelName   : >>>" + strChannelName);	 
@@ -1318,6 +1320,8 @@ function CategoryList(apireq,usersession) {
 				   BotstrStationCallSign:strChannelName,
 				   BotstrFIOSRegionID : strRegionId,
 				   BotstrFIOSID : strFiosId,
+				   BotstrEpisodeTitleValue : strTeam,
+				   BotstrCastCreditNamesRoles : strCast,
 				   BotstrFIOSServiceId : strStationId		   
 				  } 
 			}
