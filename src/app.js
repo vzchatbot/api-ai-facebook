@@ -138,14 +138,10 @@ function processEvent(event) {
                 console.log('Watson says:' + response.output.text[0]);
 		    
 		    if(response.intents[0])
-		    console.log('Watson INTENT:' + response.intents[0].intent);
-		    if(!response.intents)
 		    {
-			    console.log('UNIDENTIFIED INTENT');
-			  defaultReply(sender, response.output.text[0]);
-			    return;
-		    }
-		    else if(response.intents[0].intent == 'program_search' && response.entities != '')
+		    console.log('Watson INTENT:' + response.intents[0].intent);
+		
+		    if(response.intents[0].intent == 'program_search' && response.entities != '')
 		    {    console.log("USER QUERIED FOR PROGRAM SEARCH WITH PROGRAM NAME");
 		    	PgmName(sender, response.output.text[0]);
 		  
@@ -159,6 +155,17 @@ function processEvent(event) {
 			    console.log('USER HAS STARTED WITH A GREETING');
 			    welcomeMsgWat(sender, response.output.text[0]);
 		    }
+		    }
+		    else if(!response.intents)
+		    {
+			    console.log('UNIDENTIFIED INTENT');
+			  defaultReply(sender, response.output.text[0]);
+		    }
+		    else
+		    {
+			    console.log('TRY BETTER CODING');
+		    }
+		 
                 //console.log('Watson says:' + response.output.text[1]);
             }
         }
