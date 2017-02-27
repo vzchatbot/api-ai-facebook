@@ -1545,11 +1545,13 @@ function LinkOptions(apireq,usersession)
 function RecordScenario (apiresp,sender,usersession)
 {
     console.log("inside RecordScenario");
-    var channel = apiresp.result.parameters.Channel.toUpperCase();
-    var program = apiresp.result.parameters.Programs.toUpperCase();
-    var time = apiresp.result.parameters.timeofpgm;
-    var dateofrecord = apiresp.result.parameters.date;
-    var SelectedSTB = apiresp.result.parameters.SelectedSTB;
+	// getEntity(apireq.entities,"ChannelNo"); 
+    var channel = getEntity(apireq.entities,"channel");
+    var program = getEntity(apireq.entities,"Programs");
+    var time =  getEntity(apireq.entities,"timeofpgm"); 
+    var dateofrecord = getEntity(apireq.entities,"date"); 
+    var SelectedSTB = getEntity(apireq.entities,"SelectedSTB");  
+	
     console.log("SelectedSTB : " + SelectedSTB + " channel : " + channel + " dateofrecord :" + dateofrecord + " time :" + time);
 		
     if (time == "") //if time is empty show schedule
