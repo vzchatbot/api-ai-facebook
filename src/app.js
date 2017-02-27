@@ -156,14 +156,16 @@ function processEvent(event) {
 			    welcomeMsgWat(sender, response.output.text[0]);
 		    }
 		    }
-		    else if(!response.intents)
+		   /* else if(!response.intents)
 		    {
 			    console.log('UNIDENTIFIED INTENT');
 			  defaultReply(sender, response.output.text[0]);
-		    }
+		    }*/
 		    else
 		    {
 			    console.log('TRY BETTER CODING');
+			     console.log('UNIDENTIFIED INTENT');
+			  defaultReply(sender, response.output.text[0]);
 		    }
 		 
                 //console.log('Watson says:' + response.output.text[1]);
