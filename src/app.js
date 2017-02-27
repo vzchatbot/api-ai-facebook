@@ -1369,6 +1369,24 @@ function PgmSearchCallback(apiresp,usersession) {
 			 }catch (err) { console.log(err); }
         } 
    
+	
+	if (subflow != null
+            && subflow.facebook != null
+            && subflow.facebook.attachment != null
+            && subflow.facebook.attachment.payload != null
+            && subflow.facebook.attachment.payload.elements != null) {
+            try {
+                var pgms = subflow.facebook.attachment.payload.elements;
+
+                if (!util.isArray(pgms)) {
+                    subflow.facebook.attachment.payload.elements = [];
+                    subflow.facebook.attachment.payload.elements.push(pgms);
+
+                }
+            } catch (err) { logger.debug("Error on pgm search " + err); }
+        }
+
+	
 	if (subflow != null 
         && subflow.facebook != null 
         && subflow.facebook.text != null && subflow.facebook.text =='UserNotFound')
