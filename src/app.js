@@ -143,6 +143,7 @@ function processEvent(event) {
 		    {
 			    console.log('UNIDENTIFIED INTENT');
 			  defaultReply(sender, response.output.text[0]);
+			    return;
 		    }
 		    else if(response.intents[0].intent == 'program_search' && response.entities != '')
 		    {    console.log("USER QUERIED FOR PROGRAM SEARCH WITH PROGRAM NAME");
