@@ -1307,7 +1307,7 @@ function CategoryList(apireq,usersession) {
 	 var strGenre =  getEntity(watres.entities,"Genre");	
 	 var strCast =  getEntity(watres.entities,"cast");	
 	 var strTeam =  getEntity(watres.entities,"Teams");	
-	 var strdate =  getEntity(watres.entities,"date");
+	 var strdate =  getEntity(watres.entities,"sys-date");
 	 var strChannelName =  getEntity(watres.entities,"channel");
 	 console.log("<<<strChannelName   : >>>" + strChannelName);	 
 	 var strFiosId =getEntity(watres.entities,"FiosID"); 
