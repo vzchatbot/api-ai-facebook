@@ -1247,7 +1247,7 @@ function MainMenu(usersession)
 
 function CategoryList(apireq,usersession) {
 	
-    var pgNo = apireq.result.parameters.PageNo;
+    var pgNo = '';//apireq.result.parameters.PageNo;
     var categlist={}
 	
     switch(pgNo)
@@ -1259,7 +1259,7 @@ function CategoryList(apireq,usersession) {
                //    "content_type":"text", "title":"Red", "payload":"red"
                    { "content_type": "text", "title":"Children & Family", "payload":"show Kids movies" }, 
                    { "content_type": "text", "title":"Action & Adventure", "payload":"show Action movies" }, 
-                   { "content_type": "text", "title":"Documentary", "payload":"show Documentary movies" }, 
+                   { "content_type": "text", "title":"Horror", "payload":"show Documentary movies" }, 
                    { "content_type": "text", "title":"Mystery", "payload":"show Mystery movies" },
                    { "content_type": "text", "title":"More Categories ", "payload":"show categories list pageno: 2" }
 			    ] }};
