@@ -119,12 +119,12 @@ var conversation = watson.conversation({
     version_date: '2017-02-03'
 });    
 	
-	 if (validateSSN(text))
+	/* if (validateSSN(text))
 	 {
 	  console.log('SSN before encrypt:'+   text)
 	 text= Encrypt(text);
 		 console.log('SSN after encrypt:'+   text)
-	 }
+	 }*/
 	    
  convMess(text);
 	    
