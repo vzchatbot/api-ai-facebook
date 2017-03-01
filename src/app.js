@@ -118,13 +118,8 @@ var conversation = watson.conversation({
     version: 'v1',
     version_date: '2017-02-03'
 });    
-	var masktext=validateSSN(text);
-	/* if (validateSSN(text))
-	 {
-	  console.log('SSN before encrypt:'+   text)
-	 text= Encrypt(text);
-		 console.log('SSN after encrypt:'+   text)
-	 }*/
+	var masktext=validateSSN(text); //mask sensitive data
+	
 	    
  convMess(masktext);
 	    
@@ -298,11 +293,11 @@ function chunkString(s, len) {
 	
 function validateSSN (elementValue)
 {
-	console.log("ssnmethod"+ elementValue);
+      console.log("checking sensitive data");
        var  ssnPattern = /^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/;
-	 var phonenoPattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
-	 var CreditcardPattern = /^\(?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-	  console.log("ssnvalidated: "+ssnPattern.test(elementValue));
+       var phonenoPattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
+       var CreditcardPattern = /^\(?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+	  
 	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
 	    {
 		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
