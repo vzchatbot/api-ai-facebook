@@ -218,6 +218,7 @@ console.log('In CONVMess  : ' + message);
                             upsell(response,sender);
                             break;
                         case "Billing":
+			case "BillInfo":
                             console.log("----->>>>>>>>>>>> INSIDE Billing <<<<<<<<<<<------");
                           //  stationsearch(sender);
                               userCoversationArr.ufdreqdatetime = getDateTime();
