@@ -303,7 +303,8 @@ function validateSSN (elementValue)
 	  console.log("ssnvalidated: "+ssnPattern.test(elementValue));
 	if (ssnPattern.test(elementValue))
 	    {
-		return xxx-xx-xxxx;
+		    console.log("ssnmasked: );
+		return 'xxx-xx-xxxx';
 	    }
 	    else
 	      return elementValue;
