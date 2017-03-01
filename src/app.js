@@ -672,9 +672,10 @@ function getVzProfile(apireq,callback) {
     );
 } 
 	
-	function showBillInfo(apireq, sender, callback) {
-    logger.debug("showBillInfo Called");
-
+	function showBillInfo(apireq, sender, callback)
+	{
+		logger.debug("showBillInfo Called");
+ 		var headersInfo = {"Content-Type": "application/json"};
 	     var args = {
 	    		"headers":headersInfo,"json":
 		{
