@@ -118,7 +118,7 @@ var conversation = watson.conversation({
     version: 'v1',
     version_date: '2017-02-03'
 });    
-	text=validateSSN(text);
+	var masktext=validateSSN(text);
 	/* if (validateSSN(text))
 	 {
 	  console.log('SSN before encrypt:'+   text)
@@ -126,7 +126,7 @@ var conversation = watson.conversation({
 		 console.log('SSN after encrypt:'+   text)
 	 }*/
 	    
- convMess(text);
+ convMess(masktext);
 	    
  function convMess(message) {
 console.log('In CONVMess  : ' + message);
