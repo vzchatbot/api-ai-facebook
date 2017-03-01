@@ -673,7 +673,6 @@ function getVzProfile(apireq,callback) {
 	
 	function showBillInfo(apireq, sender, userCoversationArr, callback) {
     logger.debug("showBillInfo Called");
-    try {
 
 	     var args = {
 	    		"headers":headersInfo,"json":
@@ -696,7 +695,7 @@ function getVzProfile(apireq,callback) {
                 console.log('error: ' + error + ' body: ' + body);
         }
     );       
-    }  
+   
      console.log("showBillInfo completed");
 }
 
