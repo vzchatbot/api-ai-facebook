@@ -221,8 +221,8 @@ console.log('In CONVMess  : ' + message);
 			case "BillInfo":
                             console.log("----->>>>>>>>>>>> INSIDE Billing <<<<<<<<<<<------");
                           //  stationsearch(sender);
-                              userCoversationArr.ufdreqdatetime = getDateTime();
-                                showBillInfo(response, sender, userCoversationArr, function (str) { showBillInfoCallback(str, sender, userCoversationArr) });
+                            //  userCoversationArr.ufdreqdatetime = getDateTime();
+                                showBillInfo(response, sender,  function (str) { showBillInfoCallback(str, sender) });
                                 break;
 		        case "cancelappointmentnotconfirmed":
                             console.log("----->>>>>>>>>>>> INSIDE cancelappointment <<<<<<<<<<<------");
@@ -672,7 +672,7 @@ function getVzProfile(apireq,callback) {
     );
 } 
 	
-	function showBillInfo(apireq, sender, userCoversationArr, callback) {
+	function showBillInfo(apireq, sender, callback) {
     logger.debug("showBillInfo Called");
 
 	     var args = {
@@ -700,7 +700,7 @@ function getVzProfile(apireq,callback) {
      console.log("showBillInfo completed");
 }
 
-function showBillInfoCallback(apiresp, senderid, userCoversationArr) {
+function showBillInfoCallback(apiresp, senderid) {
     var objToJson = {};
     objToJson = apiresp;
     var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response;
