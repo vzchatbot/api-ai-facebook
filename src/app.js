@@ -301,7 +301,7 @@ function validateSSN (elementValue)
 	console.log("ssnmethod"+ elementValue);
        var  ssnPattern = /^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/;
 	 var phonenoPattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
-	 var CreditcardPattern = /^[0-9]{16}$/;
+	 var CreditcardPattern = /^[0-9]{4}\-?[0-9]{4}\-?[0-9]{4}\-?[0-9]{4}$/;
 	  console.log("ssnvalidated: "+ssnPattern.test(elementValue));
 	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
 	    {
