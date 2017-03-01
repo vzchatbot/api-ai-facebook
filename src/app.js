@@ -121,9 +121,9 @@ var conversation = watson.conversation({
 	
 	 if (validateSSN(text))
 	 {
-	  console.log('SSN before encrypt:"+   text)
+	  console.log('SSN before encrypt:'+   text)
 	 text= Encrypt(text);
-		 console.log('SSN after encrypt:"+   text)
+		 console.log('SSN after encrypt:'+   text)
 	 }
 	    
  convMess(text);
