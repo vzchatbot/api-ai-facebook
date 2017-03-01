@@ -303,7 +303,7 @@ function validateSSN (elementValue)
 }
 	
 	
-function Encrypt(var actualstr)
+function Encrypt( actualstr)
 {
     var actual = actualstr;
     var key = 256; //Any integer value
@@ -315,7 +315,7 @@ function Encrypt(var actualstr)
     alert(result);
 }
 
-function Decrypt(var actualstr)
+function Decrypt( actualstr)
 {
     var actual=actualstr;
     var key = 256; //Any integer value
