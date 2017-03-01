@@ -728,10 +728,10 @@ function showBillInfoCallback(apiresp, senderid) {
             }
         };
 
-        sendFBMessage(senderid, respobj.facebook, userCoversationArr);
+        sendFBMessage(senderid, respobj.facebook);
     }
     else {
-        sendFBMessage(senderid, subflow.facebook, userCoversationArr);
+        sendFBMessage(senderid, subflow.facebook);
     }
 }
 
