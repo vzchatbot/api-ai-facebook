@@ -118,6 +118,13 @@ var conversation = watson.conversation({
     version: 'v1',
     version_date: '2017-02-03'
 });    
+	
+	 if (validateSSN(text))
+	 {
+	  console.log('SSN before encrypt:"+   text)
+	 text= Encrypt(text);
+		 console.log('SSN after encrypt:"+   text)
+	 }
 	    
  convMess(text);
 	    
@@ -286,7 +293,38 @@ function chunkString(s, len) {
     output.push(s.substr(prev));
     return output;
 }
+	
+	
+	
+function validateSSN (elementValue)
+{
+       var  ssnPattern = /^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/;
+       return ssnPattern.test(elementValue);
+}
+	
+	
+function Encrypt(var actualstr)
+{
+    var actual = actualstr;
+    var key = 256; //Any integer value
+    var result = "";
+    for(i=0; i<actual.length;i++)
+    {
+        result += String.fromCharCode(key^actual.charCodeAt(i));
+    }
+    alert(result);
+}
 
+function Decrypt(var actualstr)
+{
+    var actual=actualstr;
+    var key = 256; //Any integer value
+    var result="";    
+    for(i=0; i<actual.length; i++)
+    {
+        result += String.fromCharCode(key^actual.charCodeAt(i));
+    }
+}
 function sendFBMessage(sender, messageData, callback) {
 	
      console.log('sendFBMessage: sender '+ sender + "messageData  " + messageData);
