@@ -219,8 +219,10 @@ console.log('In CONVMess  : ' + message);
                             break;
                         case "Billing":
                             console.log("----->>>>>>>>>>>> INSIDE Billing <<<<<<<<<<<------");
-                            stationsearch(sender);
-                            break;
+                          //  stationsearch(sender);
+                              userCoversationArr.ufdreqdatetime = getDateTime();
+                                showBillInfo(response, sender, userCoversationArr, function (str) { showBillInfoCallback(str, sender, userCoversationArr) });
+                                break;
 		        case "cancelappointmentnotconfirmed":
                             console.log("----->>>>>>>>>>>> INSIDE cancelappointment <<<<<<<<<<<------");
                             cancelscheduledticket(response,sender,function (str){cancelscheduledticketCallBack(str,sender)});
@@ -667,7 +669,72 @@ function getVzProfile(apireq,callback) {
                 console.log('error: ' + error + ' body: ' + body);
         }
     );
-} 	
+} 
+	
+	function showBillInfo(apireq, sender, userCoversationArr, callback) {
+    logger.debug("showBillInfo Called");
+    try {
+
+	     var args = {
+	    		"headers":headersInfo,"json":
+		{
+			Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
+			Request:{
+				ThisValue:'BillInfo',
+				 BotProviderId:sender
+				}
+		}    		};	    
+    
+        logger.debug(" Request for showBillInfo json " + JSON.stringify(args));
+	  request.post(" https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+        function (error, response, body) {	 
+            if (!error && response.statusCode == 200) {             
+                console.log("body " + JSON.stringify(body));
+                callback(body);
+            }	    
+            else
+                console.log('error: ' + error + ' body: ' + body);
+        }
+    );       
+    }  
+     console.log("showBillInfo completed");
+}
+
+function showBillInfoCallback(apiresp, senderid, userCoversationArr) {
+    var objToJson = {};
+    objToJson = apiresp;
+    var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response;
+
+    logger.debug("Response from showBillInfoCallback=" + JSON.stringify(subflow));
+
+    if (subflow != null
+        && subflow.facebook != null
+        && subflow.facebook.text != null && subflow.facebook.text == 'UserNotFound') {
+        console.log("showBillInfo subflow " + subflow.facebook.text);
+        var respobj = {
+            "facebook": {
+                "attachment": {
+                    "type": "template", "payload": {
+                        "template_type": "generic", "elements": [
+                            {
+                                //"title": "You have to Login to Verizon to proceed", "image_url": config.vzImage, "buttons": [
+                                "title": " Sorry, but we have to make sure you are you. Login to your Verizon account to continue!", "image_url": config.vzImage, "buttons": [
+                                    { "type": "account_link", "url": config.AccountLink },
+                                    { "type": "postback", "title": "Maybe later", "payload": "Main Menu" }
+                                ]
+                            }]
+                    }
+                }
+            }
+        };
+
+        sendFBMessage(senderid, respobj.facebook, userCoversationArr);
+    }
+    else {
+        sendFBMessage(senderid, subflow.facebook, userCoversationArr);
+    }
+}
+
 //=====================showOutage
 	function showOutagetickets(apireq,sender,callback) { 
     console.log('inside showOutagetickets call ');  
