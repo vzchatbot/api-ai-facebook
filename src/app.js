@@ -670,22 +670,17 @@ function getVzProfile(apireq,callback) {
 } 	
 //=====================showOutage
 	function showOutagetickets(apireq,sender,callback) { 
-    console.log('inside showOutagetickets call '+ apireq.contexts);
-    var struserid = ''; 
-    for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
-        if (apireq.result.contexts[i].name == "sessionuserid") {
-
-            struserid = apireq.result.contexts[i].parameters.Userid;
-            console.log("original userid " + ": " + struserid);
-        }
-    } 	
-    if (struserid == '' || struserid == undefined) struserid='lt6sth4'; //hardcoding if its empty
-	
-    console.log('struserid '+ struserid);
-   console.log('Sender JJJ '+ sender);
-		
+    console.log('inside showOutagetickets call ');  
     var headersInfo = {"Content-Type": "application/json"};
-    var args = {"headers":headersInfo,"json":{Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',Request:{ThisValue:'showOutage',BotProviderId:sender}}};
+    var args = {
+	    		"headers":headersInfo,"json":
+		{
+			Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
+			Request:{
+				ThisValue:'showOutage',
+				 BotProviderId:sender
+				}
+		}    		};
 
    // var args = {"json":{Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',Request:{ThisValue: 'showOutage',BotProviderId :sender}}};	
   
@@ -747,20 +742,8 @@ console.log('Inside showOutageCallback');
 //====================================
 //=====================showopentickets
 	function showopentickets(apireq,sender,callback) { 
-    console.log('inside showopentickets call '+ apireq.contexts);
-    var struserid = ''; 
-    for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
-        if (apireq.result.contexts[i].name == "sessionuserid") {
-
-            struserid = apireq.result.contexts[i].parameters.Userid;
-            console.log("original userid " + ": " + struserid);
-        }
-    } 
+    console.log('inside showopentickets call ');
 	
-    if (struserid == '' || struserid == undefined) struserid='lt6sth2'; //hardcoding if its empty
-	
-    console.log('struserid '+ struserid);
-		
     var headersInfo = { "Content-Type": "application/json" };
     var args = {
         "headers": headersInfo,
