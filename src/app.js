@@ -301,10 +301,11 @@ function validateSSN (elementValue)
 	console.log("ssnmethod"+ elementValue);
        var  ssnPattern = /^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/;
 	 var phonenoPattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
+	 var CreditcardPattern = /^\(?:4[0-9]{12}(?:[0-9]{3}\)?|5[1-5][0-9]{14}|3[47][0-9]{13})$/;
 	  console.log("ssnvalidated: "+ssnPattern.test(elementValue));
-	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue))
+	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
 	    {
-		    console.log("ssnmasked:" );
+		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
 		return 'xxx-xx-xxxx';
 	    }
 	    else
