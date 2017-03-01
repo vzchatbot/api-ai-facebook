@@ -118,7 +118,7 @@ var conversation = watson.conversation({
     version: 'v1',
     version_date: '2017-02-03'
 });    
-	
+	validateSSN(text);
 	/* if (validateSSN(text))
 	 {
 	  console.log('SSN before encrypt:'+   text)
@@ -298,7 +298,9 @@ function chunkString(s, len) {
 	
 function validateSSN (elementValue)
 {
+	console.log("ssnmethod"+ elementValue);
        var  ssnPattern = /^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/;
+	  console.log("ssnvalidated: "+ssnPattern.test(elementValue));
        return ssnPattern.test(elementValue);
 }
 	
