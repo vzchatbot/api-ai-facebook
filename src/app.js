@@ -142,6 +142,7 @@ function FindPayLoadIntent(payloaddata)
 	    {	
 		console.log('insidepayloaddata');
 		var result = {entities:{}};
+		    {
 		payloaddata.split('|').forEach(function(x){
    		 var arr = x.split(':');		
    		 arr[1] && (result.entities[arr[0]] = arr[1]);
@@ -149,6 +150,7 @@ function FindPayLoadIntent(payloaddata)
 		 console.log('strPayloadresult : ' + JSONbig.stringify(result) );
 		 var strpaylodIntent = result.entities.Intent; 
 		 console.log('payloadIntent : ' + JSONbig.stringify(strpaylodIntent) );
+		    }
 		 return (result);
 	    }
 	    
@@ -159,9 +161,9 @@ function FindPayLoadIntent(payloaddata)
 	 if (message.indexOf('|Payload|') > -1)
 	 {
 		 console.log('insidepayload');
-		 FindPayLoadIntent(message);
-		 console.log('payloadmessage ::::'+ JSONbig.stringify(message));
-		 strIntent =  getEntity(message.entities,"Intent");
+		var result = FindPayLoadIntent(message);
+		 console.log('payloadmessage ::::'+ JSONbig.stringify(result));
+		 strIntent =  result.entities.Intent;
 		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
 	 }	
 	 var text=validateCPNI(message);	
