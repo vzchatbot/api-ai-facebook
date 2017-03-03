@@ -135,50 +135,35 @@ var conversation = watson.conversation({
 		return ('xxxxxxxxx');
 	    }
 	    else
-	      return (elementValue);	
-	
+	      return (elementValue);		
 }
 	    
-function FindPayLoadIntent(payloaddata,sender)   
-	    {
-		console.log('In FindPayLoadIntent   : ' + payloaddata);
+function FindPayLoadIntent(payloaddata)   
+	    {	
+		    
 		var result = {entities:{}};
 		payloaddata.split('|').forEach(function(x){
-   		 var arr = x.split(':');
-		 console.log('In FindPayLoadIntent x  : ' + JSONbig.stringify(x)); 
-		 console.log('In FindPayLoadIntent arr  : ' + JSONbig.stringify(arr));    
+   		 var arr = x.split(':');		
    		 arr[1] && (result.entities[arr[0]] = arr[1]);
-		});
-		 console.log('In FindPayLoadIntent+++++  : ' + JSONbig.stringify(result)); 
-		 console.log('In PayloadIntentName******* : ' + JSONbig.stringify(result.entities) );
-		 		    
-		    var strPayloadIntentName = result.entities.PayloadIntentName;
-		     console.log('strPayloadIntentName : ' + JSONbig.stringify(strPayloadIntentName) );
-		    switch (strPayloadIntentName) 
-                    {
-                        case "StartRecording":
-                            console.log("----->>>>>>>>>>>> INSIDE payloaddata Intent <<<<<<<<<<<------");                           
-			    return result='false';    
-                            break;
-		    }
-		    
-		   
+		});			 		    
+		 var strPayloadIntentName = result.entities.PayloadIntentName;
+		 console.log('strPayloadIntentName : ' + JSONbig.stringify(strPayloadIntentName) );
+		    return result;
 	    }
 	    
  function convMess(message) {
-	 var actualmessage=message;
-	// var text=validateCPNI(message);
-	 var text=message;
+	  var actualmessage=message;
+	  message = "|Payload|Program: Any Given Sunday |Channel: HBOZONHDw|FiosId: 1405482754| Stationid : 2455| Date:  |ActualServiceId : 2455|";
+	 if (message.indexOf('|payload|') > -1)
+	 {
+		 console.log('insidepayload');
+		 FindPayLoadIntent(message);
+	 }	
+	 var text=validateCPNI(message);
 	 if(text !='xxxxxxxxx')
 	 {	
 		text= actualmessage;
 	 }	
-
-	 var text = "|PayloadIntentName:StartRecording|Program: Any Given Sunday |Channel: HBOZONHDw|FiosId: 1405482754| Stationid : 2455| Date:  |ActualServiceId : 2455|";
-	 var result = FindPayLoadIntent(text);
-console.log('--------  : ' + result); 	 
-	 if(result =='true')
-	 {
     conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
         input: { 'text': text }, 
@@ -298,7 +283,7 @@ console.log('--------  : ' + result);
             }
         }
     });
-	 }
+	 
 }    
      
     }
