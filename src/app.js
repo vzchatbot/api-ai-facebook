@@ -66,6 +66,8 @@ var ChatHistoryLog = log4js.getLogger('Debug');
 function validateCPNI(elementValue,copyofelementValue)
 {
       console.log("checking sensitive data - validateCPNI");
+	 console.log("elementValue - validateCPNI"+ elementValue);
+	 console.log("elementValue - validateCPNI"+ copyofelementValue);
        var  ssnPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{4})$/;
        var phonenoPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
        var CreditcardPattern = /^\(?([A-Za-z ]+)?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
@@ -76,9 +78,7 @@ function validateCPNI(elementValue,copyofelementValue)
 		return ('xxxxxxxxx',copyofelementValue);
 	    }
 	    else
-	      return elementValue;
-	 console.log("elementValue - validateCPNI"+ elementValue);
-	 console.log("elementValue - validateCPNI"+ copyofelementValue);
+	      return elementValue;	
 }
 	
 
