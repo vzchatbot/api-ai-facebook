@@ -146,7 +146,8 @@ function FindPayLoadIntent(payloaddata)
    		 var arr = x.split('=');
    		 arr[1] && (result[arr[0]] = arr[1]);
 		});
-		    return result ;
+		 console.log('In FindPayLoadIntent result  : ' + result);    
+		    return result;
 	    }
 	    
  function convMess(message) {
