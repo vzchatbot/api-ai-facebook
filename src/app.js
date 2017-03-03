@@ -155,11 +155,11 @@ function FindPayLoadIntent(payloaddata,payloadIntent)
  function convMess(message) {
 	  var payloadIntent='';
 	  var strIntent ='';
-	  message = "|Payload|Intent: programSearch|Program: Playboy's Amateur Girls|Channel: PlayboyHD|FiosId: 2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
+	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
 	 if (message.indexOf('|Payload|') > -1)
 	 {
 		 console.log('insidepayload');
-		 message=FindPayLoadIntent(message,payloadIntent);
+		 FindPayLoadIntent(message,payloadIntent);
 		 console.log('payloadmessage ::::'+ JSONbig.stringify(payloadIntent));
 		 strIntent = payloadIntent;
 		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
