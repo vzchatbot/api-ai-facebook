@@ -16,6 +16,7 @@ var watson = require('watson-developer-cloud');
 var session = require('express-session');
 var sql = require('mssql');
 var MssqlStore = require('../src/MSSQLSession.js')(session);
+var watsoncallflag='true';
 
 
 var REST_PORT = (process.env.PORT || process.env.port || process.env.OPENSHIFT_NODEJS_PORT || 5000);
@@ -138,7 +139,7 @@ var conversation = watson.conversation({
 	
 }
 	    
-function FindPayLoadIntent(payloaddata)   
+function FindPayLoadIntent(payloaddata,sender)   
 	    {
 		console.log('In FindPayLoadIntent   : ' + payloaddata);
 		var result = {};
@@ -146,12 +147,21 @@ function FindPayLoadIntent(payloaddata)
    		 var arr = x.split(':');
 		 console.log('In FindPayLoadIntent x  : ' + JSONbig.stringify(x)); 
 		 console.log('In FindPayLoadIntent arr  : ' + JSONbig.stringify(arr));    
-   		 arr[1] && (result[arr[0]] = arr[1]);
+   		 arr[1] && (result.entities[arr[0]] = arr[1]);
 		});
 		 console.log('In FindPayLoadIntent result  : ' + JSONbig.stringify(result)); 
-		    console.log('In PayloadIntentName******* : ' + result.PayloadIntentName); 
+		 console.log('In PayloadIntentName******* : ' + result.entities.PayloadIntentName);
+		    var strPayloadIntentName = result.entities.PayloadIntentName;
+		    switch (strPayloadIntentName) 
+                    {
+                        case "StartRecording":
+                            console.log("----->>>>>>>>>>>> INSIDE payloaddata Intent <<<<<<<<<<<------");
+                            RecordScenario(result,sender,sender); 
+			    return result='false';    
+                            break;
+		    }
 		    
-		    return result;
+		   
 	    }
 	    
  function convMess(message) {
@@ -169,6 +179,8 @@ function FindPayLoadIntent(payloaddata)
 	 var text = "|PayloadIntentName:GetPrograminfo|Program: Any Given Sunday |Channel: HBOZONHDw|FiosId: 1405482754| Stationid : 2455| Date:  |ActualServiceId : 2455|";
 	 var result = FindPayLoadIntent(text);
 	 
+	 if(result =='true')
+	 {
     conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
         input: { 'text': text }, 
@@ -180,9 +192,7 @@ function FindPayLoadIntent(payloaddata)
         else {
             console.log('I got a response. Let me check');
 		console.log('Watson response:' + JSONbig.stringify(response));
-            if (response != '') {
-                console.log('Watson response Text:' + response.output.text[0]);	             
-		console.log('Watson response:' + JSONbig.stringify(response));
+            if (response != '') {             
 		    var strIntent ='';
 		    if (response.intents!='')
 		    	strIntent=response.intents[0].intent;
@@ -290,6 +300,7 @@ function FindPayLoadIntent(payloaddata)
             }
         }
     });
+	 }
 }    
      
     }
