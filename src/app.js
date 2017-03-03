@@ -79,7 +79,7 @@ function processEvent(event) {
 
 	var ReqSenderID = event.sender.id.toString();
         var ReqRecipientID = event.recipient.id.toString();
-	 var ReqMessageText = text;  
+	var ReqMessageText = text;  
 	    if(event.timestamp)
 	    {
 		var ReqTimeStamp = event.timestamp.toString();
@@ -162,7 +162,7 @@ function FindPayLoadIntent(payloaddata)
 		 message=FindPayLoadIntent(message);
 		 console.log('insidepayloadstrmessage ::::'+ JSONbig.stringify(message));
 		 strIntent = getEntity(message.entities,"Intent");
-		 console.log('insidepayloadstrIntent ::::'+ strIntent);
+		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
 	 }	
 	 var text=validateCPNI(message);	
     conversation.message({
