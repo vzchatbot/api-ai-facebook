@@ -138,13 +138,15 @@ var conversation = watson.conversation({
 	
 }
 	    
-FindPayLoadIntent(payloaddata)   
+function FindPayLoadIntent(payloaddata)   
 	    {
-var result = {};
-payloaddata.split('|').forEach(function(x){
-    var arr = x.split('=');
-    arr[1] && (result[arr[0]] = arr[1]);
-});
+		    console.log('In FindPayLoadIntent   : ' + payloaddata);
+		var result = {};
+		payloaddata.split('|').forEach(function(x){
+   		 var arr = x.split('=');
+   		 arr[1] && (result[arr[0]] = arr[1]);
+		});
+		    return result ;
 	    }
 	    
  function convMess(message) {
@@ -160,13 +162,7 @@ payloaddata.split('|').forEach(function(x){
 
 	 var text = "|PayloadIntentName:GetPrograminfo|Program: Any Given Sunday |Channel: HBOZONHDw|FiosId: 1405482754| Stationid : 2455| Date:  |ActualServiceId : 2455|";
 var result = FindPayLoadIntent(text);
-
-var result = {};
-str.split('|').forEach(function(x){
-    var arr = x.split('=');
-    arr[1] && (result[arr[0]] = arr[1]);
-});
-		 
+	 
     conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
         input: { 'text': text }, 
