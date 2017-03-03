@@ -61,6 +61,25 @@ var logger = log4js.getLogger("botws");
 var Errlogger = log4js.getLogger('errorlog');
 var ChatHistoryLog = log4js.getLogger('Debug');
 
+
+	
+function validateCPNI(elementValue,copyofelementValue)
+{
+      console.log("checking sensitive data - validateCPNI");
+       var  ssnPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{4})$/;
+       var phonenoPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
+       var CreditcardPattern = /^\(?([A-Za-z ]+)?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+	  
+	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
+	    {
+		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
+		return ('xxxxxxxxx',copyofelementValue);
+	    }
+	    else
+	      return elementValue;
+}
+	
+
 function processEvent(event) {
     var sender = event.sender.id.toString();
     console.log("senderid", sender);
@@ -118,7 +137,7 @@ var conversation = watson.conversation({
     version: 'v1',
     version_date: '2017-02-03'
 });    
-	var masktext=validateCPNI(text); //mask sensitive data
+	var masktext=validateCPNI(text,text); //mask sensitive data
 	
 	    
  convMess(masktext);
@@ -145,13 +164,9 @@ console.log('In CONVMess  : ' + message);
 		    if (response.intents!='')
 		    	strIntent=response.intents[0].intent;
 		    else
-			    strIntent='';
-		    
-		   // var strIntent ="MoreOptions";
+			 strIntent='';
 		     var responseText = response.output.text[0];
-		    console.log('strIntent:' + JSONbig.stringify(strIntent));
-		  //  var fallback = response.nodes_visited["fallback intent"];
-		   //console.log('strIntent:' + JSONbig.stringify(fallback));							  
+		    console.log('strIntent:' + JSONbig.stringify(strIntent));							  
 		    if(strIntent == '')
 		    {
 			   strIntent ="Default";
@@ -293,23 +308,7 @@ function chunkString(s, len) {
 }
 	
 	
-	
-function validateCPNI(elementValue)
-{
-      console.log("checking sensitive data");
-       var  ssnPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{4})$/;
-       var phonenoPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
-       var CreditcardPattern = /^\(?([A-Za-z ]+)?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-	  
-	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
-	    {
-		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
-		return 'xxxxxxxxx';
-	    }
-	    else
-	      return elementValue;
-}
-	
+
 	
 function Encrypt( actualstr)
 {
