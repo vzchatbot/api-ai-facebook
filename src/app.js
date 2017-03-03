@@ -16,7 +16,6 @@ var watson = require('watson-developer-cloud');
 var session = require('express-session');
 var sql = require('mssql');
 var MssqlStore = require('../src/MSSQLSession.js')(session);
-var watsoncallflag='true';
 
 
 var REST_PORT = (process.env.PORT || process.env.port || process.env.OPENSHIFT_NODEJS_PORT || 5000);
@@ -79,7 +78,7 @@ function processEvent(event) {
 
 	var ReqSenderID = event.sender.id.toString();
         var ReqRecipientID = event.recipient.id.toString();
-	var ReqMessageText = text;  
+	 var ReqMessageText = text;  
 	    if(event.timestamp)
 	    {
 		var ReqTimeStamp = event.timestamp.toString();
@@ -119,81 +118,40 @@ var conversation = watson.conversation({
     version: 'v1',
     version_date: '2017-02-03'
 });    
+	//var masktext=validateCPNI(text); //mask sensitive data
 	
-	convMess(text);
 	    
- function validateCPNI(elementValue)
-{
-      console.log("checking sensitive data - validateCPNI");	
-       var  ssnPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{4})$/;
-       var phonenoPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
-       var CreditcardPattern = /^\(?([A-Za-z ]+)?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-	  
-	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
-	    {
-		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
-		console.log('There is a sensitive data');
-		return ('xxxxxxxxx');
-	    }
-	    else
-	      console.log('No sensitive data');
-	      return (elementValue);		
-}
-	    
-function FindPayLoadIntent(payloaddata)   
-	    {	
-		console.log('insidepayloaddata');
-		var result = {entities:{}};
-		    {
-		payloaddata.split('|').forEach(function(x){
-   		 var arr = x.split(':');		
-   		 arr[1] && (result.entities[arr[0]] = arr[1]);
-		}); 
-		 console.log('strPayloadresult : ' + JSONbig.stringify(result) );
-		 var strpaylodIntent = result.entities.Intent; 
-		 console.log('payloadIntent : ' + JSONbig.stringify(strpaylodIntent) );
-		    }
-		 return (result);
-	    }
+ convMess(text);
 	    
  function convMess(message) {
-	  var payloadIntent='';
-	  var strIntent ='';
-	 var responseText ='';
-	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
-	 if (message.indexOf('|Payload|') > -1)
-	 {
-		 console.log('insidepayload');
-		 var result = FindPayLoadIntent(message);
-		 console.log('payloadmessage ::::'+ JSONbig.stringify(result));
-		 strIntent =  result.entities.Intent;
-		 responseText = result;
-		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
-		 console.log('message::::'+ JSONbig.stringify(message));
-	 }
-	 else
-	 {
-	      var text=validateCPNI(message);	
-		conversation.message({
-		workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
-		input: { 'text': text }, 
-		alternate_intents: false
-	  }
+console.log('In CONVMess  : ' + message);
+    conversation.message({
+        workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
+        input: { 'text': message }, 
+	alternate_intents: false
     }, function (err, response) {
         if (err) {
             console.log('Watson error in CONVMess'+ err);
         }
         else {
             console.log('I got a response. Let me check');
-	    console.log('Watson response:' + JSONbig.stringify(response));
-            if (response != '') {             
+		console.log('Watson response:' + JSONbig.stringify(response));
+            if (response != '') {
+                console.log('Watson response Text:' + response.output.text[0]);	             
+		console.log('Watson response:' + JSONbig.stringify(response));
 		    
+		     
+		    var strIntent ='';
 		    if (response.intents!='')
 		    	strIntent=response.intents[0].intent;
 		    else
-			 strIntent='';
-		    responseText = response.output.text[0];
-		    console.log('strIntent:' + JSONbig.stringify(strIntent));							  
+			    strIntent='';
+		    
+		   // var strIntent ="MoreOptions";
+		     var responseText = response.output.text[0];
+		    console.log('strIntent:' + JSONbig.stringify(strIntent));
+		  //  var fallback = response.nodes_visited["fallback intent"];
+		   //console.log('strIntent:' + JSONbig.stringify(fallback));							  
 		    if(strIntent == '')
 		    {
 			   strIntent ="Default";
@@ -237,7 +195,7 @@ function FindPayLoadIntent(payloaddata)
                         case "channelsearch":
                             console.log("----->>>>>>>>>>>> INSIDE channelsearch <<<<<<<<<<<------");
                             //ChnlSearch(response,function (str){ ChnlSearchCallback(str,sender)}); 
-			    stationsearch(response,function (str){ stationsearchCallback(str,sender)}); 
+				    stationsearch(response,function (str){ stationsearchCallback(str,sender)}); 
                             break;
 			case "TeamSearch":
 			case "GenreSearch":
@@ -294,7 +252,6 @@ function FindPayLoadIntent(payloaddata)
             }
         }
     });
-	 
 }    
      
     }
@@ -336,7 +293,23 @@ function chunkString(s, len) {
 }
 	
 	
-
+	
+function validateCPNI(elementValue)
+{
+      console.log("checking sensitive data");
+       var  ssnPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{4})$/;
+       var phonenoPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
+       var CreditcardPattern = /^\(?([A-Za-z ]+)?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+	  
+	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
+	    {
+		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
+		return 'xxxxxxxxx';
+	    }
+	    else
+	      return elementValue;
+}
+	
 	
 function Encrypt( actualstr)
 {
