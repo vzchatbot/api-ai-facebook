@@ -115,6 +115,7 @@ function processEvent(event) {
             }
         }
 	    
+   var context = {};
     var conversation = watson.conversation({
     username: '31be4934-c02e-441a-96e6-d639b4ab69a8',
     password: 'Q2hapKhopVRj',
@@ -133,7 +134,9 @@ function processEvent(event) {
             console.log(err)
         }
         else {
-            console.log('I got a response. Let me check');
+		context=response.context;
+            console.log('I got a response. Let me check\n\n\n\n');
+		console.log(context+'\n\n\n');
             if (response.output.text.length != 0) {
                 console.log('Watson says:' + response.output.text[0]);
 		    
