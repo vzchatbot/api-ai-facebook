@@ -170,14 +170,14 @@ function FindPayLoadIntent(payloaddata)
 		 responseText = result;
 		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
 		 console.log('message::::'+ JSONbig.stringify(message));
-	 }	
-	 var text=validateCPNI(message);	
-       if(message.indexOf('|Payload|') < -1)
-	  {
-	conversation.message({
-        workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
-        input: { 'text': text }, 
-	alternate_intents: false
+	 }
+	 else
+	 {
+	      var text=validateCPNI(message);	
+		conversation.message({
+		workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
+		input: { 'text': text }, 
+		alternate_intents: false
 	  }
     }, function (err, response) {
         if (err) {
