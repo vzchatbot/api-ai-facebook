@@ -138,7 +138,7 @@ var conversation = watson.conversation({
 	      return (elementValue);		
 }
 	    
-function FindPayLoadIntent(payloaddata,payloadIntent)   
+function FindPayLoadIntent(payloaddata)   
 	    {	
 		console.log('insidepayloaddata');
 		var result = {entities:{}};
@@ -149,7 +149,7 @@ function FindPayLoadIntent(payloaddata,payloadIntent)
 		 console.log('strPayloadresult : ' + JSONbig.stringify(result) );
 		 var strpaylodIntent = result.entities.Intent; 
 		 console.log('payloadIntent : ' + JSONbig.stringify(strpaylodIntent) );
-		 return (result,strpaylodIntent);
+		 return (result);
 	    }
 	    
  function convMess(message) {
@@ -159,9 +159,9 @@ function FindPayLoadIntent(payloaddata,payloadIntent)
 	 if (message.indexOf('|Payload|') > -1)
 	 {
 		 console.log('insidepayload');
-		 FindPayLoadIntent(message,payloadIntent);
-		 console.log('payloadmessage ::::'+ JSONbig.stringify(payloadIntent));
-		 strIntent = payloadIntent;
+		 FindPayLoadIntent(message);
+		 console.log('payloadmessage ::::'+ JSONbig.stringify(message));
+		 strIntent =  getEntity(message.entities,"Intent");
 		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
 	 }	
 	 var text=validateCPNI(message);	
