@@ -152,8 +152,8 @@ function FindPayLoadIntent(payloaddata)
 	    
  function convMess(message) {
 	  var actualmessage=message;
-	  message = "|Payload|Program: Any Given Sunday |Channel: HBOZONHDw|FiosId: 1405482754| Stationid : 2455| Date:  |ActualServiceId : 2455|";
-	 if (message.indexOf('|Payload|') > -1)
+	  message = "<!Payload!>Program: Any Given Sunday |Channel: HBOZONHDw|FiosId: 1405482754| Stationid : 2455| Date:  |ActualServiceId : 2455|";
+	 if (message.indexOf('<!Payload!>') > -1)
 	 {
 		 console.log('insidepayload');
 		 message=FindPayLoadIntent(message);
