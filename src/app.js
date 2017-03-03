@@ -159,6 +159,7 @@ function FindPayLoadIntent(payloaddata)
  function convMess(message) {
 	  var payloadIntent='';
 	  var strIntent ='';
+	 var responseText ='';
 	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
 	 if (message.indexOf('|Payload|') > -1)
 	 {
@@ -166,15 +167,18 @@ function FindPayLoadIntent(payloaddata)
 		 var result = FindPayLoadIntent(message);
 		 console.log('payloadmessage ::::'+ JSONbig.stringify(result));
 		 strIntent =  result.entities.Intent;
-		 message = result;
+		 responseText = result;
 		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
 		 console.log('message::::'+ JSONbig.stringify(message));
 	 }	
 	 var text=validateCPNI(message);	
-        conversation.message({
+       if(message.indexOf('|Payload|') < -1)
+	  {
+	conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
         input: { 'text': text }, 
 	alternate_intents: false
+	  }
     }, function (err, response) {
         if (err) {
             console.log('Watson error in CONVMess'+ err);
@@ -188,7 +192,7 @@ function FindPayLoadIntent(payloaddata)
 		    	strIntent=response.intents[0].intent;
 		    else
 			 strIntent='';
-		     var responseText = response.output.text[0];
+		    responseText = response.output.text[0];
 		    console.log('strIntent:' + JSONbig.stringify(strIntent));							  
 		    if(strIntent == '')
 		    {
@@ -233,7 +237,7 @@ function FindPayLoadIntent(payloaddata)
                         case "channelsearch":
                             console.log("----->>>>>>>>>>>> INSIDE channelsearch <<<<<<<<<<<------");
                             //ChnlSearch(response,function (str){ ChnlSearchCallback(str,sender)}); 
-				    stationsearch(response,function (str){ stationsearchCallback(str,sender)}); 
+			    stationsearch(response,function (str){ stationsearchCallback(str,sender)}); 
                             break;
 			case "TeamSearch":
 			case "GenreSearch":
