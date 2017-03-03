@@ -157,9 +157,8 @@ function FindPayLoadIntent(payloaddata,sender)
 		    switch (strPayloadIntentName) 
                     {
                         case "StartRecording":
-                            console.log("----->>>>>>>>>>>> INSIDE payloaddata Intent <<<<<<<<<<<------");
-                            RecordScenario(result,sender,sender); 
-			    return result='false';    
+                            console.log("----->>>>>>>>>>>> INSIDE payloaddata Intent <<<<<<<<<<<------");                           
+			    return result 'false';    
                             break;
 		    }
 		    
