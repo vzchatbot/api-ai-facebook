@@ -148,7 +148,7 @@ function FindPayLoadIntent(payloaddata,payloadIntent)
 		}); 
 		 console.log('strPayloadresult : ' + JSONbig.stringify(result) );
 		 var strpaylodIntent = result.entities.Intent; 
-		 console.log('payloadIntent : ' + JSONbig.stringify(payloadIntent) );
+		 console.log('payloadIntent : ' + JSONbig.stringify(strpaylodIntent) );
 		 return (result,strpaylodIntent);
 	    }
 	    
