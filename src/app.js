@@ -140,15 +140,14 @@ var conversation = watson.conversation({
 	    
 function FindPayLoadIntent(payloaddata)   
 	    {	
-		    
+		     console.log('insidepayloaddata');
 		var result = {entities:{}};
 		payloaddata.split('|').forEach(function(x){
    		 var arr = x.split(':');		
    		 arr[1] && (result.entities[arr[0]] = arr[1]);
-		});			 		    
-		 var strPayloadIntentName = result.entities.PayloadIntentName;
-		 console.log('strPayloadIntentName : ' + JSONbig.stringify(strPayloadIntentName) );
-		    return result;
+		}); 
+		 console.log('strPayloadresult : ' + JSONbig.stringify(result) );
+		 return result;
 	    }
 	    
  function convMess(message) {
