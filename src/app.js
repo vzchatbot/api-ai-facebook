@@ -150,8 +150,10 @@ function FindPayLoadIntent(payloaddata,sender)
    		 arr[1] && (result.entities[arr[0]] = arr[1]);
 		});
 		 console.log('In FindPayLoadIntent+++++  : ' + JSONbig.stringify(result)); 
-		 console.log('In PayloadIntentName******* : ' + result.entities);
+		 console.log('In PayloadIntentName******* : ' + JSONbig.stringify(result.entities) );
+		 		    
 		    var strPayloadIntentName = result.entities.PayloadIntentName;
+		     console.log('strPayloadIntentName : ' + JSONbig.stringify(strPayloadIntentName) );
 		    switch (strPayloadIntentName) 
                     {
                         case "StartRecording":
@@ -176,7 +178,7 @@ function FindPayLoadIntent(payloaddata,sender)
 	 }
 	console.log('In CPNII message  : ' + text); 
 
-	 var text = "|PayloadIntentName:GetPrograminfo|Program: Any Given Sunday |Channel: HBOZONHDw|FiosId: 1405482754| Stationid : 2455| Date:  |ActualServiceId : 2455|";
+	 var text = "|PayloadIntentName:StartRecording|Program: Any Given Sunday |Channel: HBOZONHDw|FiosId: 1405482754| Stationid : 2455| Date:  |ActualServiceId : 2455|";
 	 var result = FindPayLoadIntent(text);
 	 
 	 if(result =='true')
