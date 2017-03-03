@@ -146,7 +146,7 @@ function FindPayLoadIntent(payloaddata)
    		 var arr = x.split('=');
    		 arr[1] && (result[arr[0]] = arr[1]);
 		});
-		 console.log('In FindPayLoadIntent result  : ' + result);    
+		 console.log('In FindPayLoadIntent result  : ' + JSONbig.stringify(result));    
 		    return result;
 	    }
 	    
