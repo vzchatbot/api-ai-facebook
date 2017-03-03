@@ -151,7 +151,8 @@ function FindPayLoadIntent(payloaddata)
 	    
  function convMess(message) {
 	 var actualmessage=message;
-	 var text=validateCPNI(message);
+	// var text=validateCPNI(message);
+	 var text=message;
 	 if(masktext !='xxxxxxxxx')
 	 {
 		console.log('In CONVMess message  : ' + message);
