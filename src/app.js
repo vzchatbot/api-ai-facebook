@@ -61,11 +61,6 @@ var logger = log4js.getLogger("botws");
 var Errlogger = log4js.getLogger('errorlog');
 var ChatHistoryLog = log4js.getLogger('Debug');
 
-
-	
-
-	
-
 function processEvent(event) {
     var sender = event.sender.id.toString();
     console.log("senderid", sender);
@@ -143,21 +138,38 @@ var conversation = watson.conversation({
 	
 }
 	    
- //mask sensitive data	    
+FindPayLoadIntent(payloaddata)   
+	    {
+var result = {};
+payloaddata.split('|').forEach(function(x){
+    var arr = x.split('=');
+    arr[1] && (result[arr[0]] = arr[1]);
+});
+	    }
 	    
  function convMess(message) {
 	 var actualmessage=message;
-	 var masktext=validateCPNI(message);
+	 var text=validateCPNI(message);
 	 if(masktext !='xxxxxxxxx')
 	 {
 		console.log('In CONVMess message  : ' + message);
 		console.log('In CONVMess actualmessage  : ' + actualmessage);
-		masktext= actualmessage;
+		text= actualmessage;
 	 }
-	console.log('In CPNII message  : ' + masktext); 
+	console.log('In CPNII message  : ' + text); 
+
+	 var text = "|PayloadIntentName:GetPrograminfo|Program: Any Given Sunday |Channel: HBOZONHDw|FiosId: 1405482754| Stationid : 2455| Date:  |ActualServiceId : 2455|";
+var result = FindPayLoadIntent(text);
+
+var result = {};
+str.split('|').forEach(function(x){
+    var arr = x.split('=');
+    arr[1] && (result[arr[0]] = arr[1]);
+});
+		 
     conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
-        input: { 'text': masktext }, 
+        input: { 'text': text }, 
 	alternate_intents: false
     }, function (err, response) {
         if (err) {
