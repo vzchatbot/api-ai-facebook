@@ -154,6 +154,7 @@ var conversation = watson.conversation({
 		console.log('In CONVMess actualmessage  : ' + actualmessage);
 		masktext= actualmessage;
 	 }
+	console.log('In CPNII message  : ' + masktext); 
     conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
         input: { 'text': masktext }, 
@@ -168,8 +169,6 @@ var conversation = watson.conversation({
             if (response != '') {
                 console.log('Watson response Text:' + response.output.text[0]);	             
 		console.log('Watson response:' + JSONbig.stringify(response));
-		    
-		     
 		    var strIntent ='';
 		    if (response.intents!='')
 		    	strIntent=response.intents[0].intent;
