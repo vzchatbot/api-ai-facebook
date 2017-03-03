@@ -140,29 +140,30 @@ var conversation = watson.conversation({
 	    
 function FindPayLoadIntent(payloaddata)   
 	    {	
-		     console.log('insidepayloaddata');
+		console.log('insidepayloaddata');
 		var result = {entities:{}};
 		payloaddata.split('|').forEach(function(x){
    		 var arr = x.split(':');		
    		 arr[1] && (result.entities[arr[0]] = arr[1]);
 		}); 
 		 console.log('strPayloadresult : ' + JSONbig.stringify(result) );
-		 return result;
+		 var payloadIntent = result.entities.Intent; 
+		 console.log('payloadIntent : ' + JSONbig.stringify(payloadIntent) );
+		 return (result);
 	    }
 	    
  function convMess(message) {
-	  var actualmessage=message;
-	  message = "|Payload|Program: Any Given Sunday |Channel: HBOZONHDw|FiosId: 1405482754| Stationid : 2455| Date:  |ActualServiceId : 2455|";
+	  var payloadIntent='';
+	  var strIntent ='';
+	  message = "|Payload|Intent: programSearch|Program: Playboy's Amateur Girls|Channel: PlayboyHD|FiosId: 2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
 	 if (message.indexOf('|Payload|') > -1)
 	 {
 		 console.log('insidepayload');
 		 message=FindPayLoadIntent(message);
+		 strIntent = getEntity(message.entities,"Intent");
+		 console.log('insidepayloadstrIntent ::::'+ strIntent);
 	 }	
-	 var text=validateCPNI(message);
-	 if(text !='xxxxxxxxx')
-	 {	
-		text= actualmessage;
-	 }	
+	 var text=validateCPNI(message);	
     conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
         input: { 'text': text }, 
@@ -175,7 +176,7 @@ function FindPayLoadIntent(payloaddata)
             console.log('I got a response. Let me check');
 		console.log('Watson response:' + JSONbig.stringify(response));
             if (response != '') {             
-		    var strIntent ='';
+		    
 		    if (response.intents!='')
 		    	strIntent=response.intents[0].intent;
 		    else
