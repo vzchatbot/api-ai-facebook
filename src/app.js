@@ -160,7 +160,7 @@ function FindPayLoadIntent(payloaddata)
 	 {
 		 console.log('insidepayload');
 		 message=FindPayLoadIntent(message);
-		 console.log('insidepayloadstrmessage ::::'+ message);
+		 console.log('insidepayloadstrmessage ::::'+ JSONbig.stringify(message));
 		 strIntent = getEntity(message.entities,"Intent");
 		 console.log('insidepayloadstrIntent ::::'+ strIntent);
 	 }	
