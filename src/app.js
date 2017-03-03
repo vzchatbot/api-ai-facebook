@@ -132,9 +132,11 @@ var conversation = watson.conversation({
 	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
 	    {
 		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
+		console.log('There is a sensitive data');
 		return ('xxxxxxxxx');
 	    }
 	    else
+	      console.log('No sensitive data');
 	      return (elementValue);		
 }
 	    
@@ -161,13 +163,15 @@ function FindPayLoadIntent(payloaddata)
 	 if (message.indexOf('|Payload|') > -1)
 	 {
 		 console.log('insidepayload');
-		var result = FindPayLoadIntent(message);
+		 var result = FindPayLoadIntent(message);
 		 console.log('payloadmessage ::::'+ JSONbig.stringify(result));
 		 strIntent =  result.entities.Intent;
+		 message = result;
 		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
+		 console.log('message::::'+ JSONbig.stringify(message));
 	 }	
 	 var text=validateCPNI(message);	
-    conversation.message({
+        conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
         input: { 'text': text }, 
 	alternate_intents: false
@@ -177,7 +181,7 @@ function FindPayLoadIntent(payloaddata)
         }
         else {
             console.log('I got a response. Let me check');
-		console.log('Watson response:' + JSONbig.stringify(response));
+	    console.log('Watson response:' + JSONbig.stringify(response));
             if (response != '') {             
 		    
 		    if (response.intents!='')
