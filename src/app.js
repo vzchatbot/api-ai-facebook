@@ -170,16 +170,13 @@ function FindPayLoadIntent(payloaddata,sender)
 	// var text=validateCPNI(message);
 	 var text=message;
 	 if(text !='xxxxxxxxx')
-	 {
-		console.log('In CONVMess message  : ' + message);
-		console.log('In CONVMess actualmessage  : ' + actualmessage);
+	 {	
 		text= actualmessage;
-	 }
-	console.log('In CPNII message  : ' + text); 
+	 }	
 
 	 var text = "|PayloadIntentName:StartRecording|Program: Any Given Sunday |Channel: HBOZONHDw|FiosId: 1405482754| Stationid : 2455| Date:  |ActualServiceId : 2455|";
 	 var result = FindPayLoadIntent(text);
-	 
+console.log('--------  : ' + result); 	 
 	 if(result =='true')
 	 {
     conversation.message({
