@@ -123,13 +123,10 @@ var conversation = watson.conversation({
     version: 'v1',
     version_date: '2017-02-03'
 });    
+	
+	convMess(text);
 	    
-	    
-	var masktext=validateCPNI(text,text); //mask sensitive data
-	     console.log("elementValue - masktext   : "+ masktext);
-	convMess(masktext,text);
-	    
- function validateCPNI(elementValue,copyofelementValue)
+ function validateCPNI(elementValue)
 {
       console.log("checking sensitive data - validateCPNI");	
        var  ssnPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{4})$/;
@@ -139,19 +136,27 @@ var conversation = watson.conversation({
 	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
 	    {
 		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
-		return ('xxxxxxxxx',copyofelementValue);
+		return ('xxxxxxxxx');
 	    }
 	    else
-	      return (elementValue,copyofelementValue);	
+	      return (elementValue);	
 	
 }
 	    
- function convMess(message,text) {
-console.log('In CONVMess message  : ' + message);
-	 console.log('In CONVMess text : ' + text);
+ //mask sensitive data	    
+	    
+ function convMess(message) {
+	 var actualmessage=message;
+	 var masktext=validateCPNI(message);
+	 if(masktext !='xxxxxxxxx')
+	 {
+		console.log('In CONVMess message  : ' + message);
+		console.log('In CONVMess actualmessage  : ' + actualmessage);
+		masktext= actualmessage;
+	 }
     conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
-        input: { 'text': message }, 
+        input: { 'text': masktext }, 
 	alternate_intents: false
     }, function (err, response) {
         if (err) {
