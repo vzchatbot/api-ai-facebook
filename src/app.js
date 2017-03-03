@@ -77,6 +77,8 @@ function validateCPNI(elementValue,copyofelementValue)
 	    }
 	    else
 	      return elementValue;
+	 console.log("elementValue - validateCPNI"+ elementValue);
+	 console.log("elementValue - validateCPNI"+ copyofelementValue);
 }
 	
 
