@@ -153,7 +153,7 @@ function FindPayLoadIntent(payloaddata)
 	 var actualmessage=message;
 	// var text=validateCPNI(message);
 	 var text=message;
-	 if(masktext !='xxxxxxxxx')
+	 if(text !='xxxxxxxxx')
 	 {
 		console.log('In CONVMess message  : ' + message);
 		console.log('In CONVMess actualmessage  : ' + actualmessage);
@@ -162,7 +162,7 @@ function FindPayLoadIntent(payloaddata)
 	console.log('In CPNII message  : ' + text); 
 
 	 var text = "|PayloadIntentName:GetPrograminfo|Program: Any Given Sunday |Channel: HBOZONHDw|FiosId: 1405482754| Stationid : 2455| Date:  |ActualServiceId : 2455|";
-var result = FindPayLoadIntent(text);
+	 var result = FindPayLoadIntent(text);
 	 
     conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
