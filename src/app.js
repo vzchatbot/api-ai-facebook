@@ -63,23 +63,7 @@ var ChatHistoryLog = log4js.getLogger('Debug');
 
 
 	
-function validateCPNI(elementValue,copyofelementValue)
-{
-      console.log("checking sensitive data - validateCPNI");
-	 console.log("elementValue - validateCPNI"+ elementValue);
-	 console.log("elementValue - validateCPNI"+ copyofelementValue);
-       var  ssnPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{4})$/;
-       var phonenoPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
-       var CreditcardPattern = /^\(?([A-Za-z ]+)?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-	  
-	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
-	    {
-		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
-		return ('xxxxxxxxx',copyofelementValue);
-	    }
-	    else
-	      return elementValue;	
-}
+
 	
 
 function processEvent(event) {
@@ -139,13 +123,32 @@ var conversation = watson.conversation({
     version: 'v1',
     version_date: '2017-02-03'
 });    
+	    
+	    
 	var masktext=validateCPNI(text,text); //mask sensitive data
+	     console.log("elementValue - masktext   : "+ masktext);
+	convMess(masktext,text);
+	    
+ function validateCPNI(elementValue,copyofelementValue)
+{
+      console.log("checking sensitive data - validateCPNI");	
+       var  ssnPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{4})$/;
+       var phonenoPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
+       var CreditcardPattern = /^\(?([A-Za-z ]+)?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+	  
+	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
+	    {
+		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
+		return ('xxxxxxxxx',copyofelementValue);
+	    }
+	    else
+	      return (elementValue,copyofelementValue);	
 	
+}
 	    
- convMess(masktext);
-	    
- function convMess(message) {
-console.log('In CONVMess  : ' + message);
+ function convMess(message,text) {
+console.log('In CONVMess message  : ' + message);
+	 console.log('In CONVMess text : ' + text);
     conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
         input: { 'text': message }, 
