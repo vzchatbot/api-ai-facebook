@@ -146,18 +146,18 @@ var conversation = watson.conversation({
  function convMess(message) {
  var actualmessage=message;
 
-	var Inputtext=validateCPNI(message);
+	message =validateCPNI(message);
 	 /*
 	 if(Inputtext !='xxxxxxxxx')
 	 {	console.log('There is NO sensitive data');	
 		Inputtext= actualmessage;
 	 }
 	 */
-	console.log('In CPNII message  : ' + JSONbig.stringify(Inputtext)); 
+	console.log('In CPNII message  : ' + JSONbig.stringify(message)); 
 	 
     conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
-        input: { 'text': Inputtext }, 
+        input: { 'text': message }, 
 	alternate_intents: false
     }, function (err, response) {
         if (err) {
