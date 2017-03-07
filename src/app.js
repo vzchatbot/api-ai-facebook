@@ -275,10 +275,11 @@ var conversation = watson.conversation({
                             console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");
 				responseText="Hey .....I am here to help you on Verizon Services";    
 			      sendFBMessage(sender,  {text: responseText});
+				     break;
 			case "BatteryAlert":
-                            console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");
-   			
-			      sendFBMessage(sender,  {text: responseText});
+                            console.log("----->>>>>>>>>>>> INSIDE BatteryAlert <<<<<<<<<<<------");
+   						      sendFBMessage(sender,  {text: responseText});
+				     break;
 			 case "greetings":
                             console.log("----->>>>>>>>>>>> INSIDE greetings <<<<<<<<<<<------");				   
                             //sendFBMessage(sender,  {text: responseText});	    
