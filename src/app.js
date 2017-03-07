@@ -23,7 +23,7 @@ var SEVER_IP_ADDR = process.env.OPENSHIFT_NODEJS_IP || process.env.HEROKU_IP ;
 var APIAI_ACCESS_TOKEN = "c8021e1a2dac4f85aee8f805a5a920b2"; 
 var APIAI_LANG = 'en' ;
 var FB_VERIFY_TOKEN = "CAA30DE7-CC67-4CBA-AF93-2B1C5C4C19D4";
-var FB_PAGE_ACCESS_TOKEN = "EAAQzt7vuC9EBALyAL24kk1UG3vx865BaKJrVNzpVUohGzcMS6ntmCzwtVTn5ErHRk8bGyL3sQwaNMzYamTD679OUBmHQQUU66qZCfWtEzbhJVsgyWMVhZCUcdfKR5IBqejjh5KnLFlosZB5CaAQvWyr78ZCE4OwPbfHq9eDTrwZDZD";
+var FB_PAGE_ACCESS_TOKEN = "EAAYeV8WAScYBAJ1AriKv64KvZCr3nIudmpZBiPd3VL8j4mu3UYzZCwaSguZCFCEMTmWvunm9MbOGChZBLIyBroPxI951nFZCNP23KzyrzZCNCyfWupZCVdzhrJVeisiCPo3IrdtUsBiEA9m5vZBhPG2yxoCsL4gFTYL2rdBZCVQJ2m0AZDZD";
 //var FB_PAGE_ACCESS_TOKEN = "EAAYeV8WAScYBAJGetMxDuPHLQZA4U2pUkdXfh9aZBzeNCqZBZA5CcLeXsLa59uiQPXGqQ5mHbZCunZAtnU78UBpxwXIocRykYNiiU5NRIh2RsuCREc3o4ZBlYBicmkFZAVaWrmGHfA2ZAi7od2rtOYBpUQeFpt7GpZB0WTpJ0eO0gZBAwZDZD";
 var APIAI_VERIFY_TOKEN = "verify123";
 var apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
@@ -60,6 +60,26 @@ log4js.configure({
 var logger = log4js.getLogger("botws");
 var Errlogger = log4js.getLogger('errorlog');
 var ChatHistoryLog = log4js.getLogger('Debug');
+
+function validateCPNI(elementValue)
+{
+      console.log("checking sensitive data - validateCPNI");	
+       var  ssnPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{4})$/;
+       var phonenoPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
+       var CreditcardPattern = /^\(?([A-Za-z ]+)?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+	  
+	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
+	    {
+		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
+		console.log('There is a sensitive data');	
+		return ('xxxxxxxxx');
+	    }
+	    else
+		console.log('There is NO sensitive data');	
+	      return (elementValue);	
+	
+}
+
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
@@ -117,14 +137,24 @@ var conversation = watson.conversation({
     password: 'h033JHyAbXph',
     version: 'v1',
     version_date: '2017-02-03'
-});    
-	var masktext=validateCPNI(text); //mask sensitive data
+});   
+	//var masktext=validateCPNI(text); //mask sensitive data
 	
 	    
- convMess(masktext);
+ convMess(text);
 	    
  function convMess(message) {
-console.log('In CONVMess  : ' + message);
+ var actualmessage=message;
+
+	message =validateCPNI(message);
+	 /*
+	 if(Inputtext !='xxxxxxxxx')
+	 {	console.log('There is NO sensitive data');	
+		Inputtext= actualmessage;
+	 }
+	 */
+	console.log('In CPNII message  : ' + JSONbig.stringify(message)); 
+	 
     conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
         input: { 'text': message }, 
