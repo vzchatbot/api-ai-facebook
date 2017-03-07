@@ -146,7 +146,7 @@ var actualmessage=message;
  var Inputtext=message;	
 	 var Inputtext=validateCPNI(message);
 	 if(Inputtext !='xxxxxxxxx')
-	 {	console.log('There is a sensitive data');	
+	 {	console.log('There is NO sensitive data');	
 		Inputtext= actualmessage;
 	 }	
 	console.log('In CPNII message  : ' + Inputtext); 
