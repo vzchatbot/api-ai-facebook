@@ -277,7 +277,22 @@ var conversation = watson.conversation({
 			 case "greetings":
                             console.log("----->>>>>>>>>>>> INSIDE greetings <<<<<<<<<<<------");				   
                             //sendFBMessage(sender,  {text: responseText});	    
-			  welcomeMsg(sender);    
+			  welcomeMsg(sender);   
+				    case "pkgSearch":
+                                logger.debug("----->>>>>>>>>>>> INSIDE Package search <<<<<<<<<<<------");
+                            //    var strChannelName = response.result.parameters.Channel.toUpperCase();
+                            //    var strGenre = response.result.parameters.ChannelGenre.toUpperCase();
+				var strChannelName = getEntity(response.entities,"Channel");;
+                                var strGenre =getEntity(response.entities,"ChannelGenre");;
+				     
+                                logger.debug(" Channel Name " + strChannelName);
+                                logger.debug(" Genre " + strGenre);
+                                logger.debug(" Sender ID " + sender);
+
+                                var ChnArr = { channalName: strChannelName, senderParam: sender, regionParam: "", vhoidParam: "", cktidParam: "", Genre: strGenre };
+                             
+                                packageChannelSearch(sender, ChnArr,  function (str) { packageChannelSearchCallback(str, ChnArr) });
+                                break;
                     }		  
             }
         }
@@ -763,6 +778,172 @@ function showBillInfoCallback(apiresp, senderid) {
     else {
         sendFBMessage(senderid, subflow.facebook);
     }
+}
+//==================
+	
+function packageChannelSearch(senderid, ChnArr, callback) {
+
+    logger.debug("Package Channel Search Called");
+    try {
+     console.log('ChnArr' +JSONbig.stringify(ChnArr));
+	var channe_Name = getEntity(ChnArr.entities,"channalName");
+        var senderid = getEntity(ChnArr.entities,"senderParam");	   
+        var genre = getEntity(ChnArr.entities,"Genre"); 
+
+        logger.debug(" Sender ID " + senderid);
+        logger.debug(" Channel Name " + channe_Name);
+        logger.debug(" Genre " + genre);
+	var headersInfo = {"Content-Type": "application/json"};
+        var args = {};
+
+        if (genre == "" || genre == undefined) {
+            args = {		  
+                json: {
+                   Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
+                    Request: {
+                        'ThisValue': 'AuthPKGSearch',
+                        'BotCircuitID': '',
+                        'BotstrStationCallSign': channe_Name,
+                        'BotChannelNo': '',
+                        'BotVhoId': '',
+                        'BotstrFIOSRegionID': '',
+                        'BotProviderId' : senderid
+                    }
+                }
+
+            };
+        }
+        else {
+            args = {		     
+                json: {
+                  Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
+                    Request: {
+                        'ThisValue': 'AuthPKGSearch',
+                        'BotCircuitID': '',
+                        'BotstrGenreRootId': genre,
+                        'BotChannelNo': '',
+                        'BotVhoId': '',
+                        'BotstrFIOSRegionID': '',
+                        'BotProviderId' : senderid
+                    }
+                }
+
+            };
+
+        }
+        logger.debug(" Request for package search json " + JSON.stringify(args));
+
+        request({
+            url: "https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx",          
+            headers: headersInfo,
+            method: 'POST',
+            json: args.json
+        }, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                callback(body);
+            }
+            else
+            {               
+                logger.debug(' error on callback for package search : ' + error + ' body: ' + JSON.stringify(body));
+            }
+        });
+    }
+    catch (experr) {
+        logger.debug('error on  package search : ' + experr);       
+    }
+    logger.debug("Package Channel Search completed");
+}
+
+function packageChannelSearchCallback(apiresp, ChnArr) {
+
+    logger.debug("packageChannelSearchCallback called");
+
+    var senderid = ChnArr.senderParam;
+    var channe_Name = ChnArr.channalName;
+    var Genre = ChnArr.Genre;
+    var returntext;
+
+    try {
+
+        var objToJson = {};
+        objToJson = apiresp;
+
+        var respobj = objToJson[0].Inputs.newTemp.Section.Inputs.Response;
+
+        logger.debug(" Package Search Response " + JSON.stringify(respobj));
+
+        if (respobj != null && respobj.facebook != null && respobj.facebook.attachment != null) {
+
+            //console.log("less than 10 channels ");
+
+            //fix to single element array 
+            if (respobj != null
+                && respobj.facebook != null
+                && respobj.facebook.attachment != null
+                && respobj.facebook.attachment.payload != null
+                && respobj.facebook.attachment.payload.elements != null) {
+                try {
+                    var chanls = respobj.facebook.attachment.payload.elements;
+                    //console.log(" Is array? " + util.isArray(chanls))
+                    if (!util.isArray(chanls)) {
+                        respobj.facebook.attachment.payload.elements = [];
+                        respobj.facebook.attachment.payload.elements.push(chanls);
+                        logger.debug(" Package Search CallBack = After =" + JSON.stringify(respobj));
+                    }
+                } catch (err) { logger.debug("Error on channel not available on PKG Search " + err); }
+            }
+
+            if (Genre == "" || Genre == undefined) {
+                if (channe_Name == "" || channe_Name == undefined) {
+                    //returntext = "Your package does include following channels!! Watch it on the channels below!";
+                    returntext = "Here are some awesome listings included in your package!";
+                }
+                else {
+                    returntext = "Good News! Your package does include " + channe_Name + "! Watch it on the channels below!";
+                }
+            }
+            else {
+                // returntext = "That's right, following " + Genre + " channel(s) are part of your package:";
+                //returntext = "Your package does include "+ Genre + "! Watch it on the channels below!";
+                returntext = "Here are the " + Genre + " listings that are on today ! And the good news is� they're are all a part of your package. Enjoy!"
+            }
+            sendFBMessage(senderid, { text: returntext }, userCoversationArr);
+            sendFBMessage(senderid, respobj.facebook, userCoversationArr);
+        }
+        else {
+            logger.debug("Sorry i dont find channel details");
+            if (Genre == "" || Genre == undefined) {
+                if (channe_Name == "" || channe_Name == undefined) {
+                    //returntext = "Sorry we don't find any channels in your package. Can you try another";
+                    //returntext = "I can't find any channels right now. Can you try a different channel?";
+                    returntext = "Can you do me a favor and search for something else? I am having trouble finding what you are looking for.";
+                }
+                else {
+                    //returntext = "Sorry " + channe_Name + " is not part for your package. Can you try another.";
+                    //returntext = "Sorry your package does not include "+ channe_Name + ". Can you try another.";
+                    //returntext = "I can't find " + channe_Name + ", right now. Can you try a different channel?";
+                    returntext = "My bad, but I am having trouble finding what you are looking for. Can you try searching for something else?";
+                }
+            }
+            else {
+                //returntext = "Sorry following " + Genre + " is not part for your package. Can you try another.";
+                //returntext = "Sorry your package does not include "+ Genre + ". Can you try another.";
+                //returntext = "I can't find " + Genre + ", right now. Can you try a different genre?";
+                returntext = "My bad, but I am having trouble finding what you are looking for. Can you try searching for something else?";
+            }
+            sendFBMessage(senderid, { text: returntext }, userCoversationArr);
+        }
+    }
+    catch (err) {
+        logger.debug(" Catch Error on pkg search call back " + err);
+        var senderid = ChnArr.senderParam;
+        //var channe_Name = ChnArr.channalName;
+        //var returntext = "I can't find any channels right now. Can you try a different channel?";
+        var returntext = "Can you do me a favor and search for something else? I am having trouble finding what you are looking for.";
+        sendFBMessage(senderid, { text: returntext }, userCoversationArr);
+    }
+
+    logger.debug("packageChannelSearchCallback completed");
 }
 
 //=====================showOutage
