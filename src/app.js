@@ -25,11 +25,55 @@ var APIAI_ACCESS_TOKEN = "c8021e1a2dac4f85aee8f805a5a920b2";
 var APIAI_LANG = 'en' ;
 var FB_VERIFY_TOKEN = "CAA30DE7-CC67-4CBA-AF93-2B1C5C4C19D4";
 var FB_PAGE_ACCESS_TOKEN = "EAAYeV8WAScYBAJ1AriKv64KvZCr3nIudmpZBiPd3VL8j4mu3UYzZCwaSguZCFCEMTmWvunm9MbOGChZBLIyBroPxI951nFZCNP23KzyrzZCNCyfWupZCVdzhrJVeisiCPo3IrdtUsBiEA9m5vZBhPG2yxoCsL4gFTYL2rdBZCVQJ2m0AZDZD";
-//var FB_PAGE_ACCESS_TOKEN = "EAAYeV8WAScYBAJGetMxDuPHLQZA4U2pUkdXfh9aZBzeNCqZBZA5CcLeXsLa59uiQPXGqQ5mHbZCunZAtnU78UBpxwXIocRykYNiiU5NRIh2RsuCREc3o4ZBlYBicmkFZAVaWrmGHfA2ZAi7od2rtOYBpUQeFpt7GpZB0WTpJ0eO0gZBAwZDZD";
 var APIAI_VERIFY_TOKEN = "verify123";
 var apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
 var sessionIds = new Map();
 var userData = new Map();
+//==== Session
+
+
+
+callSession(strsender,strtext)
+{
+var http = require('http');
+var xml = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:botprocessor.webservice.interfaces.ppsh.verizon.com\"> <soapenv:Header/> <soapenv:Body> <urn:getPPSHData> <msg> <![CDATA[ <BotRequest> <id>1807994092745948</id> <time>1485873297960</time> <messaging> <sender> <id>990448381059018</id> </sender> <recipient> <id>1807994092745948</id> </recipient> <timestamp>1485873297889</timestamp> <message> <mid>mid.1485873297889:fb70dae4232</mid> <seq>43351</seq> <text>What's on HBO6</text> </message> </messaging> </BotRequest>]]> </msg> </urn:getPPSHData> </soapenv:Body> </soapenv:Envelope>";
+
+var http_options = {
+  hostname: 'ip-10-74-36-199.ebiz.verizon.com',
+  port: 7002,
+  path: '/ppsh/services/BotProcessor',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Content-Length': xml.length,
+    'SOAPAction': ''
+  }
+}
+
+var req = http.request(http_options, (res) => {
+  console.log(`STATUS: ${res.statusCode}`);
+  console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+  res.setEncoding('utf8');
+  res.on('data', (chunk) => {
+    console.log(`BODY: ${chunk}`);
+  });
+ 
+  res.on('end', () => {
+    console.log('No more data in response.')
+  })
+});
+ 
+req.on('error', (e) => {
+  console.log(`problem with request: ${e.message}`);
+});
+ 
+// write data to request body
+//req.write(xml); // xml would have been set somewhere to a complete xml document in the form of a string
+req.end();
+return xml;
+
+}
+
 //======================
 log4js.configure({
     appenders: 
@@ -141,13 +185,15 @@ var conversation = watson.conversation({
 });   
 	//var masktext=validateCPNI(text); //mask sensitive data
 	
-	    
+ 
  convMess(text);
 	    
  function convMess(message) {
  var actualmessage=message;
 
 	var InputText =validateCPNI(message);
+	var sessionoutputxml =callSession(sender,text);
+	 console.log('sessionoutputxml   : '+ JSONbig.stringify(sessionoutputxml))
 	 /*
 	 if(Inputtext !='xxxxxxxxx')
 	 {	console.log('There is NO sensitive data');	
@@ -275,26 +321,18 @@ var conversation = watson.conversation({
                             console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");
 				responseText="Hey .....I am here to help you on Verizon Services";    
 			      sendFBMessage(sender,  {text: responseText});
-				     break;
-			case "BatteryAlert":
-                            console.log("----->>>>>>>>>>>> INSIDE BatteryAlert <<<<<<<<<<<------");
-   						      sendFBMessage(sender,  {text: responseText});
-				     break;
 			 case "greetings":
                             console.log("----->>>>>>>>>>>> INSIDE greetings <<<<<<<<<<<------");				   
                             //sendFBMessage(sender,  {text: responseText});	    
 			  welcomeMsg(sender);   
 				    case "pkgSearch":
-                                logger.debug("----->>>>>>>>>>>> INSIDE Package search <<<<<<<<<<<------");
-                            //    var strChannelName = response.result.parameters.Channel.toUpperCase();
-                            //    var strGenre = response.result.parameters.ChannelGenre.toUpperCase();
+                                logger.debug("----->>>>>>>>>>>> INSIDE Package search <<<<<<<<<<<------");                         
 				var strChannelName = getEntity(response.entities,"Channel");;
                                 var strGenre =getEntity(response.entities,"ChannelGenre");;
 				     
                                 logger.debug(" Channel Name " + strChannelName);
                                 logger.debug(" Genre " + strGenre);
                                 logger.debug(" Sender ID " + sender);
-
                                 var ChnArr = { channalName: strChannelName, senderParam: sender, regionParam: "", vhoidParam: "", cktidParam: "", Genre: strGenre };
                              
                                 packageChannelSearch(sender, ChnArr,  function (str) { packageChannelSearchCallback(str, ChnArr) });
