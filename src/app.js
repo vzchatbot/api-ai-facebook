@@ -116,9 +116,10 @@ req.on('error', (e) => {
 });
  
 // write data to request body
-//req.write(xml); // xml would have been set somewhere to a complete xml document in the form of a string
+req.write(xml); // xml would have been set somewhere to a complete xml document in the form of a string
+console.log('sessionresponse'+ JSONbig.stringify(xml));
 req.end();
-return xml;
+//return xml;
 
 }
 
