@@ -36,7 +36,7 @@ var userData = new Map();
 callSession(strsender,strtext)
 {
 var http = require('http');
-var xml = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:botprocessor.webservice.interfaces.ppsh.verizon.com\"> <soapenv:Header/> <soapenv:Body> <urn:getPPSHData> <msg> <![CDATA[ <BotRequest> <id>1807994092745948</id> <time>1485873297960</time> <messaging> <sender> <id>990448381059018</id> </sender> <recipient> <id>1807994092745948</id> </recipient> <timestamp>1485873297889</timestamp> <message> <mid>mid.1485873297889:fb70dae4232</mid> <seq>43351</seq> <text>What's on HBO6</text> </message> </messaging> </BotRequest>]]> </msg> </urn:getPPSHData> </soapenv:Body> </soapenv:Envelope>";
+var xml = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:botprocessor.webservice.interfaces.ppsh.verizon.com\"> <soapenv:Header/> <soapenv:Body> <urn:getPPSHData> <msg> <![CDATA[ <BotRequest> <id>1807994092745948</id> <time>1485873297960</time> <messaging> <sender> <id> "+ strsender + "</id> </sender> <recipient> <id>1807994092745948</id> </recipient> <timestamp>1485873297889</timestamp> <message> <mid>mid.1485873297889:fb70dae4232</mid> <seq>43351</seq> <text>"+ strtext +"</text> </message> </messaging> </BotRequest>]]> </msg> </urn:getPPSHData> </soapenv:Body> </soapenv:Envelope>";
 
 var http_options = {
   hostname: 'ip-10-74-36-199.ebiz.verizon.com',
