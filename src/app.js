@@ -71,9 +71,11 @@ function validateCPNI(elementValue)
 	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
 	    {
 		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
+		console.log('There is a sensitive data');	
 		return ('xxxxxxxxx');
 	    }
 	    else
+		console.log('There is NO sensitive data');	
 	      return (elementValue);	
 	
 }
@@ -145,10 +147,12 @@ var conversation = watson.conversation({
 var actualmessage=message;
  var Inputtext=message;	
 	 var Inputtext=validateCPNI(message);
+	 /*
 	 if(Inputtext !='xxxxxxxxx')
 	 {	console.log('There is NO sensitive data');	
 		Inputtext= actualmessage;
-	 }	
+	 }
+	 */
 	console.log('In CPNII message  : ' + Inputtext); 
 	 
     conversation.message({
