@@ -275,6 +275,7 @@ var conversation = watson.conversation({
 			case "GenreSearch":
 			case "castwise":
 			case "PgmDetails":
+			case "programsearch":				    
                         case "programSearch":
                             console.log("----->>>>>>>>>>>> INSIDE programSearch <<<<<<<<<<<------");
                             PgmSearch(response,sender,function (str){ PgmSearchCallback(str,sender)});
