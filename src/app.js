@@ -277,8 +277,8 @@ var conversation = watson.conversation({
 			      sendFBMessage(sender,  {text: responseText});
 			case "BatteryAlert":
                             console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");
-
-			      sendFBMessage(sender,  {text: BatteryAlert});
+   			
+			      sendFBMessage(sender,  {text: responseText});
 			 case "greetings":
                             console.log("----->>>>>>>>>>>> INSIDE greetings <<<<<<<<<<<------");				   
                             //sendFBMessage(sender,  {text: responseText});	    
