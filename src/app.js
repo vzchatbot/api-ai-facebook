@@ -29,50 +29,6 @@ var APIAI_VERIFY_TOKEN = "verify123";
 var apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
 var sessionIds = new Map();
 var userData = new Map();
-//==== Session
-
-
-
-callSession(strsender,strtext)
-{
-var http = require('http');
-var xml = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:botprocessor.webservice.interfaces.ppsh.verizon.com\"> <soapenv:Header/> <soapenv:Body> <urn:getPPSHData> <msg> <![CDATA[ <BotRequest> <id>1807994092745948</id> <time>1485873297960</time> <messaging> <sender> <id> "+ strsender + "</id> </sender> <recipient> <id>1807994092745948</id> </recipient> <timestamp>1485873297889</timestamp> <message> <mid>mid.1485873297889:fb70dae4232</mid> <seq>43351</seq> <text>"+ strtext +"</text> </message> </messaging> </BotRequest>]]> </msg> </urn:getPPSHData> </soapenv:Body> </soapenv:Envelope>";
-
-var http_options = {
-  hostname: 'ip-10-74-36-199.ebiz.verizon.com',
-  port: 7002,
-  path: '/ppsh/services/BotProcessor',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Content-Length': xml.length,
-    'SOAPAction': ''
-  }
-}
-
-var req = http.request(http_options, (res) => {
-  console.log(`STATUS: ${res.statusCode}`);
-  console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-  res.setEncoding('utf8');
-  res.on('data', (chunk) => {
-    console.log(`BODY: ${chunk}`);
-  });
- 
-  res.on('end', () => {
-    console.log('No more data in response.')
-  })
-});
- 
-req.on('error', (e) => {
-  console.log(`problem with request: ${e.message}`);
-});
- 
-// write data to request body
-//req.write(xml); // xml would have been set somewhere to a complete xml document in the form of a string
-req.end();
-return xml;
-
-}
 
 //======================
 log4js.configure({
@@ -125,6 +81,46 @@ function validateCPNI(elementValue)
 	
 }
 
+function callSession(strsender,strtext)
+{
+var http = require('http');
+var xml = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:botprocessor.webservice.interfaces.ppsh.verizon.com\"> <soapenv:Header/> <soapenv:Body> <urn:getPPSHData> <msg> <![CDATA[ <BotRequest> <id>1807994092745948</id> <time>1485873297960</time> <messaging> <sender> <id> "+ strsender + "</id> </sender> <recipient> <id>1807994092745948</id> </recipient> <timestamp>1485873297889</timestamp> <message> <mid>mid.1485873297889:fb70dae4232</mid> <seq>43351</seq> <text>"+ strtext +"</text> </message> </messaging> </BotRequest>]]> </msg> </urn:getPPSHData> </soapenv:Body> </soapenv:Envelope>";
+
+var http_options = {
+  hostname: 'ip-10-74-36-199.ebiz.verizon.com',
+  port: 7002,
+  path: '/ppsh/services/BotProcessor',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Content-Length': xml.length,
+    'SOAPAction': ''
+  }
+}
+
+var req = http.request(http_options, (res) => {
+  console.log(`STATUS: ${res.statusCode}`);
+  console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+  res.setEncoding('utf8');
+  res.on('data', (chunk) => {
+    console.log(`BODY: ${chunk}`);
+  });
+ 
+  res.on('end', () => {
+    console.log('No more data in response.')
+  })
+});
+ 
+req.on('error', (e) => {
+  console.log(`problem with request: ${e.message}`);
+});
+ 
+// write data to request body
+//req.write(xml); // xml would have been set somewhere to a complete xml document in the form of a string
+req.end();
+return xml;
+
+}
 
 function processEvent(event) {
     var sender = event.sender.id.toString();
