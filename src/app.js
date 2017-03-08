@@ -223,6 +223,7 @@ var conversation = watson.conversation({
 		    
 		   // var strIntent ="MoreOptions";
 		     var responseText = response.output.text[0];
+		    console.log('watson resp text :' + JSONbig.stringify(responseText));
 		    console.log('strIntent:' + JSONbig.stringify(strIntent));
 		  //  var fallback = response.nodes_visited["fallback intent"];
 		   //console.log('strIntent:' + JSONbig.stringify(fallback));							  
