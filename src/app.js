@@ -1446,7 +1446,7 @@ console.log(msg.constructor);
  	
 	if(msg != "I understand that you want alerts" || msg != "I understand that you don't want alerts")
 		sendFBMessage(usersession, msg);
-	else if(msg.constructor === {}.constructor)
+	else
 		sendFBMessage(usersession, {text: msg});	
 	
 	/*if(JSON.parse(msg))
