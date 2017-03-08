@@ -136,6 +136,7 @@ conversation.message({
         else {
 		context=response.context;
             console.log('I got a response. Let me check\n\n\n\n');
+		console.log('RESPONSE' + response + '\n\n')
 		console.log(context+'\n\n\n');
             if (response.output.text.length != 0) {
                 console.log('Watson says:' + response.output.text[0]);
