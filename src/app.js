@@ -1441,16 +1441,16 @@ function alertResp(usersession, msg) {
  console.log("inside ALERT REPLY");
  console.log("MESSAGE: " + msg);
 
- function isJson(msg) {
+ function check(msg) {
   if (typeof(msg) == typeof("test")) {
-   sendFBMessage(usersession, {
-    text: msg
-   });
+   sendFBMessage(usersession, {text: msg});
   } else {
    sendFBMessage(usersession, msg);
   }
  }
 }
+	
+	
 function defaultReply(usersession, msg)
 	{
 		console.log("inside UNIDENTIFIED REPLY");
