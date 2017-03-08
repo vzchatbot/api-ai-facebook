@@ -1443,7 +1443,7 @@ function alertResp(usersession, msg)
 		console.log("MESSAGE: "+ msg);
 		
 		function isJson(msg) {
-    if(JSON.parse('msg'))
+    if(typeof(msg) == typeof("test"))
     {
         sendFBMessage(usersession, {text: msg});
     }
