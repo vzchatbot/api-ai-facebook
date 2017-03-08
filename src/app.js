@@ -117,15 +117,15 @@ function processEvent(event) {
 	    
    var context = {};
     var conversation = watson.conversation({
-    username: '31be4934-c02e-441a-96e6-d639b4ab69a8',
-    password: 'Q2hapKhopVRj',
+    username: '833a5136-756c-4318-b1f2-96d73053e6da',
+    password: 'aGgVbARl0cuj',
     version: 'v1',
     version_date: '2017-02-03'
 });
    
 	    
 	    conversation.message({
-        workspace_id: 'b2d3a074-4d46-4b95-b902-f70d0000fdc6',
+        workspace_id: 'ec74dc62-e317-4050-b677-92148bfb95f6',
         input: { 'text': ReqMessageText },
   	alternate_intents : false
     }, function (err, response) {
