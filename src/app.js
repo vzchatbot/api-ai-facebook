@@ -124,7 +124,7 @@ function processEvent(event) {
 });
    
 	    
-	    conversation.message({
+conversation.message({
         workspace_id: 'ec74dc62-e317-4050-b677-92148bfb95f6',
         input: { 'text': ReqMessageText },
   	alternate_intents : false
@@ -158,6 +158,11 @@ function processEvent(event) {
 			    console.log('USER HAS STARTED WITH A GREETING');
 			    welcomeMsgWat(sender, response.output.text[0]);
 		    }
+		    else if(response.intents[0].intent == 'alert') 
+		    {
+			    console.log('ALERT CHECKING');
+			    alertResp(sender, response.output.text[0]);
+		    }
 		    }
 		   /* else if(!response.intents)
 		    {
@@ -166,7 +171,7 @@ function processEvent(event) {
 		    }*/
 		    else
 		    {
-			    console.log('TRY BETTER CODING');
+			    console.log('TRY BETTER QUESTIONS');
 			     console.log('UNIDENTIFIED INTENT');
 			  defaultReply(sender, response.output.text[0]);
 		    }
@@ -1430,7 +1435,13 @@ function PgmListing(usersession, msg)
 		//var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title": msg, "image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","subtitle":"Enjoy the show","default_action":{"type":"web_url", "url":"https://tv.verizon.com/series/24045604/details/mike-molly","messenger_extensions": true,"webview_height_ratio": "tall", "fallback_url": ""},"buttons":[]}]}}}};
 		sendFBMessage(usersession,  respobj.facebook);
 	}
-	
+
+function alertResp(usersession, msg)
+	{
+		console.log("inside ALERT REPLY");
+		sendFBMessage(usersession, {text: msg});
+		
+	}
 function defaultReply(usersession, msg)
 	{
 		console.log("inside UNIDENTIFIED REPLY");
