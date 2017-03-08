@@ -1441,6 +1441,7 @@ function alertResp(usersession, msg) {
  console.log("inside ALERT REPLY");
  console.log("MESSAGE: " + msg);
 console.log(typeof(msg) == typeof("test"));   //true
+	console.log(JSON.parse(msg));
  	
 	/*if(typeof(msg) == 'string')
 		sendFBMessage(usersession, {text: msg});
