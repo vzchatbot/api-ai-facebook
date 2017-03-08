@@ -1443,9 +1443,9 @@ function alertResp(usersession, msg) {
 console.log(typeof(msg));   //true
 	//console.log(JSON.parse(msg));
  	
-	if(typeof(msg) == 'string')
+	if(msg.constructor === "test".constructor)
 		sendFBMessage(usersession, {text: msg});
-	else if(typeof(msg) == 'object')
+	else if(msg.constructor === {}.constructor)
 		sendFBMessage(usersession, msg);
 	
 	/*if(JSON.parse(msg))
