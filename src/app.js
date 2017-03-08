@@ -1440,22 +1440,22 @@ function PgmListing(usersession, msg)
 function alertResp(usersession, msg) {
  console.log("inside ALERT REPLY");
  console.log("MESSAGE: " + msg);
-console.log(typeof(msg) == typeof("test"));   //true
-	console.log(JSON.parse(msg));
+console.log(typeof(msg));   //true
+	//console.log(JSON.parse(msg));
  	
-	/*if(typeof(msg) == 'string')
+	if(typeof(msg) == 'string')
 		sendFBMessage(usersession, {text: msg});
 	else if(typeof(msg) == 'object')
-		sendFBMessage(usersession, msg);*/
+		sendFBMessage(usersession, msg);
 	
-	if(JSON.parse(msg))
+	/*if(JSON.parse(msg))
 	{
 		sendFBMessage(usersession, msg);
 	}
 	else
 	{
 		sendFBMessage(usersession, {text: msg});
-	}
+	}*/
 		
 }
 	
