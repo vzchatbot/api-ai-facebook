@@ -1442,10 +1442,19 @@ function alertResp(usersession, msg) {
  console.log("MESSAGE: " + msg);
 console.log(typeof(msg) == typeof("test"));   //true
  	
-	if(typeof(msg) == 'string')
+	/*if(typeof(msg) == 'string')
 		sendFBMessage(usersession, {text: msg});
 	else if(typeof(msg) == 'object')
+		sendFBMessage(usersession, msg);*/
+	
+	if(JSON.parse(msg))
+	{
 		sendFBMessage(usersession, msg);
+	}
+	else
+	{
+		sendFBMessage(usersession, {text: msg});
+	}
 		
 }
 	
