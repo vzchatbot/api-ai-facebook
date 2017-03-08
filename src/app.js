@@ -1443,14 +1443,13 @@ function alertResp(usersession, msg)
 		console.log("MESSAGE: "+ msg);
 		
 		function isJson(msg) {
-    try {
-        JSON.parse(msg);
-    } catch (e) {
+    if(JSON.parse('msg'))
+    {
         sendFBMessage(usersession, {text: msg});
     }
-    		sendFBMessage(usersession, msg);
-}
-	
+			else{
+			sendFBMessage(usersession, msg);
+			}	
 	}
 function defaultReply(usersession, msg)
 	{
