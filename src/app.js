@@ -1441,16 +1441,11 @@ function alertResp(usersession, msg) {
  console.log("inside ALERT REPLY");
  console.log("MESSAGE: " + msg);
 console.log(typeof(msg) == typeof("test"));   //true
- /*function check(msg) {
-  if (typeof(msg) == typeof("test")) {
-   sendFBMessage(usersession, {text: msg});
-  } else {
-   sendFBMessage(usersession, msg);
-  }
- }*/
-	sendFBMessage(usersession, msg);
-	if(!(typeof(msg) == typeof("test")))
+ 	
+	if(typeof(msg) == 'string')
 		sendFBMessage(usersession, {text: msg});
+	else
+		sendFBMessage(usersession, msg);
 		
 }
 	
