@@ -1448,7 +1448,10 @@ console.log(typeof(msg) == typeof("test"));   //true
    sendFBMessage(usersession, msg);
   }
  }*/
-	sendFBMessage(usersession, {text: msg});
+	sendFBMessage(usersession, msg);
+	if(typeof(msg) == typeof("test"))
+		sendFBMessage(usersession, {text: msg});
+		
 }
 	
 	
