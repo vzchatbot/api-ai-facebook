@@ -1440,7 +1440,8 @@ function PgmListing(usersession, msg)
 function alertResp(usersession, msg) {
  console.log("inside ALERT REPLY");
  console.log("MESSAGE: " + msg);
-console.log(typeof(msg));   //true
+console.log(msg.constructor);
+	console.log({}.constructor);//true
 	//console.log(JSON.parse(msg));
  	
 	if(msg.constructor === "test".constructor)
