@@ -1441,8 +1441,16 @@ function alertResp(usersession, msg)
 	{
 		console.log("inside ALERT REPLY");
 		console.log("MESSAGE: "+ msg);
-		sendFBMessage(usersession, msg);
 		
+		function isJson(msg) {
+    try {
+        JSON.parse(msg);
+    } catch (e) {
+        sendFBMessage(usersession, {text: msg});
+    }
+    		sendFBMessage(usersession, msg);
+}
+	
 	}
 function defaultReply(usersession, msg)
 	{
