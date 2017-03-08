@@ -211,8 +211,7 @@ var conversation = watson.conversation({
             console.log('I got a response. Let me check');
 		console.log('Watson response:' + JSONbig.stringify(response));
             if (response != '') {
-                console.log('Watson response Text:' + response.output.text[0]);	             
-		console.log('Watson response:' + JSONbig.stringify(response));
+                
 		    
 		     
 		    var strIntent ='';
@@ -223,9 +222,10 @@ var conversation = watson.conversation({
 		    
 		   // var strIntent ="MoreOptions";
 		     var responseText = response.output.text[0];
-		    if (responseText='')
+		    console.log('Watson response Text 0:' + responseText);	             
+		    if (responseText=='')
 			    responseText = response.output.text[1];
-		    console.log('watson resp text :' + JSONbig.stringify(responseText));
+		    console.log('watson resp text 1 :' + JSONbig.stringify(responseText));
 		    console.log('strIntent:' + JSONbig.stringify(strIntent));
 		  //  var fallback = response.nodes_visited["fallback intent"];
 		   //console.log('strIntent:' + JSONbig.stringify(fallback));							  
