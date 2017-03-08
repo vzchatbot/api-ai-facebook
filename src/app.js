@@ -1440,7 +1440,7 @@ function PgmListing(usersession, msg)
 function alertResp(usersession, msg) {
  console.log("inside ALERT REPLY");
  console.log("MESSAGE: " + msg);
-
+console.log(typeof(msg) == typeof("test"));
  function check(msg) {
   if (typeof(msg) == typeof("test")) {
    sendFBMessage(usersession, {text: msg});
