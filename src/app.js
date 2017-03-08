@@ -1439,7 +1439,7 @@ function PgmListing(usersession, msg)
 function alertResp(usersession, msg)
 	{
 		console.log("inside ALERT REPLY");
-		sendFBMessage(usersession, {recipient: {id: sender},"message":msg});
+		sendFBMessage(usersession, {recipient: {id: usersession},"message":msg});
 		
 	}
 function defaultReply(usersession, msg)
