@@ -1444,7 +1444,7 @@ console.log(typeof(msg) == typeof("test"));   //true
  	
 	if(typeof(msg) == 'string')
 		sendFBMessage(usersession, {text: msg});
-	else
+	else if(typeof(msg) == 'object')
 		sendFBMessage(usersession, msg);
 		
 }
