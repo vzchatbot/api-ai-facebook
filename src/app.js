@@ -158,7 +158,7 @@ conversation.message({
     } else if (response.intents[0].intent == 'alert') {
      console.log('ALERT CHECKING');
      alertResp(sender, response.output.text[0]);
-    }else if (response.intents[0].intent == 'updates') {
+    }else if (response.intents[0].intent == 'replace') {
      console.log('REPLACE CHECKING');
      replaceResp(sender, response.output.text[0]);
     }else if (response.intents[0].intent == 'troubleshoot') {
