@@ -164,6 +164,9 @@ conversation.message({
     }else if (response.intents[0].intent == 'troubleshoot') {
      console.log('TROUBLE SHOOTING');
      trShootResp(sender, response.output.text[0]);
+    }else if (response.intents[0].intent == 'generalNo') {
+     console.log('GENERAL NO');
+     genNoResp(sender, response.output.text[0]);
     }
    }
    /* else if(!response.intents)
@@ -1521,6 +1524,14 @@ console.log(msg.constructor);
 		
 }
 	
+function genNoResp(usersession, msg) {
+ console.log("inside GENERAL NO REPLY");
+ console.log("MESSAGE: " + msg);
+ sendFBMessage(usersession, {
+  text: msg
+ });
+
+}
 	
 function defaultReply(usersession, msg)
 	{
