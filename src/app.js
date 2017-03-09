@@ -158,6 +158,9 @@ conversation.message({
     } else if (response.intents[0].intent == 'alert') {
      console.log('ALERT CHECKING');
      alertResp(sender, response.output.text[0]);
+    }else if (response.intents[0].intent == 'updates') {
+     console.log('UPDATE CHECKING');
+     updateResp(sender, response.output.text[0]);
     }
    }
    /* else if(!response.intents)
@@ -1458,6 +1461,37 @@ console.log(msg.constructor);
 	}*/
 		
 }
+	
+	
+function updateResp(usersession, msg) {
+ console.log("inside UPDATE REPLY");
+ console.log("MESSAGE: " + msg);
+console.log(msg.constructor);
+	console.log({}.constructor);//true
+	//console.log(JSON.parse(msg));
+	
+	sendFBMessage(usersession, {text: msg});
+ 	
+	/*if((msg != "I understand that you want alerts") && (msg != "I understand that you don't want alerts"))
+	{
+		sendFBMessage(usersession, msg);
+	}
+	else
+	{
+		sendFBMessage(usersession, {text: msg});	
+	} */
+	
+	/*if(JSON.parse(msg))
+	{
+		sendFBMessage(usersession, msg);
+	}
+	else
+	{
+		sendFBMessage(usersession, {text: msg});
+	}*/
+		
+}
+	
 	
 	
 function defaultReply(usersession, msg)
