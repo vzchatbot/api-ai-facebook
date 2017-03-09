@@ -159,8 +159,11 @@ conversation.message({
      console.log('ALERT CHECKING');
      alertResp(sender, response.output.text[0]);
     }else if (response.intents[0].intent == 'updates') {
-     console.log('UPDATE CHECKING');
-     updateResp(sender, response.output.text[0]);
+     console.log('REPLACE CHECKING');
+     replaceResp(sender, response.output.text[0]);
+    }else if (response.intents[0].intent == 'troubleshoot') {
+     console.log('TROUBLE SHOOTING');
+     trShootResp(sender, response.output.text[0]);
     }
    }
    /* else if(!response.intents)
@@ -1463,8 +1466,8 @@ console.log(msg.constructor);
 }
 	
 	
-function updateResp(usersession, msg) {
- console.log("inside UPDATE REPLY");
+function replaceResp(usersession, msg) {
+ console.log("inside REPLACE REPLY");
  console.log("MESSAGE: " + msg);
 console.log(msg.constructor);
 	console.log({}.constructor);//true
@@ -1489,7 +1492,34 @@ console.log(msg.constructor);
 	}*/
 		
 }
+
+
+function trShootResp(usersession, msg) {
+ console.log("inside TROUBLESHOOT REPLY");
+ console.log("MESSAGE: " + msg);
+console.log(msg.constructor);
+	console.log({}.constructor);//true
+	//console.log(JSON.parse(msg));
+ 	
+	if((msg != "Ok I am starting to troubleshoot your battery"))
+	{
+		sendFBMessage(usersession, msg);
+	}
+	else
+	{
+		sendFBMessage(usersession, {text: msg});	
+	}
 	
+	/*if(JSON.parse(msg))
+	{
+		sendFBMessage(usersession, msg);
+	}
+	else
+	{
+		sendFBMessage(usersession, {text: msg});
+	}*/
+		
+}
 	
 	
 function defaultReply(usersession, msg)
