@@ -323,11 +323,19 @@ var conversation = watson.conversation({
 				responseText="Hey .....I am here to help you on Verizon Services";    
 			      sendFBMessage(sender,  {text: responseText});
 				    break;
+			case "orderBBU":	    
 			case "replaceBBU":
 			case "alert":
                             console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
 			      sendFBMessage(sender,   responseText);
 				 break;    
+			case "confirmOrderBBU":
+                            console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
+				   var myresponseText = "Congrats we have received your order with "+ responseText +", Once we submit your order we will send order confirmation e-mail to your registered mail address with Verizon. 
+";
+			      sendFBMessage(sender,   {text: myresponseText}));
+				 break;   
+				    
 			 case "greetings":
                             console.log("----->>>>>>>>>>>> INSIDE greetings <<<<<<<<<<<------");				   
                             //sendFBMessage(sender,  {text: responseText});	    
