@@ -323,7 +323,7 @@ var conversation = watson.conversation({
 				responseText="Hey .....I am here to help you on Verizon Services";    
 			      sendFBMessage(sender,  {text: responseText});
 				    break;
-			case "BatteryAlert":
+			case "alert":
                             console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
 			      sendFBMessage(sender,   responseText);
 				 break;    
