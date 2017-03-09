@@ -189,8 +189,8 @@ var conversation = watson.conversation({
  var actualmessage=message;
 
 	var InputText =validateCPNI(message);
-	var sessionoutputxml =callSession(sender,text);
-	 console.log('sessionoutputxml   : '+ JSONbig.stringify(sessionoutputxml))
+	//var sessionoutputxml =callSession(sender,text);
+	 //console.log('sessionoutputxml   : '+ JSONbig.stringify(sessionoutputxml))
 	 /*
 	 if(Inputtext !='xxxxxxxxx')
 	 {	console.log('There is NO sensitive data');	
@@ -332,7 +332,7 @@ var conversation = watson.conversation({
 				 break;    
 			case "confirmOrderBBU":
                             console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
-			    var myresponseText = "Congrats we have received your order with "+ response.input.text +" Shipping. Once we submit your order we will send order confirmation e-mail to your registered mail address with Verizon."; 
+			    var myresponseText = "Congrats!!! \n\n\We have received your order with "+ response.input.text +" Shipping. \n\nOnce we submit your order we will send order confirmation e-mail to your registered mail address with Verizon."; 
 			     sendFBMessage(sender,   {text: myresponseText});
 				 break;   
 			 case "greetings":
