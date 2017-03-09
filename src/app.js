@@ -325,6 +325,7 @@ var conversation = watson.conversation({
 				    break;
 			case "orderBBU":	    
 			case "replaceBBU":
+			case "BBUAlert":
 			case "alert":
                             console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
 			      sendFBMessage(sender,   responseText);
