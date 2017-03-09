@@ -1445,10 +1445,14 @@ console.log(msg.constructor);
 	console.log({}.constructor);//true
 	//console.log(JSON.parse(msg));
  	
-	if(msg != "I understand that you want alerts" || msg != "I understand that you don't want alerts")
+	if((msg != "I understand that you want alerts") && (msg != "I understand that you don't want alerts"))
+	{
 		sendFBMessage(usersession, msg);
+	}
 	else
+	{
 		sendFBMessage(usersession, {text: msg});	
+	}
 	
 	/*if(JSON.parse(msg))
 	{
