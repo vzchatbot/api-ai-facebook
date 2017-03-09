@@ -332,7 +332,7 @@ var conversation = watson.conversation({
 			case "confirmOrderBBU":
                             console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
 			    var myresponseText = "Congrats we have received your order with "+ responseText +", Once we submit your order we will send order confirmation e-mail to your registered mail address with Verizon."; 
-			     sendFBMessage(sender,   {text: myresponseText}));
+			     sendFBMessage(sender,   {text: myresponseText});
 				 break;   
 			 case "greetings":
                             console.log("----->>>>>>>>>>>> INSIDE greetings <<<<<<<<<<<------");				   
