@@ -1469,17 +1469,15 @@ function updateResp(usersession, msg) {
 console.log(msg.constructor);
 	console.log({}.constructor);//true
 	//console.log(JSON.parse(msg));
-	
-	sendFBMessage(usersession, {text: msg});
  	
-	/*if((msg != "I understand that you want alerts") && (msg != "I understand that you don't want alerts"))
+	if((msg != "Good that you have landed here"))
 	{
 		sendFBMessage(usersession, msg);
 	}
 	else
 	{
 		sendFBMessage(usersession, {text: msg});	
-	} */
+	}
 	
 	/*if(JSON.parse(msg))
 	{
