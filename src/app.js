@@ -332,7 +332,7 @@ var conversation = watson.conversation({
 				 break;    
 			case "confirmOrderBBU":
                             console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
-			    var myresponseText = "Congrats!!! \n\n\We have received your order with "+ response.input.text +" Shipping. \n\nOnce we submit your order we will send order confirmation e-mail to your registered mail address with Verizon."; 
+			    var myresponseText ="Congrats!!! \n\n\We have received your order with "+ response.input.text +" Shipping. \n\nHere is your order reference number : NJ20001367542 . \n\n\Once the order is submitted you will get the order confirmation mail along with order reference number.";
 			     sendFBMessage(sender,   {text: myresponseText});
 				 break;   
 			 case "greetings":
