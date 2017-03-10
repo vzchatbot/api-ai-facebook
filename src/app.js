@@ -1467,7 +1467,7 @@ console.log(msg.constructor);
 	{
 		sendFBMessage(usersession, msg);
 	}
-	catch
+	catch(err)
 	{
 		sendFBMessage(usersession, {text: msg});
 	}
