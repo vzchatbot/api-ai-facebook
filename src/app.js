@@ -167,6 +167,12 @@ conversation.message({
     }else if (response.intents[0].intent == 'generalNo') {
      console.log('GENERAL NO');
      genNoResp(sender, response.output.text[0]);
+    }else if (response.intents[0].intent == 'order') {
+     console.log('ORDER');
+     orderResp(sender, response.output.text[0]);
+    }else if (response.intents[0].intent == 'checkDevice') {
+     console.log('CHECK THE DEVICE');
+     checkDevResp(sender, response.output.text[0]);
     }
    }
    /* else if(!response.intents)
@@ -1447,26 +1453,30 @@ function alertResp(usersession, msg) {
 console.log(msg.constructor);
 	console.log({}.constructor);//true
 	//console.log(JSON.parse(msg));
- 	
-	if((msg != "I understand that you want alerts") && (msg != "I understand that you don't want alerts"))
-	{
 		sendFBMessage(usersession, msg);
-	}
-	else
-	{
-		sendFBMessage(usersession, {text: msg});	
-	}
-	
-	/*if(JSON.parse(msg))
-	{
-		sendFBMessage(usersession, msg);
-	}
-	else
-	{
-		sendFBMessage(usersession, {text: msg});
-	}*/
 		
 }
+
+
+function orderResp(usersession, msg) {
+ console.log("inside ALERT REPLY");
+ console.log("MESSAGE: " + msg);
+console.log(msg.constructor);
+	console.log({}.constructor);//true
+	sendFBMessage(usersession, msg);
+	
+	
+}
+	
+function checkDevResp(usersession, msg) {
+ console.log("inside ALERT REPLY");
+ console.log("MESSAGE: " + msg);
+console.log(msg.constructor);
+	console.log({}.constructor);//true
+	sendFBMessage(usersession, msg);
+	
+}
+	
 	
 	
 function replaceResp(usersession, msg) {
@@ -1474,26 +1484,8 @@ function replaceResp(usersession, msg) {
  console.log("MESSAGE: " + msg);
 console.log(msg.constructor);
 	console.log({}.constructor);//true
-	//console.log(JSON.parse(msg));
- 	
-	if((msg != "Good that you have landed here"))
-	{
-		sendFBMessage(usersession, msg);
-	}
-	else
-	{
-		sendFBMessage(usersession, {text: msg});	
-	}
-	
-	/*if(JSON.parse(msg))
-	{
-		sendFBMessage(usersession, msg);
-	}
-	else
-	{
-		sendFBMessage(usersession, {text: msg});
-	}*/
-		
+
+		sendFBMessage(usersession, msg);		
 }
 
 
@@ -1502,26 +1494,8 @@ function trShootResp(usersession, msg) {
  console.log("MESSAGE: " + msg);
 console.log(msg.constructor);
 	console.log({}.constructor);//true
-	//console.log(JSON.parse(msg));
- 	
-	if((msg != "Ok I am starting to troubleshoot your battery"))
-	{
-		sendFBMessage(usersession, msg);
-	}
-	else
-	{
-		sendFBMessage(usersession, {text: msg});	
-	}
-	
-	/*if(JSON.parse(msg))
-	{
-		sendFBMessage(usersession, msg);
-	}
-	else
-	{
-		sendFBMessage(usersession, {text: msg});
-	}*/
-		
+
+		sendFBMessage(usersession, msg);		
 }
 	
 function genNoResp(usersession, msg) {
