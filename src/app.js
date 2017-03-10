@@ -1463,7 +1463,14 @@ function orderResp(usersession, msg) {
  console.log("MESSAGE: " + msg);
 console.log(msg.constructor);
 	console.log({}.constructor);//true
-	sendFBMessage(usersession, msg);
+	try
+	{
+		sendFBMessage(usersession, msg);
+	}
+	catch
+	{
+		sendFBMessage(usersession, {text: msg});
+	}
 	
 	
 }
