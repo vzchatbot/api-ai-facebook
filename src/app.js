@@ -263,7 +263,7 @@ function Findswitchcase(response,responseText,strIntent)
 		 strIntent =  result.entities.Intent;
 		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
 		 var actionname ='';
-		 Findswitchcase(actionname,strIntent)
+		// Findswitchcase(actionname,strIntent)
 	 }	
 	 var text=validateCPNI(message);	
 	 
