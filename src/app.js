@@ -248,7 +248,7 @@ function Findswitchcase(response,responseText,strIntent)
                             //sendFBMessage(sender,  {text: responseText});	    
 			    welcomeMsg(sender);    
                     }		  
-            }
+          
 	    }
 	    
  function convMess(message) {
@@ -291,6 +291,7 @@ function Findswitchcase(response,responseText,strIntent)
 		    }
                     console.log("Selected_Intent : "+ strIntent);    
                     Findswitchcase(response,responseText,strIntent);
+		 }
 	}
     });	 
 }   
