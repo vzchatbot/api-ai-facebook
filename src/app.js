@@ -160,7 +160,7 @@ function FindPayLoadIntent(payloaddata)
 	  var payloadIntent='';
 	  var strIntent ='';
 	 var responseText ='';
-	 message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
+	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
 	 if (message.indexOf('|Payload|') > -1)
 	 {
 		 console.log('insidepayload');
@@ -170,14 +170,14 @@ function FindPayLoadIntent(payloaddata)
 		 responseText = result;
 		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
 		 console.log('message::::'+ JSONbig.stringify(message));
-	 }
-	 else
-	 {
-	      var text=validateCPNI(message);	
-		conversation.message({
-		workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
-		input: { 'text': text }, 
-		alternate_intents: false
+	 }	
+	 var text=validateCPNI(message);	
+       if(message.indexOf('|Payload|') < -1)
+	  {
+	conversation.message({
+        workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
+        input: { 'text': text }, 
+	alternate_intents: false
 	  }
     }, function (err, response) {
         if (err) {
