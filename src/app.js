@@ -153,34 +153,10 @@ function FindPayLoadIntent(payloaddata)
 		    }
 		 return (result);
 	    }
-	    
- function convMess(message) {
-	  var payloadIntent='';
-	  var strIntent ='';
-//	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
-	 if (message.indexOf('|Payload|') > -1)
-	 {
-		 console.log('insidepayload');
-		var result = FindPayLoadIntent(message);
-		 console.log('payloadmessage ::::'+ JSONbig.stringify(result));
-		 strIntent =  result.entities.Intent;
-		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
-	 }	
-	 var text=validateCPNI(message);	
-	 
-    conversation.message({
-        workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
-        input: { 'text': text }, 
-	alternate_intents: false
-    }, function (err, response) {
-        if (err) {
-            console.log('Watson error in CONVMess'+ err);
-        }
-        else {
-            console.log('I got a response. Let me check');
-		console.log('Watson response:' + JSONbig.stringify(response));
-            if (response != '') {             
-		    
+
+function Findswitchcase(response,strIntent)
+	    {
+		      if (response != '') {
 		    if (response.intents!='')
 		    	strIntent=response.intents[0].intent;
 		    else
@@ -191,8 +167,7 @@ function FindPayLoadIntent(payloaddata)
 		    {
 			   strIntent ="Default";
 		    }
-                    console.log("Selected_Intent : "+ strIntent);
-                    // Methods to be called based on action 
+                    console.log("Selected_Intent : "+ strIntent);                  
                     switch (strIntent) 
                     {
                         case "getStarted":
@@ -230,7 +205,7 @@ function FindPayLoadIntent(payloaddata)
                         case "channelsearch":
                             console.log("----->>>>>>>>>>>> INSIDE channelsearch <<<<<<<<<<<------");
                             //ChnlSearch(response,function (str){ ChnlSearchCallback(str,sender)}); 
-				    stationsearch(response,function (str){ stationsearchCallback(str,sender)}); 
+			    stationsearch(response,function (str){ stationsearchCallback(str,sender)}); 
                             break;
 			case "TeamSearch":
 			case "GenreSearch":
@@ -278,25 +253,52 @@ function FindPayLoadIntent(payloaddata)
                         case "Default":
                             console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");
 				responseText="Hey .....I am here to help you on Verizon Services";    
-			      sendFBMessage(sender,  {text: responseText});
+			        sendFBMessage(sender,  {text: responseText});
 			 case "greetings":
                             console.log("----->>>>>>>>>>>> INSIDE greetings <<<<<<<<<<<------");				   
                             //sendFBMessage(sender,  {text: responseText});	    
-			  welcomeMsg(sender);    
+			    welcomeMsg(sender);    
                     }		  
             }
-        }
-    });
+	    }
+	    
+ function convMess(message) {
+	  var payloadIntent='';
+	  var strIntent ='';
+//	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
+	 if (message.indexOf('|Payload|') > -1)
+	 {
+		 console.log('insidepayload');
+		 var result = FindPayLoadIntent(message);
+		 console.log('payloadmessage ::::'+ JSONbig.stringify(result));
+		 strIntent =  result.entities.Intent;
+		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
+		 Findswitchcase(response,strIntent)
+	 }	
+	 var text=validateCPNI(message);	
 	 
-}    
-     
-    }
+    conversation.message({
+        workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
+        input: { 'text': text }, 
+	alternate_intents: false
+    }, function (err, response) {
+        if (err) {
+            console.log('Watson error in CONVMess'+ err);
+        }
+        else {
+                console.log('I got a response. Let me check');
+		console.log('Watson response:' + JSONbig.stringify(response));
+                Findswitchcase(response,strIntent);
+	}
+    });	 
+}   
 }
+}
+
 function splitResponse(str) {
     if (str.length <= 320) {
         return [str];
     }
-
     return chunkString(str, 300);
 }
 
