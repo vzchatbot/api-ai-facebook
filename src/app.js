@@ -255,15 +255,16 @@ function Findswitchcase(response,responseText,strIntent)
 	  var payloadIntent='';
 	  var strIntent ='';
 	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
+	  console.log('beforeinsidepayload');
 	 if (message.indexOf('|Payload|') > -1)
 	 {
-		 console.log('insidepayload');
+		 console.log('insideinsidepayload');
 		 var result = FindPayLoadIntent(message);
 		 console.log('payloadmessage ::::'+ JSONbig.stringify(result));
 		 strIntent =  result.entities.Intent;
 		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
-		 var actionname ='';
-		// Findswitchcase(actionname,strIntent)
+		 var actionname ='programSearch';
+		 Findswitchcase(actionname,strIntent)
 	 }	
 	 var text=validateCPNI(message);	
 	 
