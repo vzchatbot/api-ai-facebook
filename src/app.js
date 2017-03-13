@@ -160,7 +160,7 @@ function FindPayLoadIntent(payloaddata)
 	  var payloadIntent='';
 	  var strIntent ='';
 	 var responseText ='';
-	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
+	 message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
 	 if (message.indexOf('|Payload|') > -1)
 	 {
 		 console.log('insidepayload');
