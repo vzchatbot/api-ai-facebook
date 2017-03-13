@@ -10,13 +10,13 @@ var async = require('async');
 var log4js = require('log4js');
 var fs = require('fs');
 var util = require('util');
-var http = require('http');
 
 var watson = require('watson-developer-cloud');
 
 var session = require('express-session');
 var sql = require('mssql');
 var MssqlStore = require('../src/MSSQLSession.js')(session);
+var watsoncallflag='true';
 
 
 var REST_PORT = (process.env.PORT || process.env.port || process.env.OPENSHIFT_NODEJS_PORT || 5000);
@@ -24,12 +24,12 @@ var SEVER_IP_ADDR = process.env.OPENSHIFT_NODEJS_IP || process.env.HEROKU_IP ;
 var APIAI_ACCESS_TOKEN = "c8021e1a2dac4f85aee8f805a5a920b2"; 
 var APIAI_LANG = 'en' ;
 var FB_VERIFY_TOKEN = "CAA30DE7-CC67-4CBA-AF93-2B1C5C4C19D4";
-var FB_PAGE_ACCESS_TOKEN = "EAAFozkRuhZCMBAMRYsAWu38ZBvwat6Jh3bftZAaqWOcbuhszdTbynjttvFZBnZCYfIFmkOrFfbUO51DRzz3baot8ZATL2GLHsZAtrZBcjxXZCl5TcuLVKVZBtxwHurMZBneZCqwvWI1g611mXIJgf0BEpNu5o07Kmy1dwOFaZAAyDcDx47gZDZD";
+var FB_PAGE_ACCESS_TOKEN = "EAAQzt7vuC9EBALyAL24kk1UG3vx865BaKJrVNzpVUohGzcMS6ntmCzwtVTn5ErHRk8bGyL3sQwaNMzYamTD679OUBmHQQUU66qZCfWtEzbhJVsgyWMVhZCUcdfKR5IBqejjh5KnLFlosZB5CaAQvWyr78ZCE4OwPbfHq9eDTrwZDZD";
+//var FB_PAGE_ACCESS_TOKEN = "EAAYeV8WAScYBAJGetMxDuPHLQZA4U2pUkdXfh9aZBzeNCqZBZA5CcLeXsLa59uiQPXGqQ5mHbZCunZAtnU78UBpxwXIocRykYNiiU5NRIh2RsuCREc3o4ZBlYBicmkFZAVaWrmGHfA2ZAi7od2rtOYBpUQeFpt7GpZB0WTpJ0eO0gZBAwZDZD";
 var APIAI_VERIFY_TOKEN = "verify123";
 var apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
 var sessionIds = new Map();
 var userData = new Map();
-
 //======================
 log4js.configure({
     appenders: 
@@ -62,67 +62,6 @@ var logger = log4js.getLogger("botws");
 var Errlogger = log4js.getLogger('errorlog');
 var ChatHistoryLog = log4js.getLogger('Debug');
 
-function validateCPNI(elementValue)
-{
-      console.log("checking sensitive data - validateCPNI");	
-       var  ssnPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{4})$/;
-       var phonenoPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
-       var CreditcardPattern = /^\(?([A-Za-z ]+)?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-	  
-	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
-	    {
-		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
-		console.log('There is a sensitive data');	
-		return ('xxxxxxxxx');
-	    }
-	    else
-		console.log('There is NO sensitive data');	
-	      return (elementValue);	
-	
-}
-
-function callSession(strsender,strtext)
-{
-var http = require('http');
-var xml = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:botprocessor.webservice.interfaces.ppsh.verizon.com\"> <soapenv:Header/> <soapenv:Body> <urn:getPPSHData> <msg> <![CDATA[ <BotRequest> <id>1807994092745948</id> <time>1485873297960</time> <messaging> <sender> <id> "+ strsender + "</id> </sender> <recipient> <id>1807994092745948</id> </recipient> <timestamp>1485873297889</timestamp> <message> <mid>mid.1485873297889:fb70dae4232</mid> <seq>43351</seq> <text>"+ strtext +"</text> </message> </messaging> </BotRequest>]]> </msg> </urn:getPPSHData> </soapenv:Body> </soapenv:Envelope>";
-
-var http_options = {
-  hostname: 'ip-10-74-36-199.ebiz.verizon.com',
-  port: 7002,
-  path: '/ppsh/services/BotProcessor',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Content-Length': xml.length,
-    'SOAPAction': ''
-  }
-}
-
-var req = http.request(http_options, (res) => {
-  console.log(`STATUS: ${res.statusCode}`);
-  console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-  res.setEncoding('utf8');
-  res.on('data', (chunk) => {
-    console.log(`BODY: ${chunk}`);
-  });
- 
-  res.on('end', () => {
-    console.log('No more data in response.')
-  })
-});
- 
-req.on('error', (e) => {
-  console.log(`problem with request: ${e.message}`);
-});
- 
-// write data to request body
-req.write(xml); // xml would have been set somewhere to a complete xml document in the form of a string
-console.log('sessionresponse'+ JSONbig.stringify(xml));
-req.end();
-//return xml;
-
-}
-
 function processEvent(event) {
     var sender = event.sender.id.toString();
     console.log("senderid", sender);
@@ -140,7 +79,7 @@ function processEvent(event) {
 
 	var ReqSenderID = event.sender.id.toString();
         var ReqRecipientID = event.recipient.id.toString();
-	 var ReqMessageText = text;  
+	var ReqMessageText = text;  
 	    if(event.timestamp)
 	    {
 		var ReqTimeStamp = event.timestamp.toString();
@@ -179,56 +118,82 @@ var conversation = watson.conversation({
     password: 'h033JHyAbXph',
     version: 'v1',
     version_date: '2017-02-03'
-});   
-	//var masktext=validateCPNI(text); //mask sensitive data
+});    
 	
- 
- convMess(text);
+	convMess(text);
+	    
+ function validateCPNI(elementValue)
+{
+      console.log("checking sensitive data - validateCPNI");	
+       var  ssnPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{4})$/;
+       var phonenoPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
+       var CreditcardPattern = /^\(?([A-Za-z ]+)?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+	  
+	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
+	    {
+		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
+		console.log('There is a sensitive data');
+		return ('xxxxxxxxx');
+	    }
+	    else
+	      console.log('No sensitive data');
+	      return (elementValue);		
+}
+	    
+function FindPayLoadIntent(payloaddata)   
+	    {	
+		console.log('insidepayloaddata');
+		var result = {entities:{}};
+		    {
+		payloaddata.split('|').forEach(function(x){
+   		 var arr = x.split(':');		
+   		 arr[1] && (result.entities[arr[0]] = arr[1]);
+		}); 
+		 console.log('strPayloadresult : ' + JSONbig.stringify(result) );
+		 var strpaylodIntent = result.entities.Intent; 
+		 console.log('payloadIntent : ' + JSONbig.stringify(strpaylodIntent) );
+		    }
+		 return (result);
+	    }
 	    
  function convMess(message) {
- var actualmessage=message;
-
-	var InputText =validateCPNI(message);
-	//var sessionoutputxml =callSession(sender,text);
-	 //console.log('sessionoutputxml   : '+ JSONbig.stringify(sessionoutputxml))
-	 /*
-	 if(Inputtext !='xxxxxxxxx')
-	 {	console.log('There is NO sensitive data');	
-		Inputtext= actualmessage;
+	  var payloadIntent='';
+	  var strIntent ='';
+	 var responseText ='';
+	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
+	 if (message.indexOf('|Payload|') > -1)
+	 {
+		 console.log('insidepayload');
+		 var result = FindPayLoadIntent(message);
+		 console.log('payloadmessage ::::'+ JSONbig.stringify(result));
+		 strIntent =  result.entities.Intent;
+		 responseText = result;
+		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
+		 console.log('message::::'+ JSONbig.stringify(message));
 	 }
-	 */
-	console.log('In CPNII InputText  : ' + JSONbig.stringify(InputText)); 
-	 
-    conversation.message({
-        workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
-        input: { 'text': InputText }, 
-	alternate_intents: false
+	 else
+	 {
+	      var text=validateCPNI(message);	
+		conversation.message({
+		workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
+		input: { 'text': text }, 
+		alternate_intents: false
+	  }
     }, function (err, response) {
         if (err) {
             console.log('Watson error in CONVMess'+ err);
         }
         else {
             console.log('I got a response. Let me check');
-		console.log('Watson response:' + JSONbig.stringify(response));
-            if (response != '') {
-                
+	    console.log('Watson response:' + JSONbig.stringify(response));
+            if (response != '') {             
 		    
-		     
-		    var strIntent ='';
 		    if (response.intents!='')
 		    	strIntent=response.intents[0].intent;
 		    else
-			    strIntent='';
-		    
-		   // var strIntent ="MoreOptions";
-		     var responseText = response.output.text[0];
-		    console.log('Watson response Text 0:' + responseText);	             
-		    if (responseText=='')
-			    responseText = response.output.text[1];
-		    console.log('watson resp text 1 :' + JSONbig.stringify(responseText));
-		    console.log('strIntent:' + JSONbig.stringify(strIntent));
-		  //  var fallback = response.nodes_visited["fallback intent"];
-		   //console.log('strIntent:' + JSONbig.stringify(fallback));							  
+			 strIntent='';
+		    responseText = response.output.text[0];
+		    console.log('strIntent:' + JSONbig.stringify(strIntent));							  
 		    if(strIntent == '')
 		    {
 			   strIntent ="Default";
@@ -272,13 +237,12 @@ var conversation = watson.conversation({
                         case "channelsearch":
                             console.log("----->>>>>>>>>>>> INSIDE channelsearch <<<<<<<<<<<------");
                             //ChnlSearch(response,function (str){ ChnlSearchCallback(str,sender)}); 
-				    stationsearch(response,function (str){ stationsearchCallback(str,sender)}); 
+			    stationsearch(response,function (str){ stationsearchCallback(str,sender)}); 
                             break;
 			case "TeamSearch":
 			case "GenreSearch":
 			case "castwise":
 			case "PgmDetails":
-			case "programsearch":				    
                         case "programSearch":
                             console.log("----->>>>>>>>>>>> INSIDE programSearch <<<<<<<<<<<------");
                             PgmSearch(response,sender,function (str){ PgmSearchCallback(str,sender)});
@@ -322,40 +286,15 @@ var conversation = watson.conversation({
                             console.log("----->>>>>>>>>>>> INSIDE default <<<<<<<<<<<------");
 				responseText="Hey .....I am here to help you on Verizon Services";    
 			      sendFBMessage(sender,  {text: responseText});
-				    break;
-			case "orderBBU":	    
-			case "replaceBBU":
-			case "BBUAlert":
-			case "alert":
-			case "Maybelater":
-                            console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
-			      sendFBMessage(sender,   responseText);
-				 break;    
-			case "confirmOrderBBU":
-                            console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
-			    var myresponseText ="Congrats!!! \n\n\We have received your order with "+ response.input.text +" Shipping. \n\nHere is your order reference number : NJ20001367542 . \n\n\Once the order is submitted you will get the order confirmation mail along with order reference number.";
-			     sendFBMessage(sender,   {text: myresponseText});
-				 break;   
 			 case "greetings":
                             console.log("----->>>>>>>>>>>> INSIDE greetings <<<<<<<<<<<------");				   
                             //sendFBMessage(sender,  {text: responseText});	    
-			  welcomeMsg(sender);   
-				    case "pkgSearch":
-                                logger.debug("----->>>>>>>>>>>> INSIDE Package search <<<<<<<<<<<------");                         
-				var strChannelName = getEntity(response.entities,"Channel");;
-                                var strGenre =getEntity(response.entities,"ChannelGenre");;
-				     
-                                logger.debug(" Channel Name " + strChannelName);
-                                logger.debug(" Genre " + strGenre);
-                                logger.debug(" Sender ID " + sender);
-                                var ChnArr = { channalName: strChannelName, senderParam: sender, regionParam: "", vhoidParam: "", cktidParam: "", Genre: strGenre };
-                             
-                                packageChannelSearch(sender, ChnArr,  function (str) { packageChannelSearchCallback(str, ChnArr) });
-                                break;
+			  welcomeMsg(sender);    
                     }		  
             }
         }
     });
+	 
 }    
      
     }
@@ -397,23 +336,7 @@ function chunkString(s, len) {
 }
 	
 	
-	
-function validateCPNI(elementValue)
-{
-      console.log("checking sensitive data");
-       var  ssnPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{4})$/;
-       var phonenoPattern = /^\(?([A-Za-z ]+)?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
-       var CreditcardPattern = /^\(?([A-Za-z ]+)?([0-9]{4})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-	  
-	if (ssnPattern.test(elementValue) || phonenoPattern.test(elementValue) || CreditcardPattern.test(elementValue))
-	    {
-		console.log("ssn:" +ssnPattern.test(elementValue) +" phone:" + phonenoPattern.test(elementValue) +"ccard:"+ CreditcardPattern.test(elementValue));
-		return 'xxxxxxxxx';
-	    }
-	    else
-	      return elementValue;
-}
-	
+
 	
 function Encrypt( actualstr)
 {
@@ -837,172 +760,6 @@ function showBillInfoCallback(apiresp, senderid) {
     else {
         sendFBMessage(senderid, subflow.facebook);
     }
-}
-//==================
-	
-function packageChannelSearch(senderid, ChnArr, callback) {
-
-    logger.debug("Package Channel Search Called");
-    try {
-     console.log('ChnArr' +JSONbig.stringify(ChnArr));
-	var channe_Name = getEntity(ChnArr.entities,"channalName");
-        var senderid = getEntity(ChnArr.entities,"senderParam");	   
-        var genre = getEntity(ChnArr.entities,"Genre"); 
-
-        logger.debug(" Sender ID " + senderid);
-        logger.debug(" Channel Name " + channe_Name);
-        logger.debug(" Genre " + genre);
-	var headersInfo = {"Content-Type": "application/json"};
-        var args = {};
-
-        if (genre == "" || genre == undefined) {
-            args = {		  
-                json: {
-                   Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
-                    Request: {
-                        'ThisValue': 'AuthPKGSearch',
-                        'BotCircuitID': '',
-                        'BotstrStationCallSign': channe_Name,
-                        'BotChannelNo': '',
-                        'BotVhoId': '',
-                        'BotstrFIOSRegionID': '',
-                        'BotProviderId' : senderid
-                    }
-                }
-
-            };
-        }
-        else {
-            args = {		     
-                json: {
-                  Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
-                    Request: {
-                        'ThisValue': 'AuthPKGSearch',
-                        'BotCircuitID': '',
-                        'BotstrGenreRootId': genre,
-                        'BotChannelNo': '',
-                        'BotVhoId': '',
-                        'BotstrFIOSRegionID': '',
-                        'BotProviderId' : senderid
-                    }
-                }
-
-            };
-
-        }
-        logger.debug(" Request for package search json " + JSON.stringify(args));
-
-        request({
-            url: "https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx",          
-            headers: headersInfo,
-            method: 'POST',
-            json: args.json
-        }, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                callback(body);
-            }
-            else
-            {               
-                logger.debug(' error on callback for package search : ' + error + ' body: ' + JSON.stringify(body));
-            }
-        });
-    }
-    catch (experr) {
-        logger.debug('error on  package search : ' + experr);       
-    }
-    logger.debug("Package Channel Search completed");
-}
-
-function packageChannelSearchCallback(apiresp, ChnArr) {
-
-    logger.debug("packageChannelSearchCallback called");
-
-    var senderid = ChnArr.senderParam;
-    var channe_Name = ChnArr.channalName;
-    var Genre = ChnArr.Genre;
-    var returntext;
-
-    try {
-
-        var objToJson = {};
-        objToJson = apiresp;
-
-        var respobj = objToJson[0].Inputs.newTemp.Section.Inputs.Response;
-
-        logger.debug(" Package Search Response " + JSON.stringify(respobj));
-
-        if (respobj != null && respobj.facebook != null && respobj.facebook.attachment != null) {
-
-            //console.log("less than 10 channels ");
-
-            //fix to single element array 
-            if (respobj != null
-                && respobj.facebook != null
-                && respobj.facebook.attachment != null
-                && respobj.facebook.attachment.payload != null
-                && respobj.facebook.attachment.payload.elements != null) {
-                try {
-                    var chanls = respobj.facebook.attachment.payload.elements;
-                    //console.log(" Is array? " + util.isArray(chanls))
-                    if (!util.isArray(chanls)) {
-                        respobj.facebook.attachment.payload.elements = [];
-                        respobj.facebook.attachment.payload.elements.push(chanls);
-                        logger.debug(" Package Search CallBack = After =" + JSON.stringify(respobj));
-                    }
-                } catch (err) { logger.debug("Error on channel not available on PKG Search " + err); }
-            }
-
-            if (Genre == "" || Genre == undefined) {
-                if (channe_Name == "" || channe_Name == undefined) {
-                    //returntext = "Your package does include following channels!! Watch it on the channels below!";
-                    returntext = "Here are some awesome listings included in your package!";
-                }
-                else {
-                    returntext = "Good News! Your package does include " + channe_Name + "! Watch it on the channels below!";
-                }
-            }
-            else {
-                // returntext = "That's right, following " + Genre + " channel(s) are part of your package:";
-                //returntext = "Your package does include "+ Genre + "! Watch it on the channels below!";
-                returntext = "Here are the " + Genre + " listings that are on today ! And the good news is� they're are all a part of your package. Enjoy!"
-            }
-            sendFBMessage(senderid, { text: returntext }, userCoversationArr);
-            sendFBMessage(senderid, respobj.facebook, userCoversationArr);
-        }
-        else {
-            logger.debug("Sorry i dont find channel details");
-            if (Genre == "" || Genre == undefined) {
-                if (channe_Name == "" || channe_Name == undefined) {
-                    //returntext = "Sorry we don't find any channels in your package. Can you try another";
-                    //returntext = "I can't find any channels right now. Can you try a different channel?";
-                    returntext = "Can you do me a favor and search for something else? I am having trouble finding what you are looking for.";
-                }
-                else {
-                    //returntext = "Sorry " + channe_Name + " is not part for your package. Can you try another.";
-                    //returntext = "Sorry your package does not include "+ channe_Name + ". Can you try another.";
-                    //returntext = "I can't find " + channe_Name + ", right now. Can you try a different channel?";
-                    returntext = "My bad, but I am having trouble finding what you are looking for. Can you try searching for something else?";
-                }
-            }
-            else {
-                //returntext = "Sorry following " + Genre + " is not part for your package. Can you try another.";
-                //returntext = "Sorry your package does not include "+ Genre + ". Can you try another.";
-                //returntext = "I can't find " + Genre + ", right now. Can you try a different genre?";
-                returntext = "My bad, but I am having trouble finding what you are looking for. Can you try searching for something else?";
-            }
-            sendFBMessage(senderid, { text: returntext }, userCoversationArr);
-        }
-    }
-    catch (err) {
-        logger.debug(" Catch Error on pkg search call back " + err);
-        var senderid = ChnArr.senderParam;
-        //var channe_Name = ChnArr.channalName;
-        //var returntext = "I can't find any channels right now. Can you try a different channel?";
-        var returntext = "Can you do me a favor and search for something else? I am having trouble finding what you are looking for.";
-        sendFBMessage(senderid, { text: returntext }, userCoversationArr);
-    }
-
-    logger.debug("packageChannelSearchCallback completed");
 }
 
 //=====================showOutage
