@@ -154,20 +154,9 @@ function FindPayLoadIntent(payloaddata)
 		 return (result);
 	    }
 
-function Findswitchcase(response,strIntent)
+function Findswitchcase(response,responseText,strIntent)
 	    {
-		      if (response != '') {
-		    if (response.intents!='')
-		    	strIntent=response.intents[0].intent;
-		    else
-			 strIntent='';
-		     var responseText = response.output.text[0];
-		    console.log('strIntent:' + JSONbig.stringify(strIntent));							  
-		    if(strIntent == '')
-		    {
-			   strIntent ="Default";
-		    }
-                    console.log("Selected_Intent : "+ strIntent);                  
+		              
                     switch (strIntent) 
                     {
                         case "getStarted":
@@ -265,7 +254,7 @@ function Findswitchcase(response,strIntent)
  function convMess(message) {
 	  var payloadIntent='';
 	  var strIntent ='';
-//	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
+	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
 	 if (message.indexOf('|Payload|') > -1)
 	 {
 		 console.log('insidepayload');
@@ -273,7 +262,8 @@ function Findswitchcase(response,strIntent)
 		 console.log('payloadmessage ::::'+ JSONbig.stringify(result));
 		 strIntent =  result.entities.Intent;
 		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
-		 Findswitchcase(response,strIntent)
+		 var actionname ='';
+		 Findswitchcase(actionname,strIntent)
 	 }	
 	 var text=validateCPNI(message);	
 	 
@@ -288,7 +278,19 @@ function Findswitchcase(response,strIntent)
         else {
                 console.log('I got a response. Let me check');
 		console.log('Watson response:' + JSONbig.stringify(response));
-                Findswitchcase(response,strIntent);
+		      if (response != '') {
+		    if (response.intents!='')
+		    	strIntent=response.intents[0].intent;
+		    else
+			 strIntent='';
+		     var responseText = response.output.text[0];
+		    console.log('strIntent:' + JSONbig.stringify(strIntent));							  
+		    if(strIntent == '')
+		    {
+			   strIntent ="Default";
+		    }
+                    console.log("Selected_Intent : "+ strIntent);    
+                    Findswitchcase(response,responseText,strIntent);
 	}
     });	 
 }   
