@@ -270,6 +270,10 @@ function Findswitchcase(response,responseText,strIntent)
 		 console.log('payloadmessage::::'+ JSONbig.stringify(result));
 		 strIntent =  result.entities.Intent;
 		 console.log('insidepayloadstrIntent::::'+ JSONbig.stringify(strIntent));
+		  response =result;		  
+		  Findswitchcase(response,actionname,strIntent)
+		 
+		/*
 		 if (strIntent =='programSearch' ||strIntent =='TeamSearch' ||strIntent =='GenreSearch' ||strIntent =='castwise' ||strIntent =='PgmDetails' ||strIntent =='PgmDetails' ) 
 		{
 		    console.log('programSearch');
@@ -280,7 +284,7 @@ function Findswitchcase(response,responseText,strIntent)
 		 {			
 			result = FindPayLoadIntent(message);			
 		 	Findswitchcase(response,actionname,strIntent)
-		 }
+		 } */
 	 }
 	 else
 	 {
