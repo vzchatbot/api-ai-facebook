@@ -1469,12 +1469,7 @@ console.log(msg.constructor);
 function checkDevResp(usersession, msg) {
  console.log("inside ALERT REPLY");
  console.log("MESSAGE: " + msg);
-console.log(msg.constructor);
-	console.log('\n\n\n'+msg.attachment.type+'\n\n\n');
-	if(msg.attachment.type != 'template' || msg.attachment.type != null)
-		sendFBMessage(usersession, {  text: msg  });	
-	else
-		sendFBMessage(usersession, msg);	
+ sendFBMessage(usersession, msg);	
 }
 	
 	
