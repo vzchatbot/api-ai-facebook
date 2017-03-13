@@ -157,7 +157,7 @@ function FindPayLoadIntent(payloaddata)
  function convMess(message) {
 	  var payloadIntent='';
 	  var strIntent ='';
-	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
+//	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
 	 if (message.indexOf('|Payload|') > -1)
 	 {
 		 console.log('insidepayload');
@@ -167,6 +167,7 @@ function FindPayLoadIntent(payloaddata)
 		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
 	 }	
 	 var text=validateCPNI(message);	
+	 
     conversation.message({
         workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
         input: { 'text': text }, 
