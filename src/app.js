@@ -208,6 +208,10 @@ function Findswitchcase(response,responseText,strIntent)
                             console.log("----->>>>>>>>>>>> INSIDE support <<<<<<<<<<<------");
                             support(sender);
                             break;
+			case "record":
+                               console.log("----->>>>>>>>>>>> INSIDE recordnew <<<<<<<<<<<------");                               
+                                RecordScenario(response, sender, userCoversationArr);
+                                break;
                         case "upgradeDVR":
                             console.log("----->>>>>>>>>>>> INSIDE upgradeDVR <<<<<<<<<<<------");
                             upgradeDVR(response,sender);
@@ -255,21 +259,28 @@ function Findswitchcase(response,responseText,strIntent)
 	  var payloadIntent='';
 	  var response='';
 	  var strIntent ='';
-	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
+	  var actionname ='';
+	  var result='';
+	  message = "|Payload|Intent:record|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
 	  console.log('beforeinsidepayload');
 	 if (message.indexOf('|Payload|') > -1)
 	 {
 		 console.log('insideinsidepayload');
-		 var result = FindPayLoadIntent(message);
+		 result = FindPayLoadIntent(message);
 		 console.log('payloadmessage::::'+ JSONbig.stringify(result));
 		 strIntent =  result.entities.Intent;
 		 console.log('insidepayloadstrIntent::::'+ JSONbig.stringify(strIntent));
 		 if (strIntent =='programSearch' ||strIntent =='TeamSearch' ||strIntent =='GenreSearch' ||strIntent =='castwise' ||strIntent =='PgmDetails' ||strIntent =='PgmDetails' ) 
 		{
 		    console.log('programSearch');
-	            var actionname ='';	
+	            response =result;		  
 		    Findswitchcase(response,actionname,strIntent)
-		}	
+		}
+		 else if(strIntent== 'record')
+		 {			
+			result = FindPayLoadIntent(message);			
+		 	Findswitchcase(response,actionname,strIntent)
+		 }
 	 }
 	 else
 	 {
@@ -704,7 +715,271 @@ function getVzProfile(apireq,callback) {
         }
     );
 } 
+//========================
+function RecordScenario(apiresp, senderid, userCoversationArr) {
+    logger.debug("inside RecordScenario");
+    try {
+        var channel = getEntity(apiresp.entities,"Channel"); 
+        var program =   getEntity(apiresp.entities,"Programs"); 
+        var time =  getEntity(apiresp.entities,"timeofpgm");
+        var dateofrecord =    getEntity(apiresp.entities,"date"); 
+        var SelectedSTB = getEntity(apiresp.entities,"SelectedSTB");	   
+	    
+        logger.debug("SelectedSTB : " + SelectedSTB + " channel : " + channel + " dateofrecord :" + dateofrecord + " time :" + time);
+
+        if (time == "") //if time is empty show schedule
+        {
+            PgmSearch(apiresp, senderid, function (str) { PgmSearchCallback(str, senderid) });
+		
+        }
+        else if (SelectedSTB == "" || SelectedSTB == undefined)
+        {
+            STBList(apiresp, senderid,function (str) { STBListCallBack(str, senderid) });
+        }
+        else {  //Schedule Recording
+            logger.debug(" Channel: " + apiresp.result.parameters.Channel + " Programs: " + apiresp.result.parameters.Programs + " SelectedSTB: " + apiresp.result.parameters.SelectedSTB + " Duration: " + apiresp.result.parameters.Duration + " FiosId: " + apiresp.result.parameters.FiosId + " RegionId: " + apiresp.result.parameters.RegionId + " STBModel: " + apiresp.result.parameters.STBModel + " StationId: " + apiresp.result.parameters.StationId + " date: " + apiresp.result.parameters.date + " timeofpgm: " + apiresp.result.parameters.timeofpgm);
+            DVRRecord(apiresp, senderid, function (str) { DVRRecordCallback(str, senderid) });
+        }
+    }
+    catch (experr) {
+        logger.debug('error on  RecordScenario : ' + experr);
+    }
+    logger.debug("inside RecordScenario completed");
+}
 	
+function STBList(apireq, senderid, callback) {
+    logger.debug("inside STBList");
+	var headersInfo = {"Content-Type": "application/json"};
+    try {
+        var args = {
+		"headers":headersInfo,
+            json: {
+               Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
+                Request: {
+                    ThisValue: 'AuthSTBList',
+                    BotProviderId : senderid,
+                    Userid: ''
+                }
+            }
+        };
+
+        logger.debug('Request of STB List ' + JSON.stringify(args));
+         request.post(" https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
+		      function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                callback(body);
+            }
+            else
+            {               
+                logger.debug('error on posting the stb list request : ' + error + ' body: ' + JSON.stringify(body));
+            }
+        });
+    }
+    catch (experr) {
+        logger.debug('error on  STBList : ' + experr);
+    }
+    logger.debug("inside STBList completd");
+}
+
+function STBListCallBack(apiresp, senderid) {
+    var objToJson = {};
+    objToJson = apiresp;
+    try {
+
+        var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response;
+        logger.debug("STBListCallBack=before=" + JSON.stringify(subflow));       
+
+        //fix to single element array 
+        if (subflow != null
+            && subflow.facebook != null
+            && subflow.facebook.attachment != null
+            && subflow.facebook.attachment.payload != null
+            && subflow.facebook.attachment.payload.buttons != null) {
+            try {
+                var pgms = subflow.facebook.attachment.payload.buttons;
+
+                if (!util.isArray(pgms)) {
+                    subflow.facebook.attachment.payload.buttons = [];
+                    subflow.facebook.attachment.payload.buttons.push(pgms);
+
+                }
+            } catch (err) { logger.debug('error on stblistcallback - array ' + err); }
+        }
+
+        sendFBMessage(senderid, subflow.facebook);
+    }
+    catch (experr) {
+        logger.debug('error on  STBList callback: ' + experr);
+    }
+}
+function DVRRecord(apireq, senderid, callback) {
+    var headersInfo = {"Content-Type": "application/json"};
+    logger.debug("<<< Inside DVRRecord function >>>");
+    try {
+        var strUserid = '';
+        var args = {};
+
+        var strProgram = getEntity(apireq.entities,"Programs"); 
+        var strChannelName =  getEntity(apireq.entities,"Channel"); 
+        var strGenre = getEntity(apireq.entities,"Genre"); 
+
+        var strFiosId =  getEntity(apireq.entities,"FiosId"); 
+        var strSeriesId =  getEntity(apireq.entities,"SeriesId"); 
+        var strStationId =  getEntity(apireq.entities,"StationId"); 
+	    
+        var strAirDate =   getEntity(apireq.entities,"date"); 
+        var strAirTime = getEntity(apireq.entities,"timeofpgm"); 
+        var strDuration = getEntity(apireq.entities,"Duration"); 
+
+        var strRegionId = getEntity(apireq.entities,"RegionId"); 
+        var strSTBModel = getEntity(apireq.entities,"STBModel"); 
+        var strSTBId = getEntity(apireq.entities,"SelectedSTB");
+        var strVhoId = getEntity(apireq.entities,"VhoId"); 
+        var strProviderId =  getEntity(apireq.entities,"ProviderId"); 	   
+	    
+	    
+        logger.debug(" strUserid " + strUserid + "Recording strProgram " + strProgram + " strGenre " + strGenre + " strdate " + strAirDate + " strFiosId " + strFiosId + " strSeriesId " + strSeriesId + " strStationId " + strStationId + " strAirDate " + strAirDate + " strAirTime " + strAirTime + " strSTBId " + strSTBId + " strSTBModel " + strSTBModel + " strRegionId " + strRegionId + " strDuration " + strDuration);
+
+        //var headersInfo = { "Content-Type": "application/json" };
+
+        if (strSeriesId != '' && strSeriesId != undefined) {
+            console.log("Record Series");
+            args = {
+		    "headers":headersInfo,"json":
+		    {
+                    Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
+                    Request: {
+                        ThisValue: 'AuthRecordSeries',  //DVRSeriesSchedule
+                        Userid : '',
+                        BotStbId: strSTBId,
+                        BotDeviceModel : strSTBModel,
+                        BotstrFIOSRegionID : '',
+                        BotstrFIOSID: strFiosId,
+                        BotstrFIOSServiceId : strSeriesId, //yes its series id
+                        BotStationId : strStationId,
+                        BotAirDate : strAirDate,
+                        BotAirTime : strAirTime,
+                        BotDuration : strDuration,
+                        BotstrTitleValue: strProgram,
+                        BotVhoId : strVhoId,
+                        BotProviderId : senderid, //yes sender id
+                        BotstrFIOSRegionID : strRegionId
+                    }
+                }
+
+            };
+        }
+        else {
+            logger.debug("Record Episode");
+            args = {
+		    "headers":headersInfo,"json":
+		    {
+                     Flow:'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
+                    Request: {
+                        ThisValue: 'AuthRecordShow',
+                        Userid : '',
+                        BotStbId: strSTBId,
+                        BotDeviceModel : strSTBModel,
+                        BotstrFIOSRegionID : '',
+                        BotstrFIOSServiceId : strFiosId,
+                        BotStationId : strStationId,
+                        BotAirDate : strAirDate,
+                        BotAirTime : strAirTime,
+                        BotDuration : strDuration,
+                        BotVhoId : strVhoId,
+                        BotProviderId : senderid
+                    }
+                }
+            };
+        }
+
+        logger.debug("Request for dvr record args " + JSON.stringify(args));
+
+         request.post(" https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+
+                //console.log("body " + body);
+                callback(body);
+            }
+            else {               
+                logger.debug('error on DVR Record: ' + error + ' body: ' + body);
+            }
+        });
+    }
+    catch (experr) {
+        logger.debug('error on  DVRRecord : ' + experr);
+    }
+
+    logger.debug("<<< Inside DVRRecord function complted >>>");
+}
+
+function DVRRecordCallback(apiresp, senderid) {
+    var objToJson = {};
+    objToJson = apiresp;
+    try {
+        var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response;     
+
+        logger.debug("subflow Value -----" + JSON.stringify(subflow));
+        var respobj = {};
+        if (subflow != null) {
+            if (subflow != null && subflow.facebook != null && subflow.facebook.result != null && subflow.facebook.result.msg != null && subflow.facebook.result.msg == "success") {
+                respobj = { "facebook": { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "Good news, you have successfully scheduled this recording.Did you need help finding something else to watch?", "buttons": [{ "type": "postback", "title": "YES", "payload": "Main Menu" }, { "type": "postback", "title": "NO", "payload": "No on record end" }] } } } };
+                sendFBMessage(senderid, respobj.facebook);
+            }
+            else if (subflow != null && subflow.facebook != null && subflow.facebook.result != null && subflow.facebook.result.code != null && subflow.facebook.result.code == "9507") {
+                //respobj = "This Program has already been scheduled";
+                respobj = "You�ve already scheduled this recording! We know you really want to watch,  but doing it again won't make it twice as it good, it will  just take up space on your DVR.";
+                sendFBMessage(senderid, { text: respobj });
+            }
+            else if (subflow != null && subflow.facebook != null && subflow.facebook.result != null && subflow.facebook.result.code != null && subflow.facebook.result.code == "9117") //not subscribed
+            {
+                respobj = {
+                    "facebook": {
+                        "attachment": {
+                            "type": "template", "payload":
+                            {
+                                "template_type": "button",
+                                //"text": " Sorry you are not subscribed to this channel. Would you like to subscribe ?", "buttons": [
+                                "text": "I would love to help, but there's a problem, this channel is not a part of your package. Let's get it added now, so you can watch and record at your leisure!", "buttons": [
+                                    { "type": "postback", "title": "Subscribe", "payload": "Subscribe" },
+                                    { "type": "postback", "title": "No, I'll do it later ", "payload": "Main Menu" }]
+                            }
+                        }
+                    }
+                };
+                sendFBMessage(senderid, respobj.facebook);
+            }
+            else {
+                logger.debug("Error occured in recording: ");
+                if (subflow != null && subflow.facebook != null && subflow.facebook.result != null && subflow.facebook.result.msg != null) {
+                    respobj = "I'm unable to schedule this Program now. Can you please try this later.";
+                    logger.debug("Error while recording Code :" + subflow.facebook.result.code + " and Message " + subflow.facebook.result.msg);
+                }
+                else if (subflow != null && subflow.facebook != null && subflow.facebook.errorPage != null && subflow.facebook.errorPage.errormsg != null) {
+                    respobj = "I'm unable to schedule this Program now. Can you please try this later.";
+                    logger.debug("Error while recording Error Message :" + subflow.facebook.errorPage.errormsg);
+                }
+                else
+                    //respobj = "I'm unable to schedule this Program now. Can you please try this later";
+                    respobj = "Yikes, looks like something went wrong with this recording. Do me a favor and try again later.";
+
+                sendFBMessage(senderid, { text: respobj });
+            }
+        }
+        else {
+            //respobj = "I'm unable to schedule this Program now. Can you please try this later";
+            respobj = "Yikes, looks like something went wrong with this recording. Do me a favor and try again later.";
+            sendFBMessage(senderid, { text: respobj });
+        }
+    }
+    catch (err) {
+        logger.debug("Error occured in recording: " + err);
+        //respobj = "I'm unable to schedule this Program now. Can you please try this later";
+        respobj = "Yikes, looks like something went wrong with this recording. Do me a favor and try again later.";
+        sendFBMessage(senderid, { text: respobj });
+    }
+}
+//==========================	
 	function showBillInfo(apireq, sender, callback)	{
 		logger.debug("showBillInfo Called");
  		var headersInfo = {"Content-Type": "application/json"};
@@ -1673,275 +1948,7 @@ function LinkOptions(apireq,usersession)
     }
     sendFBMessage(usersession,  respobj.facebook);
 }
-
-function RecordScenario (apiresp,sender,usersession)
-{
-    console.log("inside RecordScenario");
-	// getEntity(apireq.entities,"ChannelNo"); 
-    var channel = getEntity(apireq.entities,"channel");
-    var program = getEntity(apireq.entities,"Programs");
-    var time =  getEntity(apireq.entities,"timeofpgm"); 
-    var dateofrecord = getEntity(apireq.entities,"date"); 
-    var SelectedSTB = getEntity(apireq.entities,"SelectedSTB");  
 	
-    console.log("SelectedSTB : " + SelectedSTB + " channel : " + channel + " dateofrecord :" + dateofrecord + " time :" + time);
-		
-    if (time == "") //if time is empty show schedule
-    { PgmSearch(apiresp,function (str){ PgmSearchCallback(str,usersession)});}
-    else if (SelectedSTB == "" || SelectedSTB == undefined) 
-    { STBList(apiresp,sender,function (str){ STBListCallBack(str,usersession)}); }
-        /*else if (channel == 'HBOSIG') //not subscribed scenario - call to be made
-			{
-			  var respobj = {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":" Sorry you are not subscribed to " + channel +". Would you like to subscribe " + channel + " ?","buttons":[{"type":"postback","title":"Subscribe","payload":"Subscribe"},{"type":"postback","title":"No, I'll do it later ","payload":"Main Menu"}]}}}};	
-			  sendFBMessage(usersession,  respobj.facebook);
-				
-			}
-		else if (channel == 'CBSSN')  //DVR full scenario - call to be made
-			{
-			   var respobj= {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":" Sorry your DVR storage is full.  Would you like to upgrade your DVR ?","buttons":[{"type":"postback","title":"Upgrade my DVR","payload":"Upgrade my DVR"},{"type":"postback","title":"No, I'll do it later ","payload":"Main Menu"}]}}}};
-			   sendFBMessage(usersession,  respobj.facebook);
-			}*/
-    else 
-    {  //Schedule Recording
-        console.log(" Channel: " + apiresp.result.parameters.Channel +" Programs: " + apiresp.result.parameters.Programs +" SelectedSTB: " + apiresp.result.parameters.SelectedSTB +" Duration: " + apiresp.result.parameters.Duration +" FiosId: " + apiresp.result.parameters.FiosId +" RegionId: " + apiresp.result.parameters.RegionId +" STBModel: " + apiresp.result.parameters.STBModel +" StationId: " + apiresp.result.parameters.StationId +" date: " + apiresp.result.parameters.date +" timeofpgm: " + apiresp.result.parameters.timeofpgm );
-        DVRRecord(apiresp,function (str){ DVRRecordCallback(str,usersession)});
-    }  
-}
-
-
-function STBList(apireq,sender,callback) { 
-    console.log('inside external call '+ apireq.contexts);
-    var struserid = ''; 
-    for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
-        if (apireq.result.contexts[i].name == "sessionuserid") {
-
-            struserid = apireq.result.contexts[i].parameters.Userid;
-            console.log("original userid " + ": " + struserid);
-        }
-    } 
-	
-    if (struserid == '' || struserid == undefined) struserid='lt6sth2'; //hardcoding if its empty
-	
-    console.log('struserid '+ struserid);
-    var headersInfo = { "Content-Type": "application/json" };
-    var args = {
-        "headers": headersInfo,
-        "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
-            Request: {ThisValue: 'AuthSTBList',
-		       BotProviderId :sender, 
-		      Userid:''} 
-        }		
-    };
-console.log("args=" + JSON.stringify(args));
-    request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
-        function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-             
-                console.log("body " + body);
-                callback(body);
-            }
-            else
-                console.log('error: ' + error + ' body: ' + body);
-        }
-    );
-} 
-  
-function STBListCallBack(apiresp,usersession) {
-    var objToJson = {};
-    objToJson = apiresp;
-    var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response; 
-	console.log("STBListCresp=" + JSON.stringify(subflow));
-    //fix to single element array 
-    if (subflow != null 
-         && subflow.facebook != null 
-         && subflow.facebook.attachment != null 
-         && subflow.facebook.attachment.payload != null 
-         && subflow.facebook.attachment.payload.buttons != null) {
-        try {
-            var pgms = subflow.facebook.attachment.payload.buttons;
-            console.log ("Is array? "+ util.isArray(pgms))
-            if (!util.isArray(pgms))
-            {
-                subflow.facebook.attachment.payload.buttons = [];
-                subflow.facebook.attachment.payload.buttons.push(pgms);
-                console.log("STBListCallBack=After=" + JSON.stringify(subflow));
-            }
-        }catch (err) { console.log(err); }
-    } 
-    console.log("STBListCallBack=" + JSON.stringify(subflow));
-	
-	if (subflow != null 
-        && subflow.facebook != null 
-        && subflow.facebook.text != null && subflow.facebook.text =='UserNotFound')
-	{
-		console.log ("STBListCallBack subflow "+ subflow.facebook.text);
-		var respobj ={"facebook":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[
-		{"title":"You have to Login to Verizon to proceed","image_url":"https://www98.verizon.com/foryourhome/vzrepair/siwizard/img/verizon-logo-200.png","buttons":[
-			{"type":"account_link","url":"https://www98.verizon.com/vzssobot/upr/preauth"}]}]}}}};		
-		sendFBMessage(usersession,  respobj.facebook);
-	}
-	else
-	{	
-         sendFBMessage(usersession,  subflow.facebook);
-	}
-   
-} 
-
-function DVRRecord(apireq,callback) { 
-	
-    console.log("<<< Inside DVRRecord function >>>");
-    var strUserid = ''; 
-    var args ={};
-    for (var i = 0, len = apireq.result.contexts.length; i < len; i++) {
-        if (apireq.result.contexts[i].name == "sessionuserid") 
-        {
-            strUserid = apireq.result.contexts[i].parameters.Userid;
-            console.log("original userid " + ": " + strUserid);
-        }
-    } 
-    if (strUserid == '' || strUserid == undefined) strUserid='lt6sth2'; //hardcoding if its empty
-		
-    var strProgram =  apireq.result.parameters.Programs;
-    var strChannelName =  apireq.result.parameters.Channel;
-    var strGenre =  apireq.result.parameters.Genre;
-
-    var strFiosId = apireq.result.parameters.FiosId;
-    var strSeriesId = apireq.result.parameters.SeriesId;
-    var strStationId =apireq.result.parameters.StationId  ;
-	
-    var strAirDate =apireq.result.parameters.date  ;
-    var strAirTime =apireq.result.parameters.timeofpgm  ;
-    var strDuration =apireq.result.parameters.Duration  ;
-	
-    var strRegionId =apireq.result.parameters.RegionId;
-    var strSTBModel =apireq.result.parameters.STBModel  ;
-    var strSTBId =apireq.result.parameters.SelectedSTB  ;	
-    var strVhoId =apireq.result.parameters.VhoId  ;
-    var strProviderId =apireq.result.parameters.ProviderId  ;
-	
-    console.log(" strUserid " + strUserid + "Recording strProgram " + strProgram + " strGenre " + strGenre + " strdate " +strAirDate + " strFiosId " +strFiosId +" strSeriesId "+ strSeriesId +" strStationId " +strStationId  +" strAirDate " + strAirDate + " strAirTime " + strAirTime+ " strSTBId " +strSTBId + " strSTBModel " +strSTBModel+" strRegionId " +strRegionId+ " strDuration " +strDuration );
-	
-    var headersInfo = { "Content-Type": "application/json" };
-	
-    if (strSeriesId !='' && strSeriesId != undefined  )
-    {
-        console.log ("Record Series");
-        args = {
-            "headers": headersInfo,
-            "json": {Flow: 'TroubleShooting Flows\\ChatBot\\APIChatBot.xml',
-                Request: {ThisValue: 'DVRSeriesSchedule',  //DVRSeriesSchedule
-                    Userid : strUserid,
-                    BotStbId:strSTBId, 
-                    BotDeviceModel : strSTBModel,
-                    BotstrFIOSRegionID : '91629',
-                    BotstrFIOSID:strFiosId,
-                    BotstrFIOSServiceId : strSeriesId, //yes its series id
-                    BotStationId : strStationId,
-                    BotAirDate : strAirDate,
-                    BotAirTime : strAirTime,
-                    BotDuration : strDuration,
-                    BotstrTitleValue: strProgram,
-                    BotVhoId : strVhoId,
-                    BotProviderId : strProviderId,
-                    BotstrFIOSRegionID : strRegionId
-                } 
-            }
-	
-        };
-    }
-    else
-    {
-        console.log ("Record Episode");
-        args = {
-            "headers": headersInfo,
-            "json": {Flow: 'TroubleShooting Flows\\Test\\APIChatBot.xml',
-                Request: {ThisValue: 'DVRSchedule', 
-                    Userid : strUserid,
-                    BotStbId:strSTBId, 
-                    BotDeviceModel : strSTBModel,
-                    BotstrFIOSRegionID : '91629',
-                    BotstrFIOSServiceId : strFiosId,
-                    BotStationId : strStationId,
-                    BotAirDate : strAirDate,
-                    BotAirTime : strAirTime,
-                    BotDuration : strDuration,
-                    BotVhoId : strVhoId,
-                    BotProviderId : strProviderId
-                } 
-            }
-        };
-    }
-	
-    console.log("args " + JSON.stringify(args));
-	
-    request.post("https://www.verizon.com/foryourhome/vzrepair/flowengine/restapi.ashx", args,
-        function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-             
-                console.log("body " + JSON.stringify(body));
-                callback(body);
-            }
-            else
-                console.log('error: ' + error + ' body: ' + body);
-        }
-    );
-} 
-
-function DVRRecordCallback(apiresp,usersession) 
-{
-    var objToJson = {};
-    objToJson = apiresp;
-    try{
-        var subflow = objToJson[0].Inputs.newTemp.Section.Inputs.Response;
-        console.log( "subflow Value -----" + JSON.stringify(subflow));
-        var respobj={};
-        if (subflow !=null )
-        {
-            if (subflow != null  && subflow.facebook != null  && subflow.facebook.result != null && subflow.facebook.result.msg !=null && subflow.facebook.result.msg =="success" )
-            {
-                respobj = {"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":"Good news, you have successfully scheduled this recording. Would you like to see some other TV Recommendations for tonight?","buttons":[{"type":"postback","title":"Show Recommendations","payload":"Show Recommendations"},{"type":"postback","title":"More Options","payload":"More Options"}]}}}};				
-                sendFBMessage(usersession,  respobj.facebook);
-            }
-            else if (subflow != null  && subflow.facebook != null  && subflow.facebook.result != null && subflow.facebook.result.code != null &&  subflow.facebook.result.code == "9507")
-            {
-                respobj = "This Program has already been scheduled";
-                sendFBMessage(usersession,  {text: respobj});
-            }
-            else if (subflow != null  && subflow.facebook != null  && subflow.facebook.result != null && subflow.facebook.result.code != null && subflow.facebook.result.code == "9117") //not subscribed
-            {
-                respobj = {"facebook":{"attachment":{"type":"template","payload":
-                                    {"template_type":"button","text":" Sorry you are not subscribed to this channel. Would you like to subscribe ?","buttons":[
-                                        {"type":"postback","title":"Subscribe","payload":"Subscribe"},
-                                        {"type":"postback","title":"No, I'll do it later ","payload":"Main Menu"}]}}}};	
-                sendFBMessage(usersession,  respobj.facebook);
-            }
-            else
-            {				
-                console.log( "Error occured in recording: ");
-                if (subflow != null  && subflow.facebook != null  && subflow.facebook.result != null && subflow.facebook.result.msg != null)
-                    respobj =  "I'm unable to schedule this Program now. Can you please try this later ("+subflow.facebook.result.code+" : " + subflow.facebook.result.msg +")"  ;
-                else if (subflow != null  && subflow.facebook != null  && subflow.facebook.errorPage != null && subflow.facebook.errorPage.errormsg  != null)
-                    respobj =  "I'm unable to schedule this Program now. Can you please try this later (" + subflow.facebook.errorPage.errormsg +")"  ;
-                else
-                    respobj =  "I'm unable to schedule this Program now. Can you please try this later" ;
-                sendFBMessage(usersession,  {text: respobj});				
-            }
-        }
-        else
-        {
-            respobj = "I'm unable to schedule this Program now. Can you please try this later";			
-            sendFBMessage(usersession,  {text: respobj});
-        }
-    }
-    catch (err) 
-    {
-        console.log( "Error occured in recording: " + err);
-        respobj = "I'm unable to schedule this Program now. Can you please try this later (" + err + ")";
-        //sendFBMessage(usersession,  respobj.facebook);
-        sendFBMessage(usersession,  {text: respobj});
-    }
-}
-
 function support(usersession)
 {
     var respobj={"facebook":{"attachment":{"type":"template","payload":{"template_type":"button","text":"You may need some additional help. Tap one below.","buttons":[{"type":"web_url","url":"https://m.me/fios","title":"Chat with Agent "},{"type":"phone_number","title":"Talk to an agent","payload":"+918554804789"}]}}}};	
