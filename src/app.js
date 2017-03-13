@@ -210,7 +210,7 @@ function Findswitchcase(response,responseText,strIntent)
                             break;
 			case "record":
                                console.log("----->>>>>>>>>>>> INSIDE recordnew <<<<<<<<<<<------");                               
-                                RecordScenario(response, sender, userCoversationArr);
+                                RecordScenario(response, sender);
                                 break;
                         case "upgradeDVR":
                             console.log("----->>>>>>>>>>>> INSIDE upgradeDVR <<<<<<<<<<<------");
@@ -261,7 +261,10 @@ function Findswitchcase(response,responseText,strIntent)
 	  var strIntent ='';
 	  var actionname ='';
 	  var result='';
+	 //record
 	  message = "|Payload|Intent:record|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
+	 //programsearch
+	// message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
 	  console.log('beforeinsidepayload');
 	 if (message.indexOf('|Payload|') > -1)
 	 {
@@ -270,7 +273,7 @@ function Findswitchcase(response,responseText,strIntent)
 		 console.log('payloadmessage::::'+ JSONbig.stringify(result));
 		 strIntent =  result.entities.Intent;
 		 console.log('insidepayloadstrIntent::::'+ JSONbig.stringify(strIntent));
-		  response =result;		  
+		  response = result;		  
 		  Findswitchcase(response,actionname,strIntent)
 		 
 		/*
@@ -724,9 +727,9 @@ function RecordScenario(apiresp, senderid, userCoversationArr) {
     logger.debug("inside RecordScenario");
     try {
         var channel = getEntity(apiresp.entities,"Channel"); 
-        var program =   getEntity(apiresp.entities,"Programs"); 
+        var program =  getEntity(apiresp.entities,"Programs"); 
         var time =  getEntity(apiresp.entities,"timeofpgm");
-        var dateofrecord =    getEntity(apiresp.entities,"date"); 
+        var dateofrecord = getEntity(apiresp.entities,"date"); 
         var SelectedSTB = getEntity(apiresp.entities,"SelectedSTB");	   
 	    
         logger.debug("SelectedSTB : " + SelectedSTB + " channel : " + channel + " dateofrecord :" + dateofrecord + " time :" + time);
