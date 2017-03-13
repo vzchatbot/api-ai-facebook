@@ -173,6 +173,9 @@ conversation.message({
     }else if (response.intents[0].intent == 'checkDevice') {
      console.log('CHECK THE DEVICE');
      checkDevResp(sender, response.output.text[0]);
+    }else if (response.intents[0].intent == 'shipOrder') {
+     console.log('SHIP ORDER');
+     shipOrderResp(sender, response.output.text[0]);
     }
    }
    /* else if(!response.intents)
@@ -1472,6 +1475,11 @@ function checkDevResp(usersession, msg) {
  sendFBMessage(usersession, msg);	
 }
 	
+function shipOrderResp(usersession, msg) {
+ console.log("inside SHIP ORDER");
+ console.log("MESSAGE: " + msg);
+ sendFBMessage(usersession, {text:msg});	
+}
 	
 	
 function replaceResp(usersession, msg) {
