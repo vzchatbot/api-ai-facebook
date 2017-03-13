@@ -253,6 +253,7 @@ function Findswitchcase(response,responseText,strIntent)
 	    
  function convMess(message) {
 	  var payloadIntent='';
+	  var response='';
 	  var strIntent ='';
 	  message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
 	  console.log('beforeinsidepayload');
@@ -260,11 +261,15 @@ function Findswitchcase(response,responseText,strIntent)
 	 {
 		 console.log('insideinsidepayload');
 		 var result = FindPayLoadIntent(message);
-		 console.log('payloadmessage ::::'+ JSONbig.stringify(result));
+		 console.log('payloadmessage::::'+ JSONbig.stringify(result));
 		 strIntent =  result.entities.Intent;
-		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
-		 var actionname ='programSearch';
-		 Findswitchcase(actionname,strIntent)
+		 console.log('insidepayloadstrIntent::::'+ JSONbig.stringify(strIntent));
+		 if (strIntent =='programSearch' ||strIntent =='TeamSearch' ||strIntent =='GenreSearch' ||strIntent =='castwise' ||strIntent =='PgmDetails' ||strIntent =='PgmDetails' ) 
+		{
+		    console.log('programSearch');
+	            var actionname ='';	
+		    Findswitchcase(response,actionname,strIntent)
+		}	
 	 }
 	 else
 	 {
