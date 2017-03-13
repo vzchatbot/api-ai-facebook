@@ -1470,7 +1470,7 @@ function checkDevResp(usersession, msg) {
  console.log("inside ALERT REPLY");
  console.log("MESSAGE: " + msg);
 console.log(msg.constructor);
-	console.log({}.constructor);//true
+	console.log('\n\n\n'+msg.attachment+'\n\n\n');
 	if(msg.attachment != undefined || msg.attachment != null)
 		sendFBMessage(usersession, msg);	
 	else
