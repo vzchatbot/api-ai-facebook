@@ -265,37 +265,39 @@ function Findswitchcase(response,responseText,strIntent)
 		 console.log('insidepayloadstrIntent ::::'+ JSONbig.stringify(strIntent));
 		 var actionname ='programSearch';
 		 Findswitchcase(actionname,strIntent)
-	 }	
-	 var text=validateCPNI(message);	
-	 
-    conversation.message({
-        workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
-        input: { 'text': text }, 
-	alternate_intents: false
-    }, function (err, response) {
-        if (err) {
-            console.log('Watson error in CONVMess'+ err);
-        }
-        else {
+	 }
+	 else
+	 {
+	 var text=validateCPNI(message);
+	    conversation.message({workspace_id: 'fd85881c-2303-497d-835a-b83548ad8cea',
+		input: { 'text': text }, alternate_intents: false}, function (err, response)
+		{
+		if (err) 
+		{
+		    console.log('Watson error in CONVMess'+ err);
+		}
+       		 else 
+		 {
                 console.log('I got a response. Let me check');
 		console.log('Watson response:' + JSONbig.stringify(response));
-		      if (response != '') {
-		    if (response.intents!='')
-		    	strIntent=response.intents[0].intent;
-		    else
-			 strIntent='';
-		     var responseText = response.output.text[0];
-		    console.log('strIntent:' + JSONbig.stringify(strIntent));							  
-		    if(strIntent == '')
-		    {
-			   strIntent ="Default";
-		    }
-                    console.log("Selected_Intent : "+ strIntent);    
-                    Findswitchcase(response,responseText,strIntent);
-		 }
-	}
-    });	 
-}   
+		      if (response != '') 
+		      {
+			    if (response.intents!='')
+				strIntent=response.intents[0].intent;
+			    else
+				 strIntent='';
+			     var responseText = response.output.text[0];
+			    console.log('strIntent:' + JSONbig.stringify(strIntent));							  
+			    if(strIntent == '')
+			    {
+				   strIntent ="Default";
+			    }
+			    console.log("Selected_Intent : "+ strIntent);    
+			    Findswitchcase(response,responseText,strIntent);
+			}
+		}
+	    });	 
+}  } 
 }
 }
 
