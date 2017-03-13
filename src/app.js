@@ -1471,13 +1471,10 @@ function checkDevResp(usersession, msg) {
  console.log("MESSAGE: " + msg);
 console.log(msg.constructor);
 	console.log({}.constructor);//true
-	sendFBMessage(usersession, msg);
-	
-	sendFBMessage(usersession, {
-  text: msg
- });
-
-	
+	if(msg.attachment != undefined || msg.attachment != null)
+		sendFBMessage(usersession, msg);	
+	else
+		sendFBMessage(usersession, {  text: msg  });	
 }
 	
 	
