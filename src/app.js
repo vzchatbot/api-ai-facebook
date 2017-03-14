@@ -217,8 +217,8 @@ function Findswitchcase(response,responseText,strIntent)
 			case "confirmOrderBBU":
                             	console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
 			    	var DeliveryOption=response.input.text ;
-				    var visionCustID=""; var BTN=""; var State="";
-				BBUOrder(sender,DeliveryOption, visionCustID, BTN, State,function (str) { BBUOrderCallback(sender,DeliveryOption,str, callback, session) });
+				    var visionCustID=""; var BTN=""; var State=""; var str="";
+				BBUOrder(sender,DeliveryOption, visionCustID, BTN, State,function (str) { BBUOrderCallback(sender,DeliveryOption,str) });
 				    
 				    //var myresponseText ="Congrats!!! \n\n\We have received your order with "+ response.input.text +" Shipping. \n\nHere is your order reference number : NJ20001367542 . \n\n\Once the order is submitted you will get the order confirmation mail along with order reference number.";
 			     //sendFBMessage(sender,   {text: myresponseText});
@@ -806,7 +806,7 @@ var shippingOpt="1";
 	console.log("BBUOrder completed");
 }
 
-function BBUOrderCallback(senderid,DeliveryTime, resp,callback, session){
+function BBUOrderCallback(senderid,DeliveryTime, resp){
 	console.log("BBUOrderCallback Started");
     objToJson = resp;
 	var objToJson = {};
