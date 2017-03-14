@@ -820,8 +820,11 @@ function BBUOrderCallback(senderid,DeliveryTime, resp){
 		//speechOutput = 'Congrats! <break time="1s"/> We have received your order with '+DeliveryTime+' delivery option. <break time="1s"/> Once we submit your order we will send order confirmation e-mail to your registered mail address with Verizon. <break time="1s"/> Thank You! Good Bye!';
 		shouldEndSession = false;
 console.log("BBUOrder success messgage");
-		speechOutput = "Congrats!  We have received your order with "+DeliveryTime+" delivery option. Once we submit your order we will send order confirmation e-mail to your registered mail address with Verizon.";
-		  sendFBMessage(senderid, {text: speechOutput});
+		//speechOutput = "Congrats!  We have received your order with "+DeliveryTime+" delivery option. Once we submit your order we will send order confirmation e-mail to your registered mail address with Verizon.";
+		  
+		
+		speechOutput= "Congrats!!! \n\n\We have received your order with "+ DeliveryTime +" Shipping. \n\nOnce we submit your order we will send order confirmation e-mail to your registered mail address with Verizon."; 
+		sendFBMessage(senderid, {text: speechOutput});
 		//repromptText = 'Can you please note down your order number for future reference with Verizon';
 
 		/*session.attributes.lastspeech = speechOutput;
