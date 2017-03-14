@@ -176,6 +176,9 @@ conversation.message({
     }else if (response.intents[0].intent == 'shipOrder') {
      console.log('SHIP ORDER');
      shipOrderResp(sender, response.output.text[0]);
+    }else if (response.intents[0].intent == 'devFine') {
+     console.log('DEVICE WORKING FINE');
+     devFineResp(sender, response.output.text[0]);
     }
    }
    /* else if(!response.intents)
@@ -1477,6 +1480,12 @@ function checkDevResp(usersession, msg) {
 	
 function shipOrderResp(usersession, msg) {
  console.log("inside SHIP ORDER");
+ console.log("MESSAGE: " + msg);
+ sendFBMessage(usersession, {text:msg});	
+}
+	
+function devFineResp(usersession, msg) {
+ console.log("inside DEVICE WORKING FINE");
  console.log("MESSAGE: " + msg);
  sendFBMessage(usersession, {text:msg});	
 }
