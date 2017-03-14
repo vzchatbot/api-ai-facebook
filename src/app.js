@@ -215,9 +215,11 @@ function Findswitchcase(response,responseText,strIntent)
 			     sendFBMessage(sender,   responseText);
 			break;    
 			case "confirmOrderBBU":
-                            console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
-			    var myresponseText ="Congrats!!! \n\n\We have received your order with "+ response.input.text +" Shipping. \n\nHere is your order reference number : NJ20001367542 . \n\n\Once the order is submitted you will get the order confirmation mail along with order reference number.";
-			     sendFBMessage(sender,   {text: myresponseText});
+                            	console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
+			    	var DeliveryOption=response.input.text ;
+				BBUOrder(DeliveryOption, visionCustID, BTN, State,function (str) { BBUOrderCallback(DeliveryOption,str, callback, session) });
+				    //var myresponseText ="Congrats!!! \n\n\We have received your order with "+ response.input.text +" Shipping. \n\nHere is your order reference number : NJ20001367542 . \n\n\Once the order is submitted you will get the order confirmation mail along with order reference number.";
+			     //sendFBMessage(sender,   {text: myresponseText});
 				 break;   
                         case "support":
                             console.log("----->>>>>>>>>>>> INSIDE support <<<<<<<<<<<------");
@@ -737,6 +739,119 @@ function getVzProfile(apireq,callback) {
     );
 } 
 //========================
+	
+function BBUOrder(DeliveryTime, visionCustID, BTN, State,callback) {
+	
+console.log("BBUOrder Called");
+
+var shippingOpt="1";
+
+	if(DeliveryTime == 'Premium')
+		shippingOpt = '1';
+	else if(DeliveryTime == 'Economy')
+		shippingOpt = '2';
+	else 
+		shippingOpt = '3';
+
+
+	try
+	{
+
+		var args = {
+            json: {
+					source:"Bot",
+					btn:"7328422487",
+					state:"NJ",
+					visionCustomerID:"154190083",
+					visionAccountID:"0001",
+					orderIntent:"BATTERYBACKUPREPLACEMENTORDER",
+					shippingOption:	shippingOpt,
+					ban:""
+            }
+        };	
+		
+		console.log(" Request for BBUOrder json " + JSON.stringify(args.json));
+
+        request.post({
+            url: 'https://www.verizon.com/foryourhome/ordering/services/BatteryReplacemnetOrder',
+            proxy: '',
+            headers: {'content-type':'application/json'},
+            method: 'POST',
+            json: args.json
+        },
+            function (error, response, body) {
+				
+				//console.log('Called the callback now response' + response)
+				//console.log('Called the callback now body ' + body)		
+				
+                if (!error && response.statusCode == 200) {
+					
+					console.log('Called the callback now BBU Order ' + JSON.stringify(body))	
+                    callback(body);
+                }
+                else {
+                    
+                    console.log('error on callback for bbuordercallback : ' + error);
+                }
+            }
+        );
+	}
+	catch(err)
+	{
+		console.log("Error while posting the BBU Order " + err);
+	}
+	
+	console.log("BBUOrder completed");
+}
+
+function BBUOrderCallback(DeliveryTime, resp,callback, session){
+	console.log("BBUOrderCallback Started");
+    objToJson = resp;
+	var objToJson = {};
+	var repromptText = ""; 
+	var sessionAttributes = {}; 
+	var shouldEndSession = false; 
+	var speechOutput = "";
+	let title = "BBU Order Success";
+	try
+	{
+		//speechOutput = 'Congrats! <break time="1s"/> We have received your order with '+DeliveryTime+' delivery option. <break time="1s"/> Once we submit your order we will send order confirmation e-mail to your registered mail address with Verizon. <break time="1s"/> Thank You! Good Bye!';
+		shouldEndSession = false;
+console.log("BBUOrder success messgage");
+		speechOutput = 'Congrats!  We have received your order with '+DeliveryTime+' delivery option. Once we submit your order we will send order confirmation e-mail to your registered mail address with Verizon. Thank You! Good Bye;
+		  sendFBMessage(senderid, subflow.facebook);
+		//repromptText = 'Can you please note down your order number for future reference with Verizon';
+
+		/*session.attributes.lastspeech = speechOutput;
+		session.attributes.lastreprompt = repromptText;
+		session.attributes.speechOutput = speechOutput;
+		session.attributes.repromptText = repromptText;
+		session.attributes.ordercomplete = "YES";
+		sessionAttributes = session.attributes;
+		callback(sessionAttributes, buildSSMLSpeechletResponse(title, speechOutput, repromptText, shouldEndSession));*/
+		
+	}
+	catch(Err)
+	{
+		console.log('Error on BBUOrder Callback' + err);
+	}
+	
+	console.log("BBUOrderCallback Completed");
+}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 function RecordScenario(apiresp, senderid, userCoversationArr) {
     logger.debug("inside RecordScenario");
     try {
