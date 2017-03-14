@@ -217,7 +217,9 @@ function Findswitchcase(response,responseText,strIntent)
 			case "confirmOrderBBU":
                             	console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
 			    	var DeliveryOption=response.input.text ;
+				    var visionCustID=""; BTN="";State="";
 				BBUOrder(DeliveryOption, visionCustID, BTN, State,function (str) { BBUOrderCallback(DeliveryOption,str, callback, session) });
+				    
 				    //var myresponseText ="Congrats!!! \n\n\We have received your order with "+ response.input.text +" Shipping. \n\nHere is your order reference number : NJ20001367542 . \n\n\Once the order is submitted you will get the order confirmation mail along with order reference number.";
 			     //sendFBMessage(sender,   {text: myresponseText});
 				 break;   
