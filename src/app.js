@@ -24,8 +24,10 @@ var SEVER_IP_ADDR = process.env.OPENSHIFT_NODEJS_IP || process.env.HEROKU_IP ;
 var APIAI_ACCESS_TOKEN = "c8021e1a2dac4f85aee8f805a5a920b2"; 
 var APIAI_LANG = 'en' ;
 var FB_VERIFY_TOKEN = "CAA30DE7-CC67-4CBA-AF93-2B1C5C4C19D4";
-var FB_PAGE_ACCESS_TOKEN = "EAAFozkRuhZCMBAMRYsAWu38ZBvwat6Jh3bftZAaqWOcbuhszdTbynjttvFZBnZCYfIFmkOrFfbUO51DRzz3baot8ZATL2GLHsZAtrZBcjxXZCl5TcuLVKVZBtxwHurMZBneZCqwvWI1g611mXIJgf0BEpNu5o07Kmy1dwOFaZAAyDcDx47gZDZD";
-//var FB_PAGE_ACCESS_TOKEN = "EAAYeV8WAScYBAJGetMxDuPHLQZA4U2pUkdXfh9aZBzeNCqZBZA5CcLeXsLa59uiQPXGqQ5mHbZCunZAtnU78UBpxwXIocRykYNiiU5NRIh2RsuCREc3o4ZBlYBicmkFZAVaWrmGHfA2ZAi7od2rtOYBpUQeFpt7GpZB0WTpJ0eO0gZBAwZDZD";
+//watson key
+//var FB_PAGE_ACCESS_TOKEN = "EAAFozkRuhZCMBAMRYsAWu38ZBvwat6Jh3bftZAaqWOcbuhszdTbynjttvFZBnZCYfIFmkOrFfbUO51DRzz3baot8ZATL2GLHsZAtrZBcjxXZCl5TcuLVKVZBtxwHurMZBneZCqwvWI1g611mXIJgf0BEpNu5o07Kmy1dwOFaZAAyDcDx47gZDZD";
+//Fdev key
+var FB_PAGE_ACCESS_TOKEN = "EAAYeV8WAScYBAJ1AriKv64KvZCr3nIudmpZBiPd3VL8j4mu3UYzZCwaSguZCFCEMTmWvunm9MbOGChZBLIyBroPxI951nFZCNP23KzyrzZCNCyfWupZCVdzhrJVeisiCPo3IrdtUsBiEA9m5vZBhPG2yxoCsL4gFTYL2rdBZCVQJ2m0AZDZD";
 var APIAI_VERIFY_TOKEN = "verify123";
 var apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
 var sessionIds = new Map();
@@ -262,7 +264,7 @@ function Findswitchcase(response,responseText,strIntent)
 	  var actionname ='';
 	  var result='';
 	 //record
-	  message = "|Payload|Intent:record|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
+	//  message = "|Payload|Intent:record|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
 	 //programsearch
 	// message = "|Payload|Intent:programSearch|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
 	  console.log('beforeinsidepayload');
@@ -274,8 +276,7 @@ function Findswitchcase(response,responseText,strIntent)
 		 strIntent =  result.entities.Intent;
 		 console.log('insidepayloadstrIntent::::'+ JSONbig.stringify(strIntent));
 		  response = result;		  
-		  Findswitchcase(response,actionname,strIntent)
-		 
+		  Findswitchcase(response,actionname,strIntent)		 
 		/*
 		 if (strIntent =='programSearch' ||strIntent =='TeamSearch' ||strIntent =='GenreSearch' ||strIntent =='castwise' ||strIntent =='PgmDetails' ||strIntent =='PgmDetails' ) 
 		{
