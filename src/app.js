@@ -206,6 +206,19 @@ function Findswitchcase(response,responseText,strIntent)
                             console.log("----->>>>>>>>>>>> INSIDE programSearch <<<<<<<<<<<------");
                             PgmSearch(response,sender,function (str){ PgmSearchCallback(str,sender)});
                             break;
+		       case "orderBBU":	    
+			case "replaceBBU":
+			case "BBUAlert":
+			case "alert":
+			case "Maybelater":
+                            console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
+			     sendFBMessage(sender,   responseText);
+			break;    
+			case "confirmOrderBBU":
+                            console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
+			    var myresponseText ="Congrats!!! \n\n\We have received your order with "+ response.input.text +" Shipping. \n\nHere is your order reference number : NJ20001367542 . \n\n\Once the order is submitted you will get the order confirmation mail along with order reference number.";
+			     sendFBMessage(sender,   {text: myresponseText});
+				 break;   
                         case "support":
                             console.log("----->>>>>>>>>>>> INSIDE support <<<<<<<<<<<------");
                             support(sender);
