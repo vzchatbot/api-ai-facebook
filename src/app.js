@@ -218,7 +218,7 @@ function Findswitchcase(response,responseText,strIntent)
                             	console.log("----->>>>>>>>>>>> BatteryAlert default <<<<<<<<<<<------");
 			    	var DeliveryOption=response.input.text ;
 				    var visionCustID=""; BTN="";State="";
-				BBUOrder(DeliveryOption, visionCustID, BTN, State,function (str) { BBUOrderCallback(DeliveryOption,str, callback, session) });
+				BBUOrder(sender,DeliveryOption, visionCustID, BTN, State,function (str) { BBUOrderCallback(sender,DeliveryOption,str, callback, session) });
 				    
 				    //var myresponseText ="Congrats!!! \n\n\We have received your order with "+ response.input.text +" Shipping. \n\nHere is your order reference number : NJ20001367542 . \n\n\Once the order is submitted you will get the order confirmation mail along with order reference number.";
 			     //sendFBMessage(sender,   {text: myresponseText});
@@ -742,7 +742,7 @@ function getVzProfile(apireq,callback) {
 } 
 //========================
 	
-function BBUOrder(DeliveryTime, visionCustID, BTN, State,callback) {
+function BBUOrder(senderid,DeliveryTime, visionCustID, BTN, State,callback) {
 	
 console.log("BBUOrder Called");
 
@@ -806,7 +806,7 @@ var shippingOpt="1";
 	console.log("BBUOrder completed");
 }
 
-function BBUOrderCallback(DeliveryTime, resp,callback, session){
+function BBUOrderCallback(senderid,DeliveryTime, resp,callback, session){
 	console.log("BBUOrderCallback Started");
     objToJson = resp;
 	var objToJson = {};
@@ -820,8 +820,8 @@ function BBUOrderCallback(DeliveryTime, resp,callback, session){
 		//speechOutput = 'Congrats! <break time="1s"/> We have received your order with '+DeliveryTime+' delivery option. <break time="1s"/> Once we submit your order we will send order confirmation e-mail to your registered mail address with Verizon. <break time="1s"/> Thank You! Good Bye!';
 		shouldEndSession = false;
 console.log("BBUOrder success messgage");
-		speechOutput = 'Congrats!  We have received your order with '+DeliveryTime+' delivery option. Once we submit your order we will send order confirmation e-mail to your registered mail address with Verizon. Thank You! Good Bye;
-		  sendFBMessage(senderid, subflow.facebook);
+		speechOutput = "Congrats!  We have received your order with "+DeliveryTime+" delivery option. Once we submit your order we will send order confirmation e-mail to your registered mail address with Verizon.";
+		  sendFBMessage(senderid, {text: speechOutput});
 		//repromptText = 'Can you please note down your order number for future reference with Verizon';
 
 		/*session.attributes.lastspeech = speechOutput;
