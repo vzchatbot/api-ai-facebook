@@ -389,7 +389,7 @@ function Findswitchcase(response,responseText,strIntent)
 			    }
 			    console.log("Selected_Intent : "+ strIntent);
 			    console.log("NLP : "+ JSONbig.stringify(NLP));
-			    NLPresponseFormatter(NLP,responseText); 
+			    NLPresponseFormatter(NLP,response); 
 			    Findswitchcase(response,responseText,strIntent);
 			}
 		}
