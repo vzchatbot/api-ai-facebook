@@ -190,6 +190,21 @@ function NLPresponseFormatter(NLP, response)
 	 var strChannelName =  getEntity(response.entities,"channel");	
 	 var strFiosId =getEntity(response.entities,"FiosID"); 
 	 var strStationId = getEntity(response.entities,"Stationid");
+	 var strChannelNo = getEntity(response.entities,"ChannelNo");
+	var strSeriesId =  getEntity(response.entities,"SeriesId"); 
+        var strAirDate =   getEntity(response.entities,"date"); 
+        var strAirTime = getEntity(response.entities,"timeofpgm"); 
+        var strDuration = getEntity(response.entities,"Duration"); 
+        var strRegionId = getEntity(response.entities,"RegionId"); 
+        var strSTBModel = getEntity(response.entities,"STBModel"); 
+        var strSTBId = getEntity(response.entities,"SelectedSTB");
+        var strVhoId = getEntity(response.entities,"VhoId"); 
+        var strProviderId =  getEntity(response.entities,"ProviderId");
+		
+	var strchannel = getEntity(response.entities,"Channel");        
+        var strtimeofpgm =  getEntity(response.entities,"timeofpgm");
+        var strdateofrecord = getEntity(response.entities,"date"); 
+        var strSelectedSTB = getEntity(response.entities,"SelectedSTB");
 		
 		//convert Watson  resp to below format
 		formattedResponse=
@@ -202,10 +217,26 @@ function NLPresponseFormatter(NLP, response)
 							"ChannelGenre":strGenre,
 							"date":strdate,
 							"Genre":strGenre,
-							"Programs":strProgram
+							"Programs":strProgram,
+							"BotStbId": strSTBId,
+							"BotDeviceModel": strSTBModel,
+							"BotstrFIOSRegionID" : '',
+						        "BotstrFIOSID": strFiosId,
+							"BotstrFIOSServiceId" : strSeriesId, //yes its series id
+							"BotStationId" : strStationId,
+							"BotAirDate" : strAirDate,
+							"BotAirTime" : strAirTime,
+							"BotDuration" : strDuration,
+							"BotstrTitleValue": strProgram,
+							"BotVhoId" : strVhoId,                    
+							"BotstrFIOSRegionID" : strRegionId
 						}
 				}
 		}; 
+		
+	//	var merged_object = JSON.parse('{"attachment":' + JSON.stringify(aa.attachment) + ',' + '"quick_replies":' + JSON.stringify(bb.quick_replies) + '}');
+		
+		
 	}
 	if (NLP=='Custom') //payload concept
 	{
