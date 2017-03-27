@@ -32,6 +32,7 @@ var APIAI_VERIFY_TOKEN = "verify123";
 var apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
 var sessionIds = new Map();
 var userData = new Map();
+var NLP="watson";
 //======================
 log4js.configure({
     appenders: 
@@ -155,6 +156,68 @@ function FindPayLoadIntent(payloaddata)
 		    }
 		 return (result);
 	    }
+
+function NLPresponseFormatter(NLP, response) 
+{
+	console.log('Inside NLPresponseFormatter : ' +JSONbig.stringify(response) );
+	var formattedResponse={};
+	if (NLP=='apiai')
+	{
+		//convert api resp to below format
+		formattedResponse=
+			{
+			"formattedResponse":
+				{
+					"parameters":
+						{
+							"Channel":"HBO",
+							"ChannelGenre":"",
+							"date":"",
+							"Genre":"",
+							"Programs":""
+						}
+				}
+		}; 
+	}
+	if (NLP=='watson')
+	{
+		//convert Watson  resp to below format
+		formattedResponse=
+			{
+			"formattedResponse":
+				{
+					"parameters":
+						{
+							"Channel":"HBO",
+							"ChannelGenre":"",
+							"date":"",
+							"Genre":"",
+							"Programs":""
+						}
+				}
+		}; 
+	}
+	if (NLP=='Custom') //payload concept
+	{
+		//convert payload resp to below format
+		formattedResponse=
+			{
+			"formattedResponse":
+				{
+					"parameters":
+						{
+							"Channel":"HBO",
+							"ChannelGenre":"",
+							"date":"",
+							"Genre":"",
+							"Programs":""
+						}
+				}
+		}; 
+	}
+		return formattedResponse;
+}
+	    
 
 function Findswitchcase(response,responseText,strIntent)
 	    {
@@ -287,6 +350,7 @@ function Findswitchcase(response,responseText,strIntent)
 	  console.log('beforeinsidepayload');
 	 if (message.indexOf('|Payload|') > -1)
 	 {
+		 NLP="Payload";
 		 console.log('insideinsidepayload');
 		 result = FindPayLoadIntent(message);
 		 console.log('payloadmessage::::'+ JSONbig.stringify(result));
@@ -294,18 +358,7 @@ function Findswitchcase(response,responseText,strIntent)
 		 console.log('insidepayloadstrIntent::::'+ JSONbig.stringify(strIntent));
 		  response = result;		  
 		  Findswitchcase(response,actionname,strIntent)		 
-		/*
-		 if (strIntent =='programSearch' ||strIntent =='TeamSearch' ||strIntent =='GenreSearch' ||strIntent =='castwise' ||strIntent =='PgmDetails' ||strIntent =='PgmDetails' ) 
-		{
-		    console.log('programSearch');
-	            response =result;		  
-		    Findswitchcase(response,actionname,strIntent)
-		}
-		 else if(strIntent== 'record')
-		 {			
-			result = FindPayLoadIntent(message);			
-		 	Findswitchcase(response,actionname,strIntent)
-		 } */
+		
 	 }
 	 else
 	 {
@@ -333,7 +386,9 @@ function Findswitchcase(response,responseText,strIntent)
 			    {
 				   strIntent ="Default";
 			    }
-			    console.log("Selected_Intent : "+ strIntent);    
+			    console.log("Selected_Intent : "+ strIntent);
+			    console.log("NLP : "+ JSONbig.stringify(NLP));
+			    NLPresponseFormatter(NLP,responseText); 
 			    Findswitchcase(response,responseText,strIntent);
 			}
 		}
