@@ -121,8 +121,7 @@ var conversation = watson.conversation({
     password: 'h033JHyAbXph',
     version: 'v1',
     version_date: '2017-02-03'
-});    
-	
+}); 
 	convMess(text);
 	    
  function validateCPNI(elementValue)
@@ -156,7 +155,15 @@ function FindPayLoadIntent(payloaddata)
 		    }
 		 return (result);
 	    }
-
+function getSeprateEntity(entitycoll,entityValue) {
+	var i = null;
+	for (i = 0; entitycoll.length > i; i += 1) {
+		if (entitycoll[i].entity === entityValue) {
+			return entitycoll[i].value;
+		}
+	}	
+	return '';
+        }
 function NLPresponseFormatter(NLP, response) 
 {
 	console.log('Inside NLPresponseFormatter : ' +JSONbig.stringify(response) );
@@ -199,8 +206,7 @@ function NLPresponseFormatter(NLP, response)
         var strSTBModel = getEntity(response.entities,"STBModel"); 
         var strSTBId = getEntity(response.entities,"SelectedSTB");
         var strVhoId = getEntity(response.entities,"VhoId"); 
-        var strProviderId =  getEntity(response.entities,"ProviderId");
-		
+        var strProviderId =  getEntity(response.entities,"ProviderId");		
 	var strchannel = getEntity(response.entities,"Channel");        
         var strtimeofpgm =  getEntity(response.entities,"timeofpgm");
         var strdateofrecord = getEntity(response.entities,"date"); 
