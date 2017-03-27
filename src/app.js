@@ -182,6 +182,15 @@ function NLPresponseFormatter(NLP, response)
 	}
 	if (NLP=='watson')
 	{
+	 var strProgram =  getEntity(response.entities,"Programs");	
+	 var strGenre =  getEntity(response.entities,"Genre");	
+	 var strCast =  getEntity(response.entities,"cast");	
+	 var strTeam =  getEntity(response.entities,"Teams");	
+	 var strdate =  getEntity(response.entities,"sys-date");
+	 var strChannelName =  getEntity(response.entities,"channel");	
+	 var strFiosId =getEntity(response.entities,"FiosID"); 
+	 var strStationId = getEntity(response.entities,"Stationid");
+		
 		//convert Watson  resp to below format
 		formattedResponse=
 			{
@@ -189,11 +198,11 @@ function NLPresponseFormatter(NLP, response)
 				{
 					"parameters":
 						{
-							"Channel":"HBO",
-							"ChannelGenre":"",
-							"date":"",
-							"Genre":"",
-							"Programs":""
+							"Channel":strChannelName,
+							"ChannelGenre":strGenre,
+							"date":strdate,
+							"Genre":strGenre,
+							"Programs":strProgram
 						}
 				}
 		}; 
@@ -344,6 +353,7 @@ function Findswitchcase(response,responseText,strIntent)
 	  var strIntent ='';
 	  var actionname ='';
 	  var result='';
+	 var Formatedres='';
 	 //record
 	//  message = "|Payload|Intent:record|Program:Playboy's Amateur Girls|Channel:PlayboyHD|FiosId:2299432202| Stationid : 5591| Date: |ActualServiceId : 5591|";
 	 //programsearch
@@ -389,7 +399,8 @@ function Findswitchcase(response,responseText,strIntent)
 			    }
 			    console.log("Selected_Intent : "+ strIntent);
 			    console.log("NLP : "+ JSONbig.stringify(NLP));
-			    NLPresponseFormatter(NLP,response); 
+			    Formatedres = NLPresponseFormatter(NLP,response); 
+			    console.log("Formatedres : "+ JSONbig.stringify(Formatedres));
 			    Findswitchcase(response,responseText,strIntent);
 			}
 		}
@@ -1900,14 +1911,12 @@ function CategoryList(apireq,usersession) {
 	 console.log("<<<sender>>>" + sender);
 		
          //var strProgram = watres.entities[0].value;
-	 var strProgram =  getEntity(watres.entities,"Programs");
-	 console.log("<<<strProgram   : >>>"+ strProgram);
+	 var strProgram =  getEntity(watres.entities,"Programs");	
 	 var strGenre =  getEntity(watres.entities,"Genre");	
 	 var strCast =  getEntity(watres.entities,"cast");	
 	 var strTeam =  getEntity(watres.entities,"Teams");	
 	 var strdate =  getEntity(watres.entities,"sys-date");
-	 var strChannelName =  getEntity(watres.entities,"channel");
-	 console.log("<<<strChannelName   : >>>" + strChannelName);	 
+	 var strChannelName =  getEntity(watres.entities,"channel");	
 	 var strFiosId =getEntity(watres.entities,"FiosID"); 
 	 var strStationId = getEntity(watres.entities,"Stationid");
 	 var strRegionId = "";	
