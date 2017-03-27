@@ -160,6 +160,7 @@ function FindPayLoadIntent(payloaddata)
 function NLPresponseFormatter(NLP, response) 
 {
 	console.log('Inside NLPresponseFormatter : ' +JSONbig.stringify(response) );
+	console.log('Inside NLP : ' +JSONbig.stringify(NLP) );
 	var formattedResponse={};
 	if (NLP=='apiai')
 	{
